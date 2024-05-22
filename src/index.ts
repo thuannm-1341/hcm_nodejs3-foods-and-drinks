@@ -8,6 +8,7 @@ import i18next from 'i18next';
 import i18nextBackend from 'i18next-fs-backend';
 import i18nextMiddleware from 'i18next-http-middleware';
 import { AppDataSource } from './config/ormConfig';
+import router from './routes';
 
 const port = process.env.PORT || 3000;
 const sessionSecret = process.env.SESSION_SECRET || 'food_and_drink';
@@ -53,9 +54,13 @@ app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 app.use(i18nextMiddleware.handle(i18next));
 
 app.use(logger('dev'));
+app.use(router);
 
 AppDataSource.initialize()
   .then(() => {

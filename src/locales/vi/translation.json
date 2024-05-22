@@ -1,0 +1,36 @@
+{
+  "login": {
+    "title": "Đăng nhập"
+  },
+  "error": {
+    "password": {
+      "minLength": "Mật khẩu có độ dài tối thiểu là 4"
+    },
+    "email": {
+      "notEmail": "Vui lòng nhập đúng định dạng email",
+      "duplicate": "Email bị trùng"
+    },
+    "fullName": {
+      "minLength": "Độ dài của họ và tên tối thiểu là 4"
+    },
+    "userName": {
+      "minLength": "Độ dài của tên đăng nhập tối thiểu là 4",
+      "duplicate": "Tên tài khoản bị trùng"
+    }
+  },
+  "register": {
+    "title": "Tạo tài khoản mới",
+    "userName": "Tên đăng nhập",
+    "fullName": "Tên đầy đủ",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "registerBtn": "Đăng ký",
+    "signIn": "Đăng nhập",
+    "signInMessage": "Bạn đã có tài khoản?",
+    "forgot-password": "Forgot password",
+    "userName_ph": "Điền tên đăng nhập của bạn",
+    "fullName_ph": "Điền tên đầy đủ của bạn",
+    "password_ph": "Điền mật khẩu của bạn",
+    "email_ph": "Điền email của bạn"
+  }
+}

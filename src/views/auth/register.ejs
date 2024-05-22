@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= t('register.title') %>
+  </title>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/register.css" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+</head>
+
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6">
+        <img
+          src="/images/register.jpg"
+          class="img-fluid rounded mx-auto d-block" alt="Logo">
+      </div>
+      <div class="col-md-6 d-flex flex-column justify-content-center">
+        <div class="d-flex flex-column align-items-center mt-3">
+          <h1 class="mb-4">
+            <%= t('register.title') %>
+          </h1>
+        </div>
+        <form method="POST">
+          <div class="form-group">
+            <label for="userName" class="mt-2"><strong><%= t('register.userName') %></strong></label>
+            <input 
+              type="text" 
+              class="form-control mt-2" 
+              name="userName" 
+              required
+              placeholder="<%= t('register.userName_ph') %>"
+              value="<%= typeof data !=='undefined' ? data.userName : '' %>"
+            >
+            <% if (typeof errors !=='undefined' && errors.userName!==undefined) { %>
+              <p class="text-danger pt-2 mb-0">
+                <%= t(errors.userName) %>
+              </p>
+              <% } %>
+          </div>
+          <div class="form-group">
+            <label for="fullName" class="mt-2"><strong><%= t('register.fullName') %></strong></label>
+            <input 
+              type="text" 
+              class="form-control mt-2" 
+              name="fullName" 
+              required
+              placeholder="<%= t('register.fullName_ph') %>"
+              value="<%= typeof data !=='undefined' ? data.fullName : '' %>"
+            >
+            <% if (typeof errors !=='undefined' && errors.fullName!==undefined) { %>
+              <p class="text-danger pt-2 mb-0">
+                <%= t(errors.fullName) %>
+              </p>
+              <% } %>
+          </div>
+          <div class="form-group">
+            <label for="email" class="mt-2"><strong><%= t('register.email') %></strong></label>
+            <input 
+              type="text" 
+              class="form-control mt-2" 
+              name="email" 
+              required
+              placeholder="<%= t('register.email_ph') %>"
+              value="<%= typeof data !=='undefined' ? data.email : '' %>"
+            >
+            <% if (typeof errors !=='undefined' && errors.email!==undefined) { %>
+              <p class="text-danger pt-2 mb-0">
+                <%= t(errors.email) %>
+              </p>
+              <% } %>
+          </div>
+          <div class="form-group">
+            <label for="password" class="mt-2"><strong><%= t('register.password') %></strong></label>
+            <input 
+              type="password" 
+              class="form-control mt-2" 
+              name="password" 
+              required
+              placeholder="<%= t('register.password_ph') %>"
+              value="<%= typeof data !=='undefined' ? data.password : '' %>"
+            >
+            <% if (typeof errors !=='undefined' && errors.password!==undefined) { %>
+              <p class="text-danger pt-2 mb-0">
+                <%= t(errors.password) %>
+              </p>
+              <% } %>
+          </div>
+          <button type="submit" class="btn btn-primary registerBtn mt-4">
+            <strong><%= t('register.registerBtn') %></strong>
+          </button>
+        </form>
+        <div class="d-flex flex-column align-items-center mt-3">
+          <p><%= t('register.signInMessage') %> <a href="/auth/sign-in"><%= t('register.signIn') %></a></p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

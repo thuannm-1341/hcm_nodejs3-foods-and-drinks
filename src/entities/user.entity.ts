@@ -7,13 +7,17 @@ import { BaseEntity } from './base.entity';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {
-  @Column({ name: 'user_name', length: EntityPropertyLength.MEDIUM })
+  @Column({
+    name: 'user_name',
+    length: EntityPropertyLength.MEDIUM,
+    unique: true,
+  })
   userName: string;
 
-  @Column({ length: EntityPropertyLength.SMALL })
+  @Column({ length: EntityPropertyLength.LARGE })
   password: string;
 
-  @Column({ length: EntityPropertyLength.MEDIUM })
+  @Column({ length: EntityPropertyLength.MEDIUM, unique: true })
   email: string;
 
   @Column({ type: 'enum', enum: Gender, default: Gender.MALE })

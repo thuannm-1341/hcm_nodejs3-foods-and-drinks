@@ -3,3 +3,7 @@ export * from './entityPropertyLength';
 export * from './payment';
 export * from './feedback';
 export * from './order';
+export * from './error';
+export * from './role';
+export * from './system';
+export * from './register';
