@@ -7,6 +7,7 @@ import { validate } from 'class-validator';
 import { handleError } from '../commons/utils';
 import { UserService } from '../services/user.service';
 import { UserEntity } from '../entities/user.entity';
+import { LoginDto } from '../commons/dtos/login.dto';
 
 export class AuthController {
   private readonly authService: AuthService;
@@ -37,6 +38,32 @@ export class AuthController {
         return res.render('auth/register', {errors: registerResult, data});
       }
       const accessToken = this.authService.createJwt(registerResult);
+      res.cookie("token", accessToken, { httpOnly: true });
+      res.redirect('/');
+    },
+  );
+
+  public loginGet = asyncHandler(
+    async (req: Request, res: Response) => {
+      res.render('auth/login');
+      return;
+    },
+  );
+
+  public loginPost = asyncHandler(
+    async (req: Request, res: Response) => {
+      const loginDto = plainToClass(LoginDto, req.body);
+      const rawErrors = await validate(loginDto);
+      const data = {...req.body};
+      if( rawErrors.length > 0 ){
+        const errors = handleError(rawErrors, req, res);
+        return res.render('auth/login', {errors, data});
+      }
+      const loginResult = await this.userService.userLogin(loginDto);
+      if(!(loginResult instanceof UserEntity)){
+        return res.render('auth/login', {errors: loginResult, data});
+      }
+      const accessToken = this.authService.createJwt(loginResult);
       res.cookie("token", accessToken, { httpOnly: true });
       res.redirect('/');
     },

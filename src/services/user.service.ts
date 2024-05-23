@@ -4,6 +4,7 @@ import { UserEntity } from '../entities/user.entity';
 import { AppDataSource } from '../config/ormConfig';
 import { Error } from '../constants';
 import bcryptjs from 'bcryptjs';
+import { LoginDto } from '../commons/dtos/login.dto';
 
 export class UserService {
   private readonly userRepository: Repository<UserEntity>;
@@ -41,5 +42,24 @@ export class UserService {
       password: hashedPassword,
     });
     return await this.userRepository.save(newUser);
+  }
+
+  public async userLogin(loginDto: LoginDto): Promise<string | UserEntity> {
+    //check duplicate userName
+    const user = await this.userRepository.findOne({
+      where: [
+        { userName: loginDto.userName },
+        { email: loginDto.userName },
+      ],
+    });
+    if (user===null){
+      return Error.INVALID_CREDENTIAL;
+    }
+    const isMatch = 
+      await bcryptjs.compare(loginDto.password, user.password);
+    if (!isMatch) {
+      return Error.INVALID_CREDENTIAL;
+    }
+    return user;
   }
 }

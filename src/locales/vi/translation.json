@@ -1,10 +1,28 @@
 {
+  "header": {
+    "homePage": "Thực đơn",
+    "deals": "Khuyến mãi",
+    "stores": "Cửa hàng",
+    "vietnamese": "Vietnamese",
+    "english": "English"
+  },
+  "language": {
+    "english": "English",
+    "vietnamese": "Vietnamese"
+  },
   "login": {
-    "title": "Đăng nhập"
+    "title": "Đăng nhập",
+    "userName": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "loginBtn": "Đăng nhập",
+    "register": "Đăng ký",
+    "forgotPassword": "Quên mật khẩu",
+    "registerMessage": "Bạn chưa có tài khoản?"
   },
   "error": {
     "password": {
-      "minLength": "Mật khẩu có độ dài tối thiểu là 4"
+      "minLength": "Mật khẩu có độ dài tối thiểu là 4",
+      "notMatch": "Mật khẩu không khớp"
     },
     "email": {
       "notEmail": "Vui lòng nhập đúng định dạng email",
@@ -16,7 +34,11 @@
     "userName": {
       "minLength": "Độ dài của tên đăng nhập tối thiểu là 4",
       "duplicate": "Tên tài khoản bị trùng"
-    }
+    },
+    "user": {
+      "notFound": "Không tìm thấy người dùng"
+    },
+    "invalidCredential": "Thông tin đăng nhập không hợp lệ"
   },
   "register": {
     "title": "Tạo tài khoản mới",

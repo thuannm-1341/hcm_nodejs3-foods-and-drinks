@@ -4,3 +4,22 @@
   padding: 0;
   list-style: none;
 }
+
+.main-header {
+  background-color: #fff;
+  border-bottom: 1px solid #000;
+}
+
+.header-logo {
+  height: 80px;
+  width: auto;
+}
+
+.header-height{
+  height: 106px;
+}
+
+.header-icon{
+  height: 40px;
+  width: auto;
+}
