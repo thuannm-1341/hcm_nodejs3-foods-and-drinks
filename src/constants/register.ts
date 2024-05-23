@@ -1,0 +1,1 @@
+export const REGISTER_FIELD_MIN_LENGTH = 4;

@@ -1,0 +1,36 @@
+{
+  "login": {
+    "title": "Login"
+  },
+  "error": {
+    "password": {
+      "minLength": "Password min length is 4"
+    },
+    "email": {
+      "notEmail": "Please enter the correct email format",
+      "duplicate": "Email is duplicate"
+    },
+    "fullName": {
+      "minLength": "Full Name min length is 4"
+    },
+    "userName": {
+      "minLength": "UserName min length is 4",
+      "duplicate": "UserName is duplicate"
+    }
+  },
+  "register": {
+    "title": "CREATE YOUR ACCOUNT",
+    "userName": "UserName",
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "registerBtn": "Register",
+    "signIn": "Sign In",
+    "signInMessage": "Already have an account?",
+    "forgot-password": "Forgot password",
+    "userName_ph": "Fill in your username",
+    "fullName_ph": "Fill in your full name",
+    "password_ph": "Fill in your password",
+    "email_ph": "Fill in your email"
+  }
+}
