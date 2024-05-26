@@ -1,0 +1,94 @@
+/* External CSS File */
+.card {
+  height: 520px;
+  overflow: hidden;
+  padding: .5rem;
+  border-radius:.25rem;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+}
+
+.card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  font-size: 1.25rem;
+  margin-bottom:.5rem;
+  transition: max-width 0.3s ease-in-out;
+    /* Smooth transition for expanding content */
+}
+
+.card-price {
+  font-size: 1.25rem;
+  color: red;
+  margin-right: 0.5rem;
+  margin-bottom: 0;
+}
+
+.card-old-price {
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0;
+  color: gray;
+  text-decoration: line-through;
+}
+
+.star {
+  color: yellow;
+  margin-bottom: 0;
+}
+
+.card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  margin-bottom: 0;
+  transition: max-width 0.3s ease-in-out;
+    /* Smooth transition for expanding content */
+}
+
+.addToCartBtn {
+  background-color: #E2002B !important;
+  border-color: #E2002B !important;
+  color: white !important;
+  width: 100%;
+}
+
+.btn:hover {
+  color: #fff;
+}
+
+.input-text:focus {
+  box-shadow: 0px 0px 0px;
+  border-color: red;
+  outline: 0px;
+}
+
+.form-control {
+  border: 1px solid red;
+}
+
+.search-icon {
+  width: 30px;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.card a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}

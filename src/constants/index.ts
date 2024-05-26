@@ -7,3 +7,4 @@ export * from './error';
 export * from './role';
 export * from './system';
 export * from './register';
+export * from './product';

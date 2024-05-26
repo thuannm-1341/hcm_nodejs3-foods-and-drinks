@@ -1,4 +1,13 @@
 {
+  "home": {
+    "title": "Home",
+    "addToCartBtn": "Add to cart",
+    "newProduct": "New products",
+    "discount": "Discount",
+    "search": {
+      "placeHolder": "What are you looking for?"
+    }
+  },
   "header": {
     "homePage": "Menu",
     "deals": "Hot deals",

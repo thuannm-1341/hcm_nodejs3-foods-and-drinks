@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= t('home.title') %>
+  </title>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/home.css" />
+  <link rel="stylesheet" href="/stylesheets/register.css" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+</head>
+
+<body>
+  <%- include('../layouts/users/header') -%>
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control input-text" placeholder="<%=t('home.search.placeHolder')%>"
+              aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-lg" type="button"><img src="/images/search-icon.png" class="search-icon" alt="search icon"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="mb-4">
+        <%= t('home.newProduct') %>
+      </h3>
+      <div class="row g-4">
+        <% newProduct.forEach((product)=> { %>
+          <div class="col-md-3">
+            <div class="card">
+              <a href="/products/detail/<%= product.id %>">
+                <img src="<%= product.image %>" class="card-img-top" alt="Product Image">
+              </a>
+              <div class="card-body">
+                <a href="/products/detail/<%= product.id %>">
+                  <h5 class="card-title">
+                    <%= product.name %>
+                  </h5>
+                </a>
+                <div class="d-flex justify-content-left mb-2">
+                  <p class="card-price">
+                    <%= product.currentPrice %>₫
+                  </p>
+                  <% if(product.basePrice!==product.currentPrice) { %>
+                    <p class="card-old-price">
+                      <%= product.basePrice %>₫
+                    </p>
+                    <% } %>
+                </div>
+                <p class="star">
+                  <% for(let k=0; k < product.averageRating; k++) { %>
+                    ★
+                    <% } %>
+                </p>
+                <p class="card-text">
+                  <%= product.description %>
+                </p>
+              </div>
+              <button type="submit" class="btn btn-primary addToCartBtn">
+                <strong>
+                  <%= t('home.addToCartBtn') %>
+                </strong>
+              </button>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+      <h3 class="my-4">
+        <%= t('home.discount') %>
+      </h3>
+      <div class="row g-4">
+        <% discountProduct.forEach((product)=> { %>
+          <div class="col-md-3">
+            <div class="card">
+              <a href="/products/detail/<%= product.id %>">
+                <img src="<%= product.image %>" class="card-img-top" alt="Product Image">
+              </a>
+              <div class="card-body">
+                <a href="/products/detail/<%= product.id %>">
+                  <h5 class="card-title">
+                    <%= product.name %>
+                  </h5>
+                </a>
+                <div class="d-flex justify-content-left mb-2">
+                  <p class="card-price">
+                    <%= product.currentPrice %>₫
+                  </p>
+                  <% if(product.basePrice!==product.currentPrice) { %>
+                    <p class="card-old-price">
+                      <%= product.basePrice %>₫
+                    </p>
+                    <% } %>
+                </div>
+                <p class="star">
+                  <% for(let k=0; k < product.averageRating; k++) { %>
+                    ★
+                    <% } %>
+                </p>
+                <p class="card-text">
+                  <%= product.description %>
+                </p>
+              </div>
+              <button type="submit" class="btn btn-primary addToCartBtn">
+                <strong>
+                  <%= t('home.addToCartBtn') %>
+                </strong>
+              </button>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+      <% data.forEach((item)=> { %>
+        <h3 class="my-4">
+          <%= item.category %>
+        </h3>
+        <div class="row g-4">
+          <% item.products.forEach((product)=> { %>
+            <div class="col-md-3">
+              <div class="card">
+                <a href="/products/detail/<%= product.id %>">
+                  <img src="<%= product.image %>" class="card-img-top" alt="Product Image">
+                </a>
+                <div class="card-body">
+                  <a href="/products/detail/<%= product.id %>">
+                    <h5 class="card-title">
+                      <%= product.name %>
+                    </h5>
+                  </a>
+                  <div class="d-flex justify-content-left mb-2">
+                    <p class="card-price">
+                      <%= product.currentPrice %>₫
+                    </p>
+                    <% if(product.basePrice!==product.currentPrice) { %>
+                      <p class="card-old-price">
+                        <%= product.basePrice %>₫
+                      </p>
+                      <% } %>
+                  </div>
+                  <p class="star">
+                    <% for(let k=0; k < product.averageRating; k++) { %>
+                      ★
+                      <% } %>
+                  </p>
+                  <p class="card-text">
+                    <%= product.description %>
+                  </p>
+                </div>
+                <button type="submit" class="btn btn-primary addToCartBtn">
+                  <strong>
+                    <%= t('home.addToCartBtn') %>
+                  </strong>
+                </button>
+              </div>
+            </div>
+            <% }) %>
+        </div>
+        <% }) %>
+    </div>
+</body>
+
+</html>

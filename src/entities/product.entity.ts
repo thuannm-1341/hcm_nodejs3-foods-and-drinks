@@ -9,13 +9,16 @@ import { OrderProductEntity } from './orderProduct.entity';
 @Entity('product')
 export class ProductEntity extends BaseEntity {
   @Column({ length: EntityPropertyLength.MEDIUM })
+  name: string;
+
+  @Column({ length: EntityPropertyLength.LARGE })
   image: string;
 
   @Column({ name: 'base_price', default: 0 })
   basePrice: number;
 
   @Column({ name: 'current_price', default: 0 })
-  defaultPrice: number;
+  currentPrice: number;
 
   @Column({ length: EntityPropertyLength.EXTRA_LARGE })
   description: string;
