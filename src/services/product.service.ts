@@ -38,4 +38,13 @@ export class ProductService {
     }
     return result;
   }
+
+  public async getProductDetail(id: number): Promise<ProductEntity | null> {
+    return await this.productRepository.findOne({
+      where: {
+        id: id,
+      },
+      relations: ['categories'],
+    });
+  }
 }

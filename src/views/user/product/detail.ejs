@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= product.name %>
+  </title>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/product-detail.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+</head>
+
+<body>
+  <%- include('../../layouts/users/header') -%>
+    <div class="container">
+      <div class="col-md-12">
+        <div class="breadcrumb">
+          <a href="/" class="breadcrumb-link">
+            <%=t('header.homePage') %>
+          </a>
+          <span>/</span>
+          <a href="#" class="breadcrumb-link">
+            <%=product.categories[0].name%>
+          </a>
+          <span>/</span>
+          <a href="#" class="breadcrumb-current-link">
+            <%=product.name%>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mt-4">
+          <img src="<%=product.image%>" class="img-fluid rounded mx-auto d-block" alt="product image">
+        </div>
+        <div class="col-md-6 mt-4">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title">
+                <%=product.name%>
+              </h2>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <p class="card-price">
+                  <%= product.currentPrice %>₫
+                </p>
+                <% if(product.basePrice!==product.currentPrice) { %>
+                  <p class="card-old-price">
+                    <%= product.basePrice %>₫
+                  </p>
+                  <% } %>
+              </div>
+              <div class="d-flex justify-content-start mb-2 star">
+                <% for(let k=0; k < product.averageRating; k++) { %>
+                  ★
+                  <% } %>
+              </div>
+              <p class="card-text">
+                <%= product.description %>
+              </p>
+              <button type="submit" class="btn btn-primary addToCartBtn">
+                <strong>
+                  <%= t('home.addToCartBtn') %>
+                </strong>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>

@@ -9,10 +9,9 @@
   </title>
   <script src="/scripts/slim.min.js"></script>
   <script src="/scripts/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/stylesheets/style.css" />
-  <link rel="stylesheet" href="/stylesheets/home.css" />
-  <link rel="stylesheet" href="/stylesheets/register.css" />
   <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/home.css" />
   <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
 </head>
 
@@ -22,7 +21,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="input-group mb-3">
-            <input type="text" class="form-control input-text" placeholder="<%=t('home.search.placeHolder')%>"
+            <input type="text" class="form-control input-text rounded" placeholder="<%=t('home.search.placeHolder')%>"
               aria-label="Recipient's username" aria-describedby="basic-addon2">
             <div class="input-group-append">
               <button class="btn btn-lg" type="button"><img src="/images/search-icon.png" class="search-icon" alt="search icon"></button>
@@ -37,11 +36,11 @@
         <% newProduct.forEach((product)=> { %>
           <div class="col-md-3">
             <div class="card">
-              <a href="/products/detail/<%= product.id %>">
+              <a href="/products/<%= product.id %>">
                 <img src="<%= product.image %>" class="card-img-top" alt="Product Image">
               </a>
               <div class="card-body">
-                <a href="/products/detail/<%= product.id %>">
+                <a href="/products/<%= product.id %>">
                   <h5 class="card-title">
                     <%= product.name %>
                   </h5>
@@ -81,11 +80,11 @@
         <% discountProduct.forEach((product)=> { %>
           <div class="col-md-3">
             <div class="card">
-              <a href="/products/detail/<%= product.id %>">
+              <a href="/products/<%= product.id %>">
                 <img src="<%= product.image %>" class="card-img-top" alt="Product Image">
               </a>
               <div class="card-body">
-                <a href="/products/detail/<%= product.id %>">
+                <a href="/products/<%= product.id %>">
                   <h5 class="card-title">
                     <%= product.name %>
                   </h5>
@@ -126,11 +125,11 @@
           <% item.products.forEach((product)=> { %>
             <div class="col-md-3">
               <div class="card">
-                <a href="/products/detail/<%= product.id %>">
+                <a href="/products/<%= product.id %>">
                   <img src="<%= product.image %>" class="card-img-top" alt="Product Image">
                 </a>
                 <div class="card-body">
-                  <a href="/products/detail/<%= product.id %>">
+                  <a href="/products/<%= product.id %>">
                     <h5 class="card-title">
                       <%= product.name %>
                     </h5>
