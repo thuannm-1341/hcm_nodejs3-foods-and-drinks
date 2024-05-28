@@ -16,7 +16,8 @@
 </head>
 
 <body>
-  <div class="container mt-5">
+  <%- include('../layouts/users/header') -%>
+  <div class="container">
     <div class="row">
       <div class="col-md-6">
         <img
@@ -99,7 +100,7 @@
           </button>
         </form>
         <div class="d-flex flex-column align-items-center mt-3">
-          <p><%= t('register.signInMessage') %> <a href="/auth/sign-in"><%= t('register.signIn') %></a></p>
+          <p><%= t('register.signInMessage') %> <a href="/auth/login"><%= t('register.signIn') %></a></p>
         </div>
         </div>
       </div>

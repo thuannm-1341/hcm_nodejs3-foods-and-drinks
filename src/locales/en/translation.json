@@ -1,10 +1,28 @@
 {
+  "header": {
+    "homePage": "Menu",
+    "deals": "Hot deals",
+    "stores": "Stores",
+    "vietnamese": "Tiếng Việt",
+    "english": "Tiếng Anh"
+  },
+  "language": {
+    "english": "Tiếng Anh",
+    "vietnamese": "Tiếng Việt"
+  },
   "login": {
-    "title": "Login"
+    "title": "Log In",
+    "userName": "UserName",
+    "password": "Password",
+    "loginBtn": "Log In",
+    "register": "Register",
+    "forgotPassword": "Forgot password",
+    "registerMessage": "Haven't got an account?"
   },
   "error": {
     "password": {
-      "minLength": "Password min length is 4"
+      "minLength": "Password min length is 4",
+      "notMatch": "Password not match"
     },
     "email": {
       "notEmail": "Please enter the correct email format",
@@ -16,7 +34,11 @@
     "userName": {
       "minLength": "UserName min length is 4",
       "duplicate": "UserName is duplicate"
-    }
+    },
+    "user": {
+      "notFound": "User not found"
+    },
+    "invalidCredential": "Invalid credentials"
   },
   "register": {
     "title": "CREATE YOUR ACCOUNT",

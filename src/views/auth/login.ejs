@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= t('login.title') %>
+  </title>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/register.css" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+</head>
+
+<body>
+  <%- include('../layouts/users/header') -%>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="/images/register.jpg" class="img-fluid rounded mx-auto d-block" alt="Logo">
+      </div>
+      <div class="col-md-6 d-flex flex-column justify-content-center">
+        <div class="d-flex flex-column align-items-center mt-3">
+          <h1 class="mb-4">
+            <%= t('login.title') %>
+          </h1>
+        </div>
+        <form method="POST">
+          <div class="form-group">
+            <label for="userName" class="mt-2"><strong>
+                <%= t('login.userName') %>
+              </strong></label>
+            <input type="text" class="form-control mt-2" name="userName" required
+              placeholder="<%= t('register.userName_ph') %>"
+              value="<%= typeof data !=='undefined' ? data.userName : '' %>">
+          </div>
+          <div class="form-group">
+            <label for="password" class="mt-2"><strong>
+                <%= t('login.password') %>
+              </strong></label>
+            <input type="password" class="form-control mt-2" name="password" required
+              placeholder="<%= t('register.password_ph') %>"
+              value="<%= typeof data !=='undefined' ? data.password : '' %>">
+          </div>
+          <% if (typeof errors !=='undefined') { %>
+            <p class="text-danger pt-2 mb-0">
+              <%= t(errors) %>
+            </p>
+            <% } %>
+          <button type="submit" class="btn btn-primary registerBtn mt-4">
+            <strong>
+              <%= t('login.loginBtn') %>
+            </strong>
+          </button>
+        </form>
+        <div class="d-flex flex-column align-items-center mt-3">
+          <a href="#">
+            <%= t('login.forgotPassword') %>
+          </a>
+          <p>
+            <%= t('login.registerMessage') %> <a href="/auth/register">
+                <%= t('login.register') %>
+              </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
