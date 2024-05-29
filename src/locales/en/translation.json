@@ -47,6 +47,9 @@
     "user": {
       "notFound": "User not found"
     },
+    "product": {
+      "notFound": "Product not found"
+    },
     "invalidCredential": "Invalid credentials"
   },
   "register": {
@@ -63,5 +66,30 @@
     "fullName_ph": "Fill in your full name",
     "password_ph": "Fill in your password",
     "email_ph": "Fill in your email"
+  },
+  "product": {
+    "search": "Search product",
+    "sortField": {
+      "createdAt": "Created at",
+      "currentPrice": "Price",
+      "averageRating": "Rating"
+    },
+    "sortOrder": {
+      "ASC": "Ascending",
+      "DESC": "Descending"
+    }
+  },
+  "title": {
+    "rating": "Rating",
+    "priceRange": "Price range",
+    "category": "Categories",
+    "sortField": "Sort fields",
+    "sortOrder": "Order",
+    "applyFilter": "Apply filter"
+  },
+  "page": {
+    "previous": "Previous",
+    "next": "Next",
+    "to": "To"
   }
 }

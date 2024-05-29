@@ -8,3 +8,5 @@ export * from './role';
 export * from './system';
 export * from './register';
 export * from './product';
+export * from './common';
+export * from './page';
