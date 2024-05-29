@@ -1,4 +1,13 @@
 {
+  "home": {
+    "title": "Trang chủ",
+    "addToCartBtn": "Thêm vào giỏ hàng",
+    "newProduct": "Sản phẩm mới",
+    "discount": "Khuyến mãi",
+    "search": {
+      "placeHolder": "Bạn cần tìm gì?"
+    }
+  },
   "header": {
     "homePage": "Thực đơn",
     "deals": "Khuyến mãi",
