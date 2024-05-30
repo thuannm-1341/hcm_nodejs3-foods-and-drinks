@@ -1,0 +1,52 @@
+.breadcrumb {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.breadcrumb-link {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.breadcrumb-current-link {
+  color: gray;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.breadcrumb-link:hover
+,.breadcrumb-current-link:hover{
+  color: red !important;
+}
+
+.breadcrumb span {
+  margin: 0 10px;
+}
+
+.card-price {
+  font-size: 1.25rem;
+  color: red;
+  margin-right: 0.5rem;
+  margin-bottom: 0;
+}
+
+.card-old-price {
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0;
+  color: gray;
+  text-decoration: line-through;
+}
+
+.star {
+  color: yellow !important;
+  margin-bottom: 0;
+}
+
+.addToCartBtn {
+  background-color: #E2002B !important;
+  border-color: #E2002B !important;
+  color: white !important;
+  width: 100%;
+}
