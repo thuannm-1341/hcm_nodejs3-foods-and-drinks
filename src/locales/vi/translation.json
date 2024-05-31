@@ -47,6 +47,9 @@
     "user": {
       "notFound": "Không tìm thấy người dùng"
     },
+    "product": {
+      "notFound": "Không tìm thấy sản phẩm"
+    },
     "invalidCredential": "Thông tin đăng nhập không hợp lệ"
   },
   "register": {
@@ -63,5 +66,30 @@
     "fullName_ph": "Điền tên đầy đủ của bạn",
     "password_ph": "Điền mật khẩu của bạn",
     "email_ph": "Điền email của bạn"
+  },
+  "product": {
+    "search": "Tìm sản phẩm",
+    "sortField": {
+      "createdAt": "Ngày tạo",
+      "currentPrice": "Giá",
+      "averageRating": "Đánh giá"
+    },
+    "sortOrder": {
+      "ASC": "Tăng dần",
+      "DESC": "Giảm dần"
+    }
+  },
+  "title": {
+    "rating": "Đánh giá",
+    "priceRange": "Khoảng giá",
+    "category": "Phân loại",
+    "sortField": "Sắp xếp theo",
+    "sortOrder": "Thứ tự",
+    "applyFilter": "Áp dụng bộ lọc"
+  },
+  "page": {
+    "previous": "Trang trước",
+    "next": "Trang kế",
+    "to": "Đến"
   }
 }

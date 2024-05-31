@@ -20,13 +20,15 @@
     <div class="container mt-4">
       <div class="row">
         <div class="col-md-12">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control input-text rounded" placeholder="<%=t('home.search.placeHolder')%>"
-              aria-label="Recipient's username" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-lg" type="button"><img src="/images/search-icon.png" class="search-icon" alt="search icon"></button>
+          <form action="/products/search" id="search-product-form" method="get" class="mb-4">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control rounded" placeholder="<%=t('home.search.placeHolder')%>" name="keyword">
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-lg" type="button"><img src="/images/search-icon.png" class="search-icon"
+                    alt="search icon"></button>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       <h3 class="mb-4">

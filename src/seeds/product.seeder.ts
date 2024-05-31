@@ -966,7 +966,7 @@ export default class ProductSeeder implements Seeder {
       {
         name: '7Up Lon',
         image:
-          'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI_CAN.jpg?v=41P1nL',
+          'https://static.kfcvietnam.com.vn/images/items/lg/7UP_CAN.jpg?v=4BJOe4',
         basePrice: 19000,
         currentPrice: 19000,
         description: '7Up Lon',

@@ -2,7 +2,11 @@ import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
 import { ProductService } from '../services/product.service';
 import { ProductEntity } from '../entities/product.entity';
-import { Error } from '../constants';
+import { Error, ProductSortField } from '../constants';
+import { plainToClass } from 'class-transformer';
+import { ProductPageOptions } from '../commons/dtos/productPageOptions.dto';
+import { validate } from 'class-validator';
+import { handleError } from '../commons/utils';
 
 export class ProductController {
   private readonly productService: ProductService;
@@ -41,4 +45,29 @@ export class ProductController {
     }
     return await this.productService.getProductDetail(id);
   };
+
+  public getUserProductPage = asyncHandler(
+    async (req: Request, res: Response) => {
+      const pageOptions = plainToClass(ProductPageOptions, req.query);
+      const rawErrors = await validate(pageOptions);
+      const categories = await this.productService.getAllCategories();
+      if( rawErrors.length > 0 ){
+        const errors = handleError(rawErrors, req, res);
+        return res.render('user/product/search', {
+          categories,
+          sortField: ProductSortField,
+          errors, 
+          query: pageOptions,
+        });
+      }
+      const productPage = await this.productService.getProductPage(pageOptions);
+      return res.render('user/product/search', {
+        categories,
+        sortField: ProductSortField,
+        products: productPage.data, 
+        meta: productPage.meta, 
+        query: pageOptions,
+      });
+    },
+  );
 }

@@ -1,4 +1,11 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+} from 'typeorm';
 import { EntityPropertyLength } from '../constants';
 import { CategoryEntity } from './category.entity';
 import { CartProductEntity } from './cartProduct.entity';
@@ -9,6 +16,7 @@ import { OrderProductEntity } from './orderProduct.entity';
 @Entity('product')
 export class ProductEntity extends BaseEntity {
   @Column({ length: EntityPropertyLength.MEDIUM })
+  @Index({ fulltext: true, parser: 'ngram' })
   name: string;
 
   @Column({ length: EntityPropertyLength.LARGE })
