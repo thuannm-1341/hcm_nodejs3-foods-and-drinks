@@ -66,7 +66,7 @@
                   <%= product.description %>
                 </p>
               </div>
-              <button type="submit" class="btn btn-primary addToCartBtn">
+              <button type="submit" class="btn btn-primary addToCartBtn" onclick="addToCart(event, '<%= product.id %>')">
                 <strong>
                   <%= t('home.addToCartBtn') %>
                 </strong>
@@ -110,7 +110,7 @@
                   <%= product.description %>
                 </p>
               </div>
-              <button type="submit" class="btn btn-primary addToCartBtn">
+              <button type="submit" class="btn btn-primary addToCartBtn" onclick="addToCart(event, '<%= product.id %>')">
                 <strong>
                   <%= t('home.addToCartBtn') %>
                 </strong>
@@ -155,7 +155,7 @@
                     <%= product.description %>
                   </p>
                 </div>
-                <button type="submit" class="btn btn-primary addToCartBtn">
+                <button type="submit" class="btn btn-primary addToCartBtn" onclick="addToCart(event, '<%= product.id %>')">
                   <strong>
                     <%= t('home.addToCartBtn') %>
                   </strong>
@@ -167,5 +167,7 @@
         <% }) %>
     </div>
 </body>
-
+<script src="/scripts/utils.js"></script>
+<script src="/scripts/sweetalert.min.js"></script>
+<script src="/scripts/cart.js"></script>
 </html>

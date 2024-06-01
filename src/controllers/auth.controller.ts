@@ -8,6 +8,7 @@ import { handleError } from '../commons/utils';
 import { UserService } from '../services/user.service';
 import { UserEntity } from '../entities/user.entity';
 import { LoginDto } from '../commons/dtos/login.dto';
+import { CustomSessionData } from '../interfaces/session.interface';
 
 export class AuthController {
   private readonly authService: AuthService;
@@ -37,8 +38,9 @@ export class AuthController {
       if(!(registerResult instanceof UserEntity)){
         return res.render('auth/register', {errors: registerResult, data});
       }
+      (req.session as CustomSessionData).user = registerResult;
       const accessToken = this.authService.createJwt(registerResult);
-      res.cookie("token", accessToken, { httpOnly: true });
+      res.cookie('token', accessToken);
       res.redirect('/');
     },
   );
@@ -63,9 +65,17 @@ export class AuthController {
       if(!(loginResult instanceof UserEntity)){
         return res.render('auth/login', {errors: loginResult, data});
       }
+      (req.session as CustomSessionData).user = loginResult;
       const accessToken = this.authService.createJwt(loginResult);
-      res.cookie("token", accessToken, { httpOnly: true });
+      res.cookie('token', accessToken);
       res.redirect('/');
     },
   );
+
+  public logout = asyncHandler(async (req: Request, res: Response) => {
+    res.clearCookie('token');
+    req.session.destroy(() => {
+      res.redirect('/auth/login');
+    });
+  });
 }

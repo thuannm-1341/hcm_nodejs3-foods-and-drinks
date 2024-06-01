@@ -7,7 +7,7 @@ export class AuthService {
   public createJwt(user: UserEntity): string {
     return jwt.sign({
         id: user.id,
-        role: Role.USER
+        role: Role.USER,
       },
       JWT_SECRET,
       {expiresIn: JWT_EXPIRE},

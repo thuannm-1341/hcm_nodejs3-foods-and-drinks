@@ -91,5 +91,11 @@
     "previous": "Trang trước",
     "next": "Trang kế",
     "to": "Đến"
+  },
+  "cart": {
+    "add": {
+      "success": "Thêm sản phẩm vào giỏ hàng thành công!",
+      "fail": "Thêm sản phẩm vào giỏ hàng thất bại!"
+    }
   }
 }
