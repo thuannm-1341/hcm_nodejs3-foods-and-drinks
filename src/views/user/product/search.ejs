@@ -20,7 +20,7 @@
     <div class="container mt-2">
       <form id="search-product-form" method="get" class="mb-4">
         <div class="row">
-          <div class="col-md-3"> <!-- Adjusted from col-md-2 to col-md-4 for more space -->
+          <div class="col-md-3">
             <div class="filter-card">
               <div class="filter-card-body">
                 <div class="col-md-12">
@@ -156,7 +156,7 @@
                           <%= product.description %>
                         </p>
                       </div>
-                      <button type="submit" class="btn btn-primary addToCartBtn">
+                      <button type="submit" class="btn btn-primary addToCartBtn" onclick="addToCart(event, '<%= product.id %>')">
                         <strong>
                           <%= t('home.addToCartBtn') %>
                         </strong>
@@ -205,5 +205,7 @@
       </form>
     </div>
 </body>
-
+<script src="/scripts/utils.js"></script>
+<script src="/scripts/sweetalert.min.js"></script>
+<script src="/scripts/cart.js"></script>
 </html>

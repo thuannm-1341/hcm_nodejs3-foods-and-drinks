@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= t('cart.title') %>
+  </title>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/cart.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+</head>
+
+<body>
+  <%- include('../layouts/users/header') -%>
+  <div class="container">
+    <div class="row text-center py-4">
+      <h1><%=t('cart.title')%></h1>
+    </div>
+    <div class="row">
+      <% if (products.length> 0) { %>
+      <div class="col-md-8 px-4"> 
+        <% products.forEach((item)=> { %>
+          <div class="row">
+            <div class="product-image col-md-3">
+              <a href="/products/<%= item.product.id %>">
+                <img src="<%= item.product.image %>" class="card-img-top" alt="Product Image">
+              </a>
+            </div>
+            <div class="product-info col-md-9">
+              <div class="row">
+                <div class="col-md-10">
+                  <h3>
+                    <%=item.product.name%>
+                  </h3>
+                </div>
+                <div class="col-md-2 text-end">
+                  <form action="/cart/update" method="POST">
+                    <input type="hidden" value="<%=item.id%>" name="id">
+                    <input type="hidden" value="0" name="quantity">
+                    <button type="submit" class="remove-product-btn"><img class="w-100 h-100" src="/images/x-icon.svg"></button>
+                  </form>
+                </div>
+              </div>
+              <% if(item.product.basePrice !== item.product.currentPrice) { %>
+                <p class="product-info-text">
+                  <%= item.product.currentPrice %>₫ <span class="product-old-price">(<%= item.product.basePrice %>₫)</span>
+                </p>
+              <% } else { %>
+                <p class="product-info-text">
+                  <%= item.product.currentPrice %>₫
+                </p>
+              <% } %>
+              <p class="product-info-text">
+                <%=item.product.description%>
+              </p>
+              <div class="row">
+                <div class="col-md-8">
+                  <form action="/cart/update" method="POST" data-product-id="<%=item.product.id%>">
+                    <div class="input-group">
+                      <button class="quantity-decrement update-cart-btn" data-action="-">-</button>
+                      <input type="hidden" value="<%=item.id%>" name="id">
+                      <input type="number" class="quantity-input text-center" size="2" min="0" max="50" step="1" value="<%=item.quantity%>" name="quantity">
+                      <button class="quantity-increment update-cart-btn" data-action="+">+</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-4 text-end">
+                  <h3>
+                    <%=item.quantity * item.product.currentPrice%>₫
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <hr class="solid">
+          </div>
+          <% }) %>
+      </div>
+      <div class="col-md-4">
+        <div class="order-card px-4 py-4">
+          <div class="row text-center">
+            <h2>
+              <%=t('cart.orderInfo')%>
+            </h2>
+          </div>
+          <hr class="solid">
+          <div class="row align-items-end">
+            <div class="col-md-6 justify-content-left">
+              <h4>
+                <%=t('cart.total')%>
+              </h4>
+            </div>
+            <div class="col-md-6 text-end">
+              <h2 class="total">
+                <%=totalValue%>₫
+              </h2>
+            </div>
+          </div>
+          <hr class="solid">
+          <button class="order-btn btn-lg">
+            <%=t('cart.placeOrder')%>
+          </button>
+          <div class="row text-center">
+            <a href="/">
+              <img src="/images/reply.svg">
+              <%=t('cart.buyMore')%>
+            </a>
+          </div>
+        </div>
+      </div>
+      <% } else { %>
+        <div class="w-100 h-100 align-items-center">
+          <div class="empty-card text-center">
+            <h2>
+              <%=t('cart.emptyCart')%>
+            </h2>
+            <a href="/">
+              <img src="/images/reply.svg">
+              <%=t('cart.buyMore')%>
+            </a>
+          </div>
+        </div>
+    <% } %>
+    </div>
+  </div>
+</body>
+<script src="/scripts/utils.js"></script>
+<script src="/scripts/sweetalert.min.js"></script>
+<script src="/scripts/cart.js"></script>
+</html>

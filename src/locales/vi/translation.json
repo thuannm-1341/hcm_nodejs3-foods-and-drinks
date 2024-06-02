@@ -96,6 +96,12 @@
     "add": {
       "success": "Thêm sản phẩm vào giỏ hàng thành công!",
       "fail": "Thêm sản phẩm vào giỏ hàng thất bại!"
-    }
+    },
+    "title": "Giỏ hàng",
+    "orderInfo": "Thông tin đơn hàng",
+    "total": "Tổng cộng",
+    "placeOrder": "Đặt hàng",
+    "buyMore": "Mua thêm sản phẩm khác",
+    "emptyCart": "Giỏ hàng của bạn đang trống!"
   }
 }
