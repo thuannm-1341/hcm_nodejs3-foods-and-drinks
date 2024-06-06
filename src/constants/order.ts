@@ -11,4 +11,9 @@ export enum OrderStatus {
   REJECTED = 'REJECTED',
 }
 
+export enum OrderSortField {
+  CREATED_AT = 'createdAt',
+  VALUE = 'total',
+}
+
 export const MIN_ADDRESS_LENGTH = 5;

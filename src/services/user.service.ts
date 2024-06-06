@@ -63,7 +63,7 @@ export class UserService {
     return user;
   }
 
-  public async findById(id: number): Promise<UserEntity | null> {
+  public async findById(id: number ): Promise<UserEntity | null> {
     return this.userRepository.findOne({where: {id: id}});
   }
 }

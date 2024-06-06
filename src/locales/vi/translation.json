@@ -94,7 +94,8 @@
     "sortField": "Sắp xếp theo",
     "sortOrder": "Thứ tự",
     "applyFilter": "Áp dụng bộ lọc",
-    "order": "Đặt hàng"
+    "order": "Đặt hàng",
+    "notFound": "Không tìm thấy trang này"
   },
   "page": {
     "previous": "Trang trước",
@@ -146,6 +147,47 @@
       "message": "Nội dung",
       "title": "Thông tin thanh toán",
       "orderId": "Mã đơn hàng"
+    },
+    "search": {
+      "order": "Thứ tự sắp xếp",
+      "ASC": "Tăng dần",
+      "DESC": "Giảm dần",
+      "take": "Số bản ghi",
+      "sortField": "Sắp xếp theo",
+      "createdAt": "Ngày tạo",
+      "total": "Giá trị đơn hàng",
+      "orderStatus": "Trạng thái đơn hàng",
+      "pending": "Chờ duyệt",
+      "approved": "Đã duyệt",
+      "ready": "Sẵn sàng",
+      "completed": "Hoàn thành",
+      "rejected": "Bị từ chối",
+      "paymentStatus": "Trạng thái thanh toán",
+      "complete": "Đã thanh toán",
+      "incomplete": "Chưa thanh toán",
+      "keyword": "Từ khóa",
+      "minValue": "Giá trị thấp nhất",
+      "maxValue": "Giá trị lớn nhất",
+      "filter": "Lọc",
+      "orderType": "Loại đơn hàng",
+      "delivery": "Giao tận nơi",
+      "pickup": "Nhận tại cửa hàng",
+      "address": "Địa chỉ"
+    }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "analytic": "Phân tích",
+      "store": "Quản lý cửa hàng",
+      "product": "Quản lý sản phẩm",
+      "order": "Quản lý đơn hàng",
+      "logout": "Đăng xuất",
+      "user": "Quản lý người dùng",
+      "default": "Trang quản trị viên"
+    },
+    "home": {
+      "logout": "Đăng xuất"
     }
   }
 }

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="/stylesheets/admin-layout.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+  <title>
+    <%= (typeof currentSite !='undefined' ) ? t(currentSite) : t('admin.nav.default') %>
+  </title>
+</head>
+
+<body>
+  <div class="d-flex" id="wrapper">
+    
+    <%- include('../../layouts/admin/sidebar') -%>
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <%- include('../../layouts/admin/top-navbar') -%>
+        <div class="container-fluid px-4">
+          <form id="filterForm" class="row g-3 mb-4" method="GET">
+            <div class="row g-3 mb-4">
+              <div class="col-md-2">
+                <label for="order" class="form-label">
+                  <%= t('order.search.order') %>
+                </label>
+                <select class="form-select" id="order" name="order">
+                  <option value="ASC" <%=(typeof query !=='undefined' && query.order==='ASC' ) ? 'selected' : '' %>>
+                    <%= t('order.search.ASC') %>
+                  </option>
+                  <option value="DESC" <%=(typeof query !=='undefined' && query.order==='DESC' ) ? 'selected' : '' %>>
+                    <%= t('order.search.DESC') %>
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label for="take" class="form-label">
+                  <%= t('order.search.take') %>
+                </label>
+                <input type="number" class="form-control" id="take" name="take" min="10" max="20"
+                  value="<%= typeof query !== 'undefined' ? query.take : '12' %>">
+              </div>
+              <div class="col-md-2">
+                <label for="sortField" class="form-label">
+                  <%= t('order.search.sortField') %>
+                </label>
+                <select class="form-select" id="sortField" name="sortField">
+                  <option value="createdAt" <%=(typeof query !=='undefined' && query.sortField==='createdAt' ) ? 'selected' : '' %>>
+                    <%= t('order.search.createdAt') %>
+                  </option>
+                  <option value="total" <%=(typeof query !=='undefined' && query.sortField==='total' ) ? 'selected' : '' %>>
+                    <%= t('order.search.total') %>
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label for="orderType" class="form-label">
+                  <%= t('order.search.orderType') %>
+                </label>
+                <select class="form-select" id="orderType" name="orderType">
+                  <% ['DELIVERY', 'PICKUP' ].forEach(function(status) { %>
+                    <option value="<%= status %>" <%=(typeof query !=='undefined' && query.orderType===status) ? 'selected' : '' %>>
+                      <%= t(`order.search.${status.toLowerCase()}`) %>
+                    </option>
+                    <% }); %>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label for="orderStatus" class="form-label">
+                  <%= t('order.search.orderStatus') %>
+                </label>
+                <select class="form-select" id="orderStatus" name="orderStatus">
+                  <% ['PENDING', 'APPROVED' , 'READY' , 'COMPLETED' , 'REJECTED' ].forEach(function(status) { %>
+                    <option value="<%= status %>" <%=(typeof query !=='undefined' && query.orderStatus===status) ? 'selected' : '' %>>
+                      <%= t(`order.search.${status.toLowerCase()}`) %>
+                    </option>
+                    <% }); %>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label for="paymentStatus" class="form-label">
+                  <%= t('order.search.paymentStatus') %>
+                </label>
+                <select class="form-select" id="paymentStatus" name="paymentStatus">
+                  <% ['COMPLETE', 'INCOMPLETE' ].forEach(function(status) { %>
+                    <option value="<%= status %>" <%=(typeof query !=='undefined' && query.paymentStatus===status) ? 'selected' : ''
+                      %>>
+                      <%= t(`order.search.${status.toLowerCase()}`) %>
+                    </option>
+                    <% }); %>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="minValue" class="form-label">
+                  <%= t('order.search.minValue') %>
+                </label>
+                <input type="number" class="form-control" id="minValue" name="minValue" min="0" value="<%=query.minValue%>">
+              </div>
+              <div class="col-md-3">
+                <label for="maxValue" class="form-label">
+                  <%= t('order.search.maxValue') %>
+                </label>
+                <input type="number" class="form-control" id="maxValue" name="maxValue" min="0" value="<%=query.maxValue%>">
+              </div>
+              <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">
+                  <%= t('order.search.filter') %>
+                </button>
+              </div>
+            </div>
+          
+            <div id="ordersTableContainer">
+              <% if (typeof orders !=='undefined' && orders.length> 0) { %>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col"><%= t('order.search.createdAt') %></th>
+                      <th scope="col"><%= t('order.search.orderType') %></th>
+                      <th scope="col"><%= t('order.search.orderStatus') %></th>
+                      <th scope="col"><%= t('order.search.paymentStatus') %></th>
+                      <th scope="col"><%= t('order.search.address') %></th>
+                      <th scope="col"><%= t('order.search.total') %></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% orders.forEach(function(order) { %>
+                      <tr>
+                        <td>
+                          <%= order.id %>
+                        </td>
+                        <td>
+                          <%= formatDate(order.createdAt) %>
+                        </td>
+                        <td>
+                          <%= order.orderType %>
+                        </td>
+                        <td>
+                          <%= order.status %>
+                        </td>
+                        <td>
+                          <%= order.paymentStatus %>
+                        </td>
+                        <td>
+                          <%= order.deliveryAddress %>
+                        </td>
+                        <td>
+                          <%= order.total %>
+                        </td>
+                      </tr>
+                      <% }); %>
+                  </tbody>
+                </table>
+              <% } %>
+            </div>
+            <div class="pagination d-flex justify-content-end">
+              <% if (meta.pageCount> 1) { %>
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <% if (meta.hasPreviousPage) { %>
+                      <li class="page-item">
+                        <button type="submit" class="page-link" name="page" value="<%= parseInt(meta.page) - 1 %>">
+                          <%=t('page.previous')%>
+                        </button>
+                      </li>
+                      <% } %>
+                        <% for (let i=1; i <=meta.pageCount; i++) { %>
+                          <li class="page-item <%= parseInt(meta.page) === i ? 'active' : '' %>">
+                            <button type="submit" class="page-link" name="page" value="<%= i %>">
+                              <%= i %>
+                            </button>
+                          </li>
+                          <% } %>
+                            <% if (meta.hasNextPage) { %>
+                              <li class="page-item">
+                                <button type="submit" class="page-link" name="page" value="<%= parseInt(meta.page) + 1 %>">
+                                  <%=t('page.next')%>
+                                </button>
+                              </li>
+                              <% } %>
+                  </ul>
+                </nav>
+                <% } %>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+  </div>
+  <% function formatDate(dateString) { %>
+    <% const date=new Date(dateString); %>
+      <% return date.toLocaleString(); %>
+        <% } %>
+  <script src="/scripts/jquery.min.js"></script>
+  <script src="/scripts/bootstrap.bundle.min.js"></script>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/admin-layout.js"></script>
+</body>
+
+</html>

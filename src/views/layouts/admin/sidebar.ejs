@@ -1,0 +1,35 @@
+<div class="bg-white" id="sidebar-wrapper">
+  <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom">
+    <i class="fas fa-user-shield me-2"></i>KFC Admin
+  </div>
+  <div class="list-group list-group-flush my-3">
+    <a href="/admin/home" class="list-group-item list-group-item-action bg-transparent <%= (typeof currentSite !== 'undefined' && currentSite === 'admin.nav.dashboard') ? ' primary-text ' : ' second-text '%> fw-bold">
+      <i class="fas fa-tachometer-alt me-2"></i>
+      <%=t('admin.nav.dashboard')%>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action bg-transparent <%= (typeof currentSite !== 'undefined' && currentSite === 'admin.nav.analytic') ? ' primary-text ' : ' second-text '%> fw-bold">
+      <i class="fas fa-chart-pie me-2"></i>
+      <%=t('admin.nav.analytic')%>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action bg-transparent <%= (typeof currentSite !== 'undefined' && currentSite === 'admin.nav.store') ? ' primary-text ' : ' second-text '%> fw-bold">
+      <i class="fas fa-store me-2"></i>
+      <%=t('admin.nav.store')%>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action bg-transparent <%= (typeof currentSite !== 'undefined' && currentSite === 'admin.nav.product') ? ' primary-text ' : ' second-text '%> fw-bold">
+      <i class="fas fa-box-open me-2"></i>
+      <%=t('admin.nav.product')%>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action bg-transparent <%= (typeof currentSite !== 'undefined' && currentSite === 'admin.nav.user') ? ' primary-text ' : ' second-text '%> fw-bold">
+      <i class="fas fa-users me-2"></i>
+      <%=t('admin.nav.user')%>
+    </a>
+    <a href="/admin/order" class="list-group-item list-group-item-action bg-transparent <%= (typeof currentSite !== 'undefined' && currentSite === 'admin.nav.order') ? ' primary-text ' : ' second-text '%> fw-bold">
+      <i class="fas fa-receipt me-2"></i>
+      <%=t('admin.nav.order')%>
+    </a>
+    <a href="/auth/logout" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+      <i class="fas fa-sign-out-alt me-2"></i>
+      <%=t('admin.nav.logout')%>
+    </a>
+  </div>
+</div>

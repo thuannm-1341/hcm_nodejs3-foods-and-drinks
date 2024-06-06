@@ -1,6 +1,6 @@
 import { IsEnum, IsOptional } from 'class-validator';
 import { Error, MIN_ADDRESS_LENGTH, OrderType, PaymentType } from '../../constants';
-import { IsValidOrderAddress, IsValidOrderId } from '../../decorators';
+import { IsValidOrderAddress, IsValidStoreId } from '../../decorators';
 
 export class CreateOrderDto {
   @IsEnum(OrderType, { message: Error.INVALID_ORDER_TYPE })
@@ -20,6 +20,6 @@ export class CreateOrderDto {
   note?: string;
 
   @IsOptional()
-  @IsValidOrderId({message: Error.STORE_NOT_FOUND})
+  @IsValidStoreId({message: Error.STORE_NOT_FOUND})
   storeId?: number;
 };

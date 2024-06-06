@@ -5,8 +5,10 @@ import {
 } from 'class-validator';
 import { StoreService } from '../services/store.service';
 import { OrderType } from '../constants';
+import { UserService } from '../services/user.service';
 
 const storeService = new StoreService();
+const userService = new UserService();
 
 export function GreaterThanOrEqual(
   min: number,
@@ -61,7 +63,7 @@ export function LessThanOrEqual(
           const [max] = args.constraints;
           if (typeof value === 'string') {
             if (value === '') return true;
-            return parseInt(value) >= max;
+            return parseInt(value) <= max;
           }
           return typeof value === 'number' && value <= max;
         },
@@ -102,18 +104,16 @@ export function IsValidOrderAddress(
   };
 }
 
-export function IsValidOrderId(validationOptions?: ValidationOptions) {
+export function IsValidStoreId(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
     registerDecorator({
-      name: 'isValidOrderId',
+      name: 'isValidStoreId',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
-      constraints: [], // Pass the max value as a constraint
+      constraints: [],
       validator: {
         async validate(value: any, args: ValidationArguments) {
-          // Allow undefined for optional properties
-          // Assert the type of args.object to Record<string, unknown>
           const typedObject = args.object as Record<string, unknown>;
           if (typedObject['orderType'] === OrderType.PICK_UP) {
             if (typedObject[propertyName] === undefined) {

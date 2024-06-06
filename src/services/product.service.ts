@@ -69,8 +69,10 @@ export class ProductService {
     
     // Handle filter
     if(categoryIds && categoryIds.length > 0) {
+      const categoryIdParams = 
+        Array.isArray(categoryIds)? categoryIds : [categoryIds];
       query.andWhere('category.id IN (:...categoryIds)', 
-        {categoryIds: categoryIds},
+        {categoryIds: categoryIdParams},
       );
     }
     if(minPrice) {

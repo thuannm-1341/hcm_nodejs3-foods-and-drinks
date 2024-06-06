@@ -9,13 +9,17 @@ import { UserService } from '../services/user.service';
 import { UserEntity } from '../entities/user.entity';
 import { LoginDto } from '../commons/dtos/login.dto';
 import { CustomSessionData } from '../interfaces/session.interface';
+import { AdminService } from '../services/admin.service';
+import { AdminEntity } from '../entities/admin.entity';
 
 export class AuthController {
   private readonly authService: AuthService;
   private readonly userService: UserService;
+  private readonly adminService: AdminService;
   constructor(){
     this.authService = new AuthService();
     this.userService = new UserService();
+    this.adminService = new AdminService();
   }
   
   public registerGet = asyncHandler(
@@ -41,7 +45,7 @@ export class AuthController {
       (req.session as CustomSessionData).user = registerResult;
       const accessToken = this.authService.createJwt(registerResult);
       res.cookie('token', accessToken);
-      res.redirect('/');
+      res.redirect('/home');
     },
   );
 
@@ -68,7 +72,34 @@ export class AuthController {
       (req.session as CustomSessionData).user = loginResult;
       const accessToken = this.authService.createJwt(loginResult);
       res.cookie('token', accessToken);
-      res.redirect('/');
+      res.redirect('/home');
+    },
+  );
+
+  public adminLoginGet = asyncHandler(
+    async (req: Request, res: Response) => {
+      res.render('auth/admin-login');
+      return;
+    },
+  );
+
+  public adminLoginPost = asyncHandler(
+    async (req: Request, res: Response) => {
+      const loginDto = plainToClass(LoginDto, req.body);
+      const rawErrors = await validate(loginDto);
+      const data = {...req.body};
+      if( rawErrors.length > 0 ){
+        const errors = handleError(rawErrors, req, res);
+        return res.render('auth/admin-login', {errors, data});
+      }
+      const loginResult = await this.adminService.adminLogin(loginDto);
+      if(!(loginResult instanceof AdminEntity)){
+        return res.render('auth/admin-login', {errors: loginResult, data});
+      }
+      (req.session as CustomSessionData).admin = loginResult;
+      const accessToken = this.authService.createJwt(loginResult);
+      res.cookie('token', accessToken);
+      res.redirect('/admin/home');
     },
   );
 
