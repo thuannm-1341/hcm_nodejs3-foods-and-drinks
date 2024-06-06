@@ -10,3 +10,5 @@ export enum OrderStatus {
   COMPLETED = 'COMPLETED',
   REJECTED = 'REJECTED',
 }
+
+export const MIN_ADDRESS_LENGTH = 5;

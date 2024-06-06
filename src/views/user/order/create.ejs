@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= t('title.order') %>
+  </title>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/create-order.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+</head>
+
+<body>
+  <%- include('../../layouts/users/header') -%>
+    <div class="container">
+      <div class="row text-center py-2">
+        <h1>
+          <%=t('title.order')%>
+        </h1>
+      </div>
+      <div class="row shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="col-md-6 p-4">
+          <div class="row px-0 py-0">
+            <div class="col-md-8 px-0">
+              <h3><%=t('order.yourOrder')%></h3>
+              <p>
+                <%=t('order.reviewItem')%>
+              </p>
+            </div>
+            <div class="col-md-4 text-end px-0">
+              <p>
+                <%= products.length.toString() + ' ' + t('order.item')%>
+              </p>
+            </div>
+          </div>
+          <% products.forEach((item)=> { %>
+            <div class="row bg-light rounded my-3 py-2 px-2 align-items-center">
+              <div class="product-image col-md-3 align-items-center">
+                <a href="/products/<%= item.product.id %>">
+                  <img src="<%= item.product.image %>" class="card-img-top" alt="Product Image">
+                </a>
+              </div>
+              <div class="product-info col-md-9">
+                <h3>
+                  <%=item.product.name%>
+                </h3>
+                <p>
+                  <%=item.product.description%>
+                </p>
+                <div class="row mb-0">
+                  <p class="col-md-8">
+                    <%= item.product.currentPrice %>₫
+                  </p>
+                  <p class="col-md-4 text-end">
+                    <%= 'x' + item.quantity %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+        </div>
+
+        <div class="col-md-6 p-4">
+          <form action="" method="POST">
+            <div>
+              <h3>
+                <%=t('order.info')%>
+              </h3>
+              <div>
+                <label 
+                id="order-type" 
+                data="<%=typeof data!=='undefined' ? data.orderType : undefined %>"
+                >
+                  <%=t('order.orderType')%>:
+                </label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="orderType" id="orderType1" value="DELIVERY" <%=(typeof data!=='undefined' &&
+                    data.orderType==='DELIVERY' ) ? 'checked' : '' %> required>
+                  <label class="form-check-label" for="orderType1">
+                    <%=t('order.deliveryType')%>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="orderType" id="orderType2" value="PICKUP" <%=(typeof data!=='undefined' &&
+                    data.orderType==='PICKUP' ) ? 'checked' : '' %> required>
+                  <label class="form-check-label" for="orderType2">
+                    <%=t('order.pickUpType')%>
+                  </label>
+                </div>
+              </div>
+              <div id="deliveryAddressContainer">
+                <label>
+                  <%=t('order.delivery')%>:
+                </label>
+                <input type="text" class="form-control" name="address" placeholder="<%= t('order.address_ph') %>"
+                  value="<%= typeof data !=='undefined' ? data.address : user.address %>">
+                <% if (typeof errors !=='undefined' && errors.address!==undefined) { %>
+                  <p class="text-danger pt-2 mb-0">
+                    <%= t(errors.address) %>
+                  </p>
+                  <% } %>
+              </div>
+              <div id="storeSelectionContainer">
+                <label>
+                  <%=t('order.store')%>:
+                </label>
+                <select class="form-select" aria-label="Default select example" name="storeId">
+                  <% stores.forEach(function(store) { %>
+                    <option value="<%=store.id%>" <%=(typeof data!='undefined' && data.storeId===store.id ) ? 'checked' : '' %> >
+                      <%=store.name + ' (' + store.address + ')' %>
+                    </option>
+                    <% }); %>
+                </select>
+              </div>
+              <div id="noteContainer">
+                <label>
+                  <%=t('order.note')%>:
+                </label>
+                <input type="text" class="form-control" name="note" placeholder="<%= t('order.note_ph') %>"
+                  value="<%= typeof data !=='undefined' ? data.note : user.note %>">
+              </div>
+            </div>
+            <hr>
+            <div>
+              <h3>
+                <%=t('order.paymentInfo')%>
+              </h3>
+              <div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p>
+                      <%=t('order.subTotal')%>
+                    </p>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <p id="order-subtotal" data="<%=orderSubtotal%>">
+                      <%=orderSubtotal%>₫
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p>
+                      <%=t('order.shippingFee')%>
+                    </p>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <p id="shipping-fee" data="<%=shippingFee%>">
+                      <%=shippingFee%>₫
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <h4>
+                      <%=t('order.total')%>
+                    </h4>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <h4 id="orderTotal">
+                      <%=orderSubtotal + shippingFee%>₫
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 payment-option-card payment-option" data-option="COD">
+                  <input type="radio" class="btn-check" name="paymentType" id="option1" autocomplete="off" checked value="COD">
+                  <label class="btn btn-secondary w-100" for="option1">
+                    <%=t('order.paymentType.COD')%>
+                  </label>
+                </div>
+                <div class="col-md-6 payment-option-card payment-option" data-option="VNPAY">
+                  <input type="radio" class="btn-check" name="paymentType" id="option2" autocomplete="off" value="VNPAY">
+                  <label class="btn btn-secondary w-100" for="option2">
+                    <%=t('order.paymentType.VNPAY')%>
+                      <img src="/images/vnpay-icon.png" alt="VNPAY">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-buttons">
+              <button type="submit" class="btn btn-primary btn-custom"><strong>
+                  <%= t('order.placeOrderBtn') %>
+                </strong></button>
+              <a href="/cart" class="btn btn-danger btn-custom"><strong>
+                  <%= t('order.cancel') %>
+                </strong></a>
+            </div>
+          </form>      
+        </div>
+      </div>
+    </div>
+</body>
+<script src="/scripts/jquery.min.js"></script>
+<script src="/scripts/bootstrap.bundle.min.js"></script>
+<script src="/scripts/slim.min.js"></script>
+<script src="/scripts/header.js"></script>
+<script src="/scripts/utils.js"></script>
+<script src="/scripts/sweetalert.min.js"></script>
+<script src="/scripts/create-order.js"></script>
+</html>

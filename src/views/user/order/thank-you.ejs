@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= t('title.order') %>
+  </title>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+</head>
+
+<body>
+  <%- include('../../layouts/users/header') -%>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 text-center">
+          <h1>
+            <%= t('order.thankYou') %>
+          </h1>
+          <img src="/images/order-success.png" class="w-15" alt="image">
+          <p>
+            <%= t('order.successMessage') %>
+          </p>
+          <% if (typeof paymentInfo !=='undefined' && Object.keys(paymentInfo).length> 0) { %>
+            <hr>
+            <h4>
+              <%= t('order.payment.title') %>
+            </h4>
+            <div class="row">
+              <div class="col-md-6 text-end">
+                <p>
+                  <%= t('order.payment.orderId') %>:
+                </p>
+              </div>
+              <div class="col-md-6 text-start">
+                <p>
+                  <%= paymentInfo.vnp_TxnRef %>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 text-end">
+                <p>
+                  <%= t('order.payment.bankCode') %>:
+                </p>
+              </div>
+              <div class="col-md-6 text-start">
+                <p>
+                  <%= paymentInfo.vnp_BankCode %>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 text-end">
+                <p>
+                  <%= t('order.payment.amount') %>:
+                </p>
+              </div>
+              <div class="col-md-6 text-start">
+                <p>
+                  <%= parseInt(paymentInfo.vnp_Amount) / 100 %>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 text-end">
+                <p>
+                  <%= t('order.payment.message') %>:
+                </p>
+              </div>
+              <div class="col-md-6 text-start">
+                <p>
+                  <%= paymentInfo.vnp_OrderInfo %>
+                </p>
+              </div>
+            </div>
+            <hr>
+          <% } %>
+          <a href="/">
+            <button class="btn btn-danger w-50">
+              <%= t('order.continueShopping') %>
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+</body>
+<script src="/scripts/jquery.min.js"></script>
+<script src="/scripts/bootstrap.bundle.min.js"></script>
+<script src="/scripts/slim.min.js"></script>
+<script src="/scripts/header.js"></script>
+</html>

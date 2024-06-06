@@ -13,7 +13,9 @@
     "deals": "Khuyến mãi",
     "stores": "Cửa hàng",
     "vietnamese": "Vietnamese",
-    "english": "English"
+    "english": "English",
+    "profile": "Hồ sơ",
+    "logout": "Đăng xuất"
   },
   "language": {
     "english": "English",
@@ -50,7 +52,13 @@
     "product": {
       "notFound": "Không tìm thấy sản phẩm"
     },
-    "invalidCredential": "Thông tin đăng nhập không hợp lệ"
+    "invalidCredential": "Thông tin đăng nhập không hợp lệ",
+    "address": {
+      "minLength": "Độ dài địa chỉ tối thiểu là 5"
+    },
+    "store": {
+      "notFound": "Không tìm thấy cửa hàng"
+    }
   },
   "register": {
     "title": "Tạo tài khoản mới",
@@ -85,7 +93,8 @@
     "category": "Phân loại",
     "sortField": "Sắp xếp theo",
     "sortOrder": "Thứ tự",
-    "applyFilter": "Áp dụng bộ lọc"
+    "applyFilter": "Áp dụng bộ lọc",
+    "order": "Đặt hàng"
   },
   "page": {
     "previous": "Trang trước",
@@ -103,5 +112,40 @@
     "placeOrder": "Đặt hàng",
     "buyMore": "Mua thêm sản phẩm khác",
     "emptyCart": "Giỏ hàng của bạn đang trống!"
+  },
+  "order": {
+    "yourOrder": "Đơn hàng của bạn",
+    "reviewItem": "Kiểm tra danh sách sản phẩm",
+    "item": "sản phẩm",
+    "delivery": "Giao đến",
+    "deliveryType": "Giao tận nơi",
+    "pickUpType": "Nhận tại cửa hàng",
+    "address_ph": "Nhập vào địa chỉ giao hàng",
+    "note": "Ghi chú",
+    "note_ph": "Thêm ghi chú nếu cần thiết",
+    "store": "Cửa hàng",
+    "info": "Thông tin đơn hàng",
+    "orderType": "Loại đơn hàng",
+    "paymentInfo": "Thông tin thanh toán",
+    "paymentMethod": "Phương thức thanh toán",
+    "subTotal": "Phí thức ăn",
+    "shippingFee": "Phí giao hàng",
+    "total": "Tổng cộng",
+    "placeOrderBtn": "Đặt hàng",
+    "paymentType": {
+      "VNPAY": "VNPAY",
+      "COD": "Thanh toán khi nhận hàng"
+    },
+    "cancel": "Hủy",
+    "thankYou": "Cảm ơn!",
+    "successMessage": "Đơn hàng của bạn đã được đặt. Một email với thông tin chi tiết đơn hàng sẽ sớm được gửi đến bạn.",
+    "continueShopping": "Tiếp tục mua sắm",
+    "payment": {
+      "bankCode": "Mã ngân hàng",
+      "amount": "Số tiền",
+      "message": "Nội dung",
+      "title": "Thông tin thanh toán",
+      "orderId": "Mã đơn hàng"
+    }
   }
 }

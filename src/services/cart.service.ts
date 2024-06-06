@@ -78,4 +78,13 @@ export class CartService {
       }
     }
   }
+
+  public async removeProductFromCart(
+    user: UserEntity,
+  ): Promise<void> {
+    await this.cartRepository
+    .createQueryBuilder('cartProduct')
+    .leftJoinAndSelect('cartProduct.user', 'user')
+    .delete().where('user.id = :userId', {userId: user.id}).execute();
+  }
 }
