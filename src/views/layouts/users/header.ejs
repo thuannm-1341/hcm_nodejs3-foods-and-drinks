@@ -29,9 +29,15 @@
           <div class="nav-item"><a class="nav-link nav-text" href="?locale=vi"><%=t('header.vietnamese')%></a></div>
           <div class="nav-item ms-3"><a class="nav-link nav-text" href="?locale=en"><%=t('header.english')%></a></div>
           <div class="ms-3">
-            <a class="nav-link" href="#">
-              <img src="/images/sample-avatar.png" alt="Avatar" class="header-icon">
-            </a>
+            <% if(typeof user !== 'undefined') { %>
+              <a class="nav-link" href="#">
+                <img src="<%=user.avatar%>" alt="Avatar" class="header-avatar rounded-circle">
+              </a>
+              <% } else { %>
+              <a class="nav-link" href="/auth/login">
+                <img src="/images/sample-avatar.png" alt="Avatar" class="header-avatar rounded-circle">
+              </a>
+            <% } %>
           </div>
           <div class="ms-3">
             <a class="nav-link" href="#">

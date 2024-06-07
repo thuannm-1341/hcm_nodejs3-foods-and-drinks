@@ -13,7 +13,7 @@ export class UserService {
   }
 
   public async registerUser(registerDto: RegisterDto): Promise<any | UserEntity> {
-    let errors: any = {};
+    const errors: any = {};
     //check duplicate userName
     const findByUserNameResult = await this.userRepository.findOne({
       where: {
@@ -61,5 +61,9 @@ export class UserService {
       return Error.INVALID_CREDENTIAL;
     }
     return user;
+  }
+
+  public async findById(id: number): Promise<UserEntity | null> {
+    return this.userRepository.findOne({where: {id: id}});
   }
 }

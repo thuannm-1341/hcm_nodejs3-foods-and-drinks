@@ -91,5 +91,11 @@
     "previous": "Previous",
     "next": "Next",
     "to": "To"
+  },
+  "cart": {
+    "add": {
+      "success": "Add product to cart successfully!",
+      "fail": "Add product to cart failed!"
+    }
   }
 }
