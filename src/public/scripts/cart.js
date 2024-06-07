@@ -50,3 +50,44 @@ const addToCart = (e, id) => {
     });
   }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const forms = document.querySelectorAll('form[data-product-id]');
+    
+    forms.forEach(form => {
+        const decrementButton = form.querySelector('.quantity-decrement');
+        const incrementButton = form.querySelector('.quantity-increment');
+        const quantityInput = form.querySelector('.quantity-input');
+        
+        decrementButton.addEventListener('click', function() {
+            event.preventDefault();
+            let currentQuantity = parseInt(quantityInput.value);
+            if (currentQuantity >= 1) {
+                quantityInput.value = currentQuantity - 1;
+            }
+            form.submit();
+        });
+        
+        incrementButton.addEventListener('click', function() {
+            event.preventDefault();
+            let currentQuantity = parseInt(quantityInput.value);
+            quantityInput.value = currentQuantity + 1;
+            if(quantityInput.value >= 51) {
+              quantityInput.value = 50;
+              swal.fire({
+                title: locale === 'en'? 'Error' : 'Lỗi',
+                text: locale === 'en'? 'Maximum product quantity is 50' : 'Số lượng tối đa của một món ăn trong giỏ hàng là 50',
+                icon: 'error',
+                confirmButtonText: 'OK',
+              });
+            } else {
+              form.submit();
+            }
+        });
+
+        quantityInput.addEventListener('change', function() {
+            event.preventDefault();
+            form.submit();
+        });
+    });
+});

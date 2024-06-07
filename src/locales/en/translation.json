@@ -96,6 +96,12 @@
     "add": {
       "success": "Add product to cart successfully!",
       "fail": "Add product to cart failed!"
-    }
+    },
+    "title": "Cart",
+    "orderInfo": "Order Information",
+    "total": "Total",
+    "placeOrder": "Place Order",
+    "buyMore": "Buy other products",
+    "emptyCart": "Your cart is empty!"
   }
 }
