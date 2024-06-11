@@ -4,6 +4,6 @@ export enum PaymentStatus {
 }
 
 export enum PaymentType {
-  ONLINE = 'ONLINE',
+  VNPAY = 'VNPAY',
   COD = 'COD',
 }

@@ -13,7 +13,9 @@
     "deals": "Hot deals",
     "stores": "Stores",
     "vietnamese": "Tiếng Việt",
-    "english": "Tiếng Anh"
+    "english": "Tiếng Anh",
+    "profile": "Profile",
+    "logout": "Logout"
   },
   "language": {
     "english": "Tiếng Anh",
@@ -50,7 +52,13 @@
     "product": {
       "notFound": "Product not found"
     },
-    "invalidCredential": "Invalid credentials"
+    "invalidCredential": "Invalid credentials",
+    "address": {
+      "minLength": "Address min length is 5"
+    },
+    "store": {
+      "notFound": "Store not found"
+    }
   },
   "register": {
     "title": "CREATE YOUR ACCOUNT",
@@ -85,7 +93,8 @@
     "category": "Categories",
     "sortField": "Sort fields",
     "sortOrder": "Order",
-    "applyFilter": "Apply filter"
+    "applyFilter": "Apply filter",
+    "order": "Order"
   },
   "page": {
     "previous": "Previous",
@@ -103,5 +112,40 @@
     "placeOrder": "Place Order",
     "buyMore": "Buy other products",
     "emptyCart": "Your cart is empty!"
+  },
+  "order": {
+    "yourOrder": "Your order",
+    "reviewItem": "Review your items",
+    "item": "items",
+    "delivery": "Delivery to",
+    "deliveryType": "Delivery type",
+    "pickUpType": "Pick up",
+    "address_ph": "Type in your address",
+    "note": "Note",
+    "note_ph": "Add note if needed",
+    "store": "Store",
+    "info": "Order information",
+    "orderType": "Order type",
+    "paymentInfo": "Payment information",
+    "paymentMethod": "Payment method",
+    "subTotal": "Subtotal",
+    "shippingFee": "Shipping fee",
+    "total": "Total",
+    "placeOrderBtn": "Place order",
+    "paymentType": {
+      "VNPAY": "VNPAY",
+      "COD": "COD"
+    },
+    "cancel": "Cancel",
+    "thankYou": "Thank you!",
+    "successMessage": "Your order has been placed. An email with your order detail will be sent to you shortly.",
+    "continueShopping": "Continue shopping",
+    "payment": {
+      "bankCode": "Bank code",
+      "amount": "Amount",
+      "message": "Message",
+      "title": "Payment information",
+      "orderId": "Order ID"
+    }
   }
 }

@@ -1,0 +1,41 @@
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-custom {
+  width: 48%;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.payment-option img {
+  height: 24px;
+  margin-left: 10px;
+}
+
+.payment-option-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+
+.payment-option-card:hover {
+  border-color: #007bff;
+}
+
+.payment-option-card input[type="radio"] {
+  display: none;
+}
+
+.payment-option-card.active {
+  border-color: #007bff;
+  background-color: #e7f1ff;
+}

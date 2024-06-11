@@ -1,51 +1,62 @@
-<header>
-  <div class="header-height"></div>
-  <div class="main-header fixed-top">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8">
-          <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="/">
-                <img src="/images/kfc-logo.jpg" alt="KFC Logo" class="header-logo">
+<header class="p-3 mb-3 border-bottom">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a class="navbar-brand" href="/">
+        <img src="/images/kfc-logo.jpg" alt="KFC Logo" class="header-logo">
+      </a>
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-mb-0">
+        <li>
+          <a class="nav-link px-2 nav-text" href="/">
+            <%=t('header.homePage')%>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link px-2 nav-text" href="#">
+            <%=t('header.deals')%>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link px-2 nav-text" href="#">
+            <%=t('header.stores')%>
+          </a>
+        </li>
+      </ul>
+      <a class="nav-link px-2 nav-text locale-link" data-locale="vi" href="#">
+        <%= t('header.vietnamese') %>
+      </a>
+      <a class="nav-link px-2 nav-text locale-link" data-locale="en" href="#">
+        <%= t('header.english') %>
+      </a>
+      <% if(typeof user !=='undefined' ) { %>
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown">
+            <img src="<%= typeof user !== 'undefined' && user.avatar ? user.avatar : '/images/sample-avatar.png' %>" alt="Avatar"
+              class="header-avatar rounded-circle">
+            <span class="nav-text">
+              <%= user.userName %>
+            </span>
+          </a>
+          <ul class="dropdown-menu mt-2">
+            <li>
+              <a href="#" class="dropdown-item">
+                <%=t('header.profile')%>
               </a>
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item">
-                    <a class="nav-link nav-text" href="/"><%=t('header.homePage')%></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link nav-text" href="#"><%=t('header.deals')%></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link nav-text" href="#"><%=t('header.stores')%></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
+            </li>
+            <li>
+              <a href="/auth/logout" class="dropdown-item">
+                <%=t('header.logout')%>
+              </a>
+            </li>
+          </ul>
         </div>
-        <div class="col-md-4 d-flex align-items-center justify-content-end">
-          <div class="nav-item"><a class="nav-link nav-text" href="?locale=vi"><%=t('header.vietnamese')%></a></div>
-          <div class="nav-item ms-3"><a class="nav-link nav-text" href="?locale=en"><%=t('header.english')%></a></div>
-          <div class="ms-3">
-            <% if(typeof user !== 'undefined') { %>
-              <a class="nav-link" href="#">
-                <img src="<%=user.avatar%>" alt="Avatar" class="header-avatar rounded-circle">
-              </a>
-              <% } else { %>
-              <a class="nav-link" href="/auth/login">
-                <img src="/images/sample-avatar.png" alt="Avatar" class="header-avatar rounded-circle">
-              </a>
-            <% } %>
-          </div>
-          <div class="ms-3">
-            <a class="nav-link" href="/cart">
-              <img src="/images/cart.png" alt="Cart" class="header-icon">
-            </a>
-          </div>
-        </div>
-      </div>
+        <% } else { %>
+          <a class="navbar-brand" href="/auth/login">
+            <img src="/images/sample-avatar.png" alt="Avatar" class="header-avatar rounded-circle">
+          </a>
+          <% } %>
+      <a class="navbar-brand" href="/cart">
+        <img src="/images/cart.png" alt="Cart" class="header-icon">
+      </a>
     </div>
   </div>
 </header>

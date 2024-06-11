@@ -26,11 +26,10 @@ export class OrderEntity extends BaseEntity {
 
   @Column({
     name: 'payment_type',
-    type: 'enum',
-    enum: PaymentType,
+    length: EntityPropertyLength.SMALL,
     default: PaymentType.COD,
   })
-  paymentType: PaymentType;
+  paymentType: string;
 
   @Column({
     name: 'delivery_address',
