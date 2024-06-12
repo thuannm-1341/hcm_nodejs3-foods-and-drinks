@@ -64,7 +64,9 @@ export class OrderService {
         const store = await this.storeService.findOneById(createOptions.storeId);
         if(store) {
           newOrder.store = store;
-          newOrder.deliveryAddress = store.address;
+          if(createOptions.orderType === OrderType.PICK_UP){
+            newOrder.deliveryAddress = store.address;
+          }
         }
       }
 

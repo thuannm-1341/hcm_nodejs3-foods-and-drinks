@@ -5,7 +5,7 @@ import { CustomSessionData } from '../../interfaces/session.interface';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import { OrderPageOptions } from '../../commons/dtos/orderPageOptions.dto';
-import { handleError } from '../../commons/utils';
+import { formatDate, handleError } from '../../commons/utils';
 import { AdminNavBar } from '../../constants/admin';
 
 export class AdminOrderController {
@@ -35,6 +35,7 @@ export class AdminOrderController {
         orders: orderPage.data, 
         meta: orderPage.meta, 
         query: pageOptions,
+        formatDate,
       });
     },
   );

@@ -3,26 +3,21 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  <link rel="stylesheet" href="/stylesheets/admin-layout.css" />
-  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
   <title>
-    <%= (typeof currentSite !='undefined' ) ? t(currentSite) : t('admin.nav.default') %>
+    <%= t('title.order') %>
   </title>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
 </head>
 
-<body>
-  <div class="d-flex" id="wrapper">
-    
-    <%- include('../../layouts/admin/sidebar') -%>
-
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-        <%- include('../../layouts/admin/top-navbar') -%>
-        <div class="container-fluid px-4">
+<body class="secondary-bg">
+  <%- include('../../layouts/users/header') -%>
+    <div class="container mt-0">
+      <%- include('../../layouts/users/top-navbar') -%>
+      <div id="content">
+        <div class="container-fluid bg-white mt-4">
           <form id="filterForm" class="row g-3 mb-4" method="GET">
             <div class="row g-3 mb-4">
               <div class="col-md-2">
@@ -50,7 +45,8 @@
                   <%= t('order.search.sortField') %>
                 </label>
                 <select class="form-select" id="sortField" name="sortField">
-                  <option value="createdAt" <%=(typeof query !=='undefined' && query.sortField==='createdAt' ) ? 'selected' : '' %>>
+                  <option value="createdAt" <%=(typeof query !=='undefined' && query.sortField==='createdAt' ) ? 'selected' : ''
+                    %>>
                     <%= t('order.search.createdAt') %>
                   </option>
                   <option value="total" <%=(typeof query !=='undefined' && query.sortField==='total' ) ? 'selected' : '' %>>
@@ -64,7 +60,8 @@
                 </label>
                 <select class="form-select" id="orderType" name="orderType">
                   <% ['DELIVERY', 'PICKUP' ].forEach(function(status) { %>
-                    <option value="<%= status %>" <%=(typeof query !=='undefined' && query.orderType===status) ? 'selected' : '' %>>
+                    <option value="<%= status %>" <%=(typeof query !=='undefined' && query.orderType===status) ? 'selected' : ''
+                      %>>
                       <%= t(`order.search.${status.toLowerCase()}`) %>
                     </option>
                     <% }); %>
@@ -76,7 +73,8 @@
                 </label>
                 <select class="form-select" id="orderStatus" name="orderStatus">
                   <% ['PENDING', 'APPROVED' , 'READY' , 'COMPLETED' , 'REJECTED' ].forEach(function(status) { %>
-                    <option value="<%= status %>" <%=(typeof query !=='undefined' && query.orderStatus===status) ? 'selected' : '' %>>
+                    <option value="<%= status %>" <%=(typeof query !=='undefined' && query.orderStatus===status) ? 'selected'
+                      : '' %>>
                       <%= t(`order.search.${status.toLowerCase()}`) %>
                     </option>
                     <% }); %>
@@ -88,8 +86,8 @@
                 </label>
                 <select class="form-select" id="paymentStatus" name="paymentStatus">
                   <% ['COMPLETE', 'INCOMPLETE' ].forEach(function(status) { %>
-                    <option value="<%= status %>" <%=(typeof query !=='undefined' && query.paymentStatus===status) ? 'selected' : ''
-                      %>>
+                    <option value="<%= status %>" <%=(typeof query !=='undefined' && query.paymentStatus===status) ? 'selected'
+                      : '' %>>
                       <%= t(`order.search.${status.toLowerCase()}`) %>
                     </option>
                     <% }); %>
@@ -113,19 +111,31 @@
                 </button>
               </div>
             </div>
-          
+        
             <div id="ordersTableContainer">
               <% if (typeof orders !=='undefined' && orders.length> 0) { %>
                 <table class="table">
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
-                      <th scope="col"><%= t('order.search.createdAt') %></th>
-                      <th scope="col"><%= t('order.search.orderType') %></th>
-                      <th scope="col"><%= t('order.search.orderStatus') %></th>
-                      <th scope="col"><%= t('order.search.paymentStatus') %></th>
-                      <th scope="col"><%= t('order.search.address') %></th>
-                      <th scope="col"><%= t('order.search.total') %></th>
+                      <th scope="col">
+                        <%= t('order.search.createdAt') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.orderType') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.orderStatus') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.paymentStatus') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.address') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.total') %>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -156,7 +166,7 @@
                       <% }); %>
                   </tbody>
                 </table>
-              <% } %>
+                <% } %>
             </div>
             <div class="pagination d-flex justify-content-end">
               <% if (meta.pageCount> 1) { %>
@@ -190,12 +200,11 @@
           </form>
         </div>
       </div>
-      <!-- /#page-content-wrapper -->
-  </div>
-  <script src="/scripts/jquery.min.js"></script>
-  <script src="/scripts/bootstrap.bundle.min.js"></script>
-  <script src="/scripts/slim.min.js"></script>
-  <script src="/scripts/admin-layout.js"></script>
+    </div>
 </body>
+<script src="/scripts/jquery.min.js"></script>
+<script src="/scripts/bootstrap.bundle.min.js"></script>
+<script src="/scripts/slim.min.js"></script>
+<script src="/scripts/header.js"></script>
 
 </html>

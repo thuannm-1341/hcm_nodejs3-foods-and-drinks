@@ -1,5 +1,5 @@
 import { PaymentStatus } from './../../constants/payment';
-import { IsEnum, IsNumberString, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional } from 'class-validator';
 import { PageOptionsDto } from './pageOptions.dto';
 import { 
   OrderSortField,
@@ -34,7 +34,7 @@ export class OrderPageOptions extends PageOptionsDto {
   paymentStatus?: PaymentStatus[];
 
   @IsOptional()
-  @IsNumberString()
+  @IsNumber()
   userId?: number;
 
   @IsOptional()

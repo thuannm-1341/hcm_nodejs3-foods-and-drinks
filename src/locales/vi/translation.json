@@ -94,8 +94,10 @@
     "sortField": "Sắp xếp theo",
     "sortOrder": "Thứ tự",
     "applyFilter": "Áp dụng bộ lọc",
-    "order": "Đặt hàng",
-    "notFound": "Không tìm thấy trang này"
+    "createOrder": "Đặt hàng",
+    "order": "Đơn hàng",
+    "notFound": "Không tìm thấy trang này",
+    "profile": "Hồ sơ"
   },
   "page": {
     "previous": "Trang trước",
@@ -188,6 +190,12 @@
     },
     "home": {
       "logout": "Đăng xuất"
+    }
+  },
+  "user": {
+    "nav": {
+      "profile": "Hồ sơ",
+      "order": "Đơn hàng"
     }
   }
 }

@@ -1,0 +1,18 @@
+<div class="d-flex align-items-center red-bg px-2 py-2">
+  <img src="<%= typeof user !== 'undefined' && user.avatar ? user.avatar : '/images/sample-avatar.png' %>" alt="Avatar"
+    class="rounded-circle mr-3" style="width: 80px; height: 80px;">
+  <h1 class="h4 mb-0 px-2">
+    <%=user.userName%>
+  </h1>
+</div>
+
+<nav id="user-nav-bar" class="nav nav-pills flex-column flex-sm-row mb-2 bg-white">
+  <a href="/user/profile" class="flex-sm-fill text-sm-center py-2 <%= currentSite === 'user.nav.profile' ? ' active ' : '' %>">
+    <i class="fas fa-user"></i>
+    <%=t('user.nav.profile')%>
+  </a>
+  <a href="/user/order" class="flex-sm-fill text-sm-center py-2 <%= currentSite === 'user.nav.order' ? ' active ' : '' %>">
+    <i class="fas fa-box"></i>
+    <%=t('user.nav.order')%>
+  </a>
+</nav>

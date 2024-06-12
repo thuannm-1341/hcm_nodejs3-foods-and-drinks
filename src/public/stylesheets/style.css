@@ -33,3 +33,45 @@
 .nav-text:hover {
   color: red;
 }
+
+:root {
+  --main-bg-color: #212121;
+  /* Black */
+  --main-text-color: #D32F2F;
+  /* Red */
+  --second-text-color: #CCCCCC;
+  /* Light Gray */
+  --second-bg-color: #F5F5F5;
+  /* Background Light Gray */
+}
+
+.primary-text {
+  color: var(--main-text-color) !important;
+}
+
+.second-text {
+  color: var(--second-text-color) !important;
+}
+
+.primary-bg {
+  background-color: var(--main-bg-color);
+}
+
+.secondary-bg {
+  background-color: var(--second-bg-color);
+}
+
+.red-bg {
+  background-color: #D32F2F;
+}
+
+#user-nav-bar a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+}
+
+#user-nav-bar .active {
+  color: var(--main-text-color) !important;
+  border-bottom: 2px solid var(--main-text-color);
+}

@@ -94,8 +94,10 @@
     "sortField": "Sort fields",
     "sortOrder": "Order",
     "applyFilter": "Apply filter",
+    "createOrder": "Create order",
     "order": "Order",
-    "notFound": "Page not found"
+    "notFound": "Page not found",
+    "profile": "Profile"
   },
   "page": {
     "previous": "Previous",
@@ -188,6 +190,12 @@
     },
     "home": {
       "logout": "Logout"
+    }
+  },
+  "user": {
+    "nav": {
+      "profile": "Profile",
+      "order": "Order"
     }
   }
 }
