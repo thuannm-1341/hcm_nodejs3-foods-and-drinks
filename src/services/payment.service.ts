@@ -33,4 +33,13 @@ export class PaymentService {
       return Error.SAVE_PAYMENT_FAILED;
     }
   }
+
+  public async findOrderPayment(orderId: number | string)
+  : Promise<PaymentEntity | null>{
+    orderId = typeof orderId === 'number' ? orderId : parseInt(orderId);
+    const query = this.paymentRepository.createQueryBuilder('payment')
+    .leftJoin('payment.order', 'order').
+    where('order.id = :orderId', {orderId: orderId});
+    return query.getOne();
+  }
 }

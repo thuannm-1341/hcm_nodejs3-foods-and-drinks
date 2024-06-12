@@ -75,7 +75,7 @@
                   <%= t('order.search.orderStatus') %>
                 </label>
                 <select class="form-select" id="orderStatus" name="orderStatus">
-                  <% ['PENDING', 'APPROVED' , 'READY' , 'COMPLETED' , 'REJECTED' ].forEach(function(status) { %>
+                  <% ['PENDING', 'APPROVED' , 'READY' , 'COMPLETED' , 'REJECTED', 'CANCELED' ].forEach(function(status) { %>
                     <option value="<%= status %>" <%=(typeof query !=='undefined' && query.orderStatus===status) ? 'selected' : '' %>>
                       <%= t(`order.search.${status.toLowerCase()}`) %>
                     </option>

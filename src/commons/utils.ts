@@ -54,5 +54,5 @@ export function sortObject(obj: CreateVNPayTransactionDto) {
 
 export function formatDate(dateString: string) {
   const date = new Date(dateString);
-  return date.toLocaleDateString();
+  return date.toLocaleString();
 }
