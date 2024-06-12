@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= t('title.orderDetail') %>
+  </title>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="/stylesheets/admin-layout.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+</head>
+
+<body>
+  <div class="d-flex" id="wrapper">
+    <%- include('../../layouts/admin/sidebar') -%>
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <%- include('../../layouts/admin/top-navbar') -%>
+          <div class="container-fluid px-4">
+            <div id="content">
+              <div class="container-fluid bg-white p-4 rounded">
+                <div id="title" class="mb-2 border-bottom">
+                  <h2 class="mb-1" id="order-id" data="<%=order.id%>">
+                    <%= t('order.detail.order') + ' #' + order.id %>
+                  </h2>
+                  <p class="text-muted">
+                    <%= formatDate(order.createdAt) %>
+                  </p>
+                </div>
+                <div class="mb-2">
+                  <div id="general-information" class="border-bottom">
+                    <div class="row">
+                      <h4 class="mt-2">
+                        <%= t('order.label.generalInformation') %>
+                      </h4>
+                      <div class="col-md-6">
+                        <p>
+                          <strong>
+                            <%= t('order.label.orderType') %>:
+                          </strong>
+                          <%= order.orderType %>
+                        </p>
+                      </div>
+                      <div class="col-md-6">
+                        <p>
+                          <strong>
+                            <%= t('order.label.orderStatus') %>:
+                          </strong>
+                          <%= order.status %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p>
+                          <strong>
+                            <%= t('order.label.paymentType') %>:
+                          </strong>
+                          <%= order.paymentType %>
+                        </p>
+                      </div>
+                      <div class="col-md-6">
+                        <p>
+                          <strong>
+                            <%= t('order.label.paymentStatus') %>:
+                          </strong>
+                          <%= order.paymentStatus %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p>
+                          <strong>
+                            <%= t('order.label.user') %>:
+                          </strong>
+                          <%= order.user.fullName %>
+                        </p>
+                      </div>
+                      <div class="col-md-6">
+                        <p>
+                          <strong>
+                            <%= t('order.label.userEmail') %>:
+                          </strong>
+                          <%= order.user.email %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <p>
+                          <strong>
+                            <%= t('order.label.address') %>:
+                          </strong>
+                          <%= order.deliveryAddress %>
+                        </p>
+                      </div>
+                    </div>
+                    <% if(order.note) { %>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p>
+                            <strong>
+                              <%= t('order.label.note') %>:
+                            </strong>
+                            <%= order.note %>
+                          </p>
+                        </div>
+                      </div>
+                      <% } %>
+                  </div>
+                  <div id="store-information" class="border-bottom">
+                    <% if(order.orderType === 'DELIVERY' && order.status === 'PENDING') { %>
+                      <div class="row  mt-2">
+                        <div class="col-md-8">
+                          <h4>
+                            <%= t('order.label.storeInformation') %>
+                          </h4>
+                        </div>
+                        <div class="col-md-4 text-end">
+                          <button type="button" class="btn btn-primary" onclick="openStoreModal('<%= order.id %>')">
+                            <%= t('order.button.chooseOtherStore') %>
+                          </button>
+                        </div>
+                      </div>
+                    <% } else { %>
+                      <h4 class="mt-2">
+                        <%= t('order.label.storeInformation') %>
+                      </h4>
+                    <% } %>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p><strong>
+                            <%= t('order.label.storeName') %>:
+                          </strong>
+                          <%= order.store.name %>
+                        </p>
+                      </div>
+                      <div class="col-md-6">
+                        <p><strong>
+                            <%= t('order.label.storePhone') %>:
+                          </strong>
+                          <%= order.store.phoneNumber %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p><strong>
+                            <%= t('order.label.storeAddress') %>:
+                          </strong>
+                          <%= order.store.address %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <% if(payment !==null) { %>
+                    <div id="payment-information" class="border-bottom">
+                      <h4 class="mt-2">
+                        <%= t('order.label.paymentInformation') %>
+                      </h4>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>
+                              <%= t('order.label.bankCode') %>:
+                            </strong>
+                            <%= payment.bankCode %>
+                          </p>
+                        </div>
+                        <div class="col-md-6">
+                          <p><strong>
+                              <%= t('order.label.transactionCode') %>:
+                            </strong>
+                            <%= payment.transactionCode %>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>
+                              <%= t('order.label.paymentAmount') %>:
+                            </strong>
+                            <%= payment.amount %>₫
+                          </p>
+                        </div>
+                        <div class="col-md-6">
+                          <p><strong>
+                              <%= t('order.label.transactionTime') %>:
+                            </strong>
+                            <%= formatDate(payment.transactionTime) %>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p><strong>
+                              <%= t('order.label.paymentMessage') %>:
+                            </strong>
+                            <%= payment.message %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <% } %>
+                </div>
+                <div id="order-item" class="mb-2">
+                  <h3>
+                    <%= t('order.label.orderItem') %>
+                  </h3>
+                  <table class="table table-striped">
+                    <tbody>
+                      <% order.orderProducts.forEach((item)=> { %>
+                        <tr>
+                          <td class="product-image align-middle">
+                            <a href="/products/<%= item.product.id %>">
+                              <img src="<%= item.product.image %>" class="img-fluid rounded" alt="Product Image"
+                                style="max-width: 100px;">
+                            </a>
+                          </td>
+                          <td class="product-name align-middle">
+                            <a href="/products/<%= item.product.id %>" class="text-decoration-none text-dark">
+                              <h5 class="mb-1">
+                                <%= item.product.name %>
+                              </h5>
+                            </a>
+                          </td>
+                          <td class="product-description align-middle">
+                            <p class="mb-0 text-muted">
+                              <%= item.product.description %>
+                            </p>
+                          </td>
+                          <td class="product-price align-middle">
+                            <%= item.price %>₫
+                          </td>
+                          <td class="product-quantity text-end align-middle">
+                            <%= 'x' + item.quantity %>
+                          </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+                <div id="order-value" class="mt-2">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p><strong>
+                          <%= t('order.subTotal') %>:
+                        </strong></p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                      <p id="order-subtotal">
+                        <%= order.total - order.shippingFee %>₫
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p><strong>
+                          <%= t('order.shippingFee') %>:
+                        </strong></p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                      <p id="shipping-fee">
+                        <%= order.shippingFee %>₫
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h4><strong>
+                          <%= t('order.total') %>:
+                        </strong></h4>
+                    </div>
+                    <div class="col-md-6 text-end">
+                      <h4 id="orderTotal">
+                        <%= order.total %>₫
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6"></div>
+                  <% switch (order.status) { 
+                    case 'PENDING' : %>
+                      <div class="col">
+                        <button class="btn btn-primary w-100" onclick="updateOrderStatus(event, '<%= order.id %>', 'APPROVED')">
+                          <strong>
+                            <%= t('order.button.approve') %>
+                          </strong>
+                        </button>
+                      </div>
+                      <div class="col">
+                        <button class="btn btn-danger w-100" onclick="openRejectModal('<%= order.id %>')">
+                          <strong>
+                            <%= t('order.button.reject') %>
+                          </strong>
+                        </button>
+                      </div>
+                    <% break; 
+                    case 'APPROVED' : %>
+                      <div class="col text-end">
+                        <button class="btn btn-primary w-50" onclick="updateOrderStatus(event, '<%= order.id %>', 'READY')">
+                          <strong>
+                            <%= t('order.button.ready') %>
+                          </strong>
+                        </button>
+                      </div>
+                    <% break; 
+                    case 'READY' : %>
+                      <div class="col text-end">
+                        <button class="btn btn-primary w-50" onclick="updateOrderStatus(event, '<%= order.id %>', 'COMPLETED')">
+                          <strong>
+                            <%= t('order.button.complete') %>
+                          </strong>
+                        </button>
+                      </div>
+                    <% break; 
+                  } %>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+  <!-- Modal for rejecting order -->
+  <div class="modal fade" id="rejectReasonModal" tabindex="-1" aria-labelledby="rejectReasonModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rejectReasonModalLabel">
+            <%= t('order.modal.rejectReason') %>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="rejectReasonForm">
+            <div class="mb-3">
+              <label for="rejectReason" class="form-label">
+                <%= t('order.label.rejectReason') %>
+              </label>
+              <textarea class="form-control" id="rejectReason" rows="3" required></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="confirmRejectBtn">
+            <%= t('order.button.confirm') %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for choosing other store -->
+  <div class="modal fade" id="chooseStoreModal" tabindex="-1" aria-labelledby="chooseStoreModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="chooseStoreModalLabel">
+            <%= t('order.modal.chooseStore') %>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="chooseStoreForm">
+            <div class="mb-3">
+              <label for="storeSelect" class="form-label">
+                <%= t('order.label.storeSelect') %>
+              </label>
+              <select class="form-select" id="storeSelect" required>
+                <% stores.forEach(store=> { %>
+                  <option value="<%= store.id %>">
+                    <%= store.name %> - <%= store.address %>
+                  </option>
+                  <% }); %>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="confirmStoreBtn">
+            <%= t('order.button.confirm') %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script src="/scripts/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="/scripts/bootstrap.bundle.min.js"></script>
+<script src="/scripts/slim.min.js"></script>
+<script src="/scripts/admin-layout.js"></script>
+<script src="/scripts/utils.js"></script>
+<script src="/scripts/sweetalert.min.js"></script>
+<script src="/scripts/admin-update-order.js"></script>
+
+</html>

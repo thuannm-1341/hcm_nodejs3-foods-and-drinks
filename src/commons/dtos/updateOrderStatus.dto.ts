@@ -1,4 +1,4 @@
-import { IsEnum, IsNumberString } from 'class-validator';
+import { IsEnum, IsNumberString, IsOptional, IsString } from 'class-validator';
 import { OrderStatus } from '../../constants';
 
 export class UpdateOrderStatusDto {
@@ -7,4 +7,8 @@ export class UpdateOrderStatusDto {
 
   @IsEnum(OrderStatus, { message: 'error.enumNotMatch.orderStatus' })
   orderStatus: OrderStatus;
+
+  @IsOptional()
+  @IsString()
+  rejectReason?: string;
 }
