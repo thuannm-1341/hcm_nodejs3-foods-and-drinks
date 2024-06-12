@@ -72,7 +72,7 @@
                   <%= t('order.search.orderStatus') %>
                 </label>
                 <select class="form-select" id="orderStatus" name="orderStatus">
-                  <% ['PENDING', 'APPROVED' , 'READY' , 'COMPLETED' , 'REJECTED' ].forEach(function(status) { %>
+                  <% ['PENDING', 'APPROVED' , 'READY' , 'COMPLETED' , 'REJECTED', 'CANCELED' ].forEach(function(status) { %>
                     <option value="<%= status %>" <%=(typeof query !=='undefined' && query.orderStatus===status) ? 'selected'
                       : '' %>>
                       <%= t(`order.search.${status.toLowerCase()}`) %>
@@ -136,6 +136,9 @@
                       <th scope="col">
                         <%= t('order.search.total') %>
                       </th>
+                      <th scope="col">
+                        <%= t('order.search.action') %>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -161,6 +164,11 @@
                         </td>
                         <td>
                           <%= order.total %>₫
+                        </td>
+                        <td>
+                          <a href="/user/order/<%=order.id%>">
+                            <button type="button" class="btn btn-primary"><%=t('order.search.viewDetail')%></button>
+                          </a>
                         </td>
                       </tr>
                       <% }); %>

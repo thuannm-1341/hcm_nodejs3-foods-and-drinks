@@ -9,6 +9,8 @@ const userController = new UserController();
 
 userRoute.use(authenticateJwt);
 userRoute.get('/order', orderController.getUserOrderPage);
+userRoute.put('/order/update', orderController.updateOrderStatus);
+userRoute.get('/order/:id', orderController.getUserOrderDetail);
 userRoute.get('/profile', userController.getUserProfile);
 
 export default userRoute;

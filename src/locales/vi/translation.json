@@ -58,7 +58,8 @@
     },
     "store": {
       "notFound": "Không tìm thấy cửa hàng"
-    }
+    },
+    "badInput": "Dữ liệu không hợp lệ"
   },
   "register": {
     "title": "Tạo tài khoản mới",
@@ -97,7 +98,8 @@
     "createOrder": "Đặt hàng",
     "order": "Đơn hàng",
     "notFound": "Không tìm thấy trang này",
-    "profile": "Hồ sơ"
+    "profile": "Hồ sơ",
+    "orderDetail": "Chi tiết đơn hàng"
   },
   "page": {
     "previous": "Trang trước",
@@ -164,6 +166,7 @@
       "ready": "Sẵn sàng",
       "completed": "Hoàn thành",
       "rejected": "Bị từ chối",
+      "canceled": "Bị hủy",
       "paymentStatus": "Trạng thái thanh toán",
       "complete": "Đã thanh toán",
       "incomplete": "Chưa thanh toán",
@@ -174,7 +177,38 @@
       "orderType": "Loại đơn hàng",
       "delivery": "Giao tận nơi",
       "pickup": "Nhận tại cửa hàng",
-      "address": "Địa chỉ"
+      "address": "Địa chỉ",
+      "action": "Hành động",
+      "viewDetail": "Chi tiết"
+    },
+    "detail": {
+      "order": "Đơn hàng"
+    },
+    "label": {
+      "orderStatus": "Trạng thái",
+      "paymentType": "Phương thức thanh toán",
+      "paymentStatus": "Trạng thái thanh toán",
+      "address": "Địa chỉ giao hàng",
+      "note": "Ghi chú",
+      "orderItem": "Món ăn trong đơn hàng",
+      "orderType": "Loại đơn hàng",
+      "storeInformation": "Thông tin cửa hàng",
+      "storeName": "Tên cửa hàng",
+      "storeAddress": "Địa chỉ",
+      "storePhone": "Số điện thoại",
+      "paymentInformation": "Thông tin thanh toán",
+      "transactionTime": "Thời gian giao dịch",
+      "bankCode": "Mã ngân hàng",
+      "transactionCode": "Mã giao dịch",
+      "paymentAmount": "Số tiền",
+      "paymentMessage": "Thông tin giao dịch",
+      "generalInformation": "Thông tin chung"
+    },
+    "button": {
+      "cancel": "Hủy đơn"
+    },
+    "update": {
+      "success": "Cập nhật đơn hàng thành công"
     }
   },
   "admin": {

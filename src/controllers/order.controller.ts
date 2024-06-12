@@ -1,10 +1,11 @@
+import { PaymentService } from './../services/payment.service';
 import { CartService } from './../services/cart.service';
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
 import { CustomSessionData } from '../interfaces/session.interface';
 import { StoreService } from '../services/store.service';
 import { OrderService } from '../services/order.service';
-import { SHIPPING_FEE } from '../constants';
+import { Error, SHIPPING_FEE } from '../constants';
 import { plainToClass } from 'class-transformer';
 import { CreateOrderDto } from '../commons/dtos/createOrder.dto';
 import { 
@@ -14,15 +15,19 @@ import { formatDate, handleError } from '../commons/utils';
 import { validate } from 'class-validator';
 import { OrderPageOptions } from '../commons/dtos/orderPageOptions.dto';
 import { UserNavBar } from '../constants/user';
+import { UpdateOrderStatusDto } from '../commons/dtos/updateOrderStatus.dto';
+import { t } from 'i18next';
 
 export class OrderController {
   private readonly orderService: OrderService;
   private readonly storeService: StoreService;
   private readonly cartService: CartService;
+  private readonly paymentService: PaymentService;
   constructor(){
     this.orderService = new OrderService();
     this.storeService = new StoreService();
     this.cartService = new CartService();
+    this.paymentService = new PaymentService();
   }
 
   public createOrderGet = asyncHandler(
@@ -116,6 +121,56 @@ export class OrderController {
           formatDate,
         });
       } else {
+        return res.redirect('/auth/login');
+      }
+    },
+  );
+
+  public getUserOrderDetail = asyncHandler(
+    async(req: Request, res: Response) => {
+      const user = (req.session as CustomSessionData).user;
+      if(user!==undefined){
+        const id = parseInt(req.params.id);
+        const order = await this.orderService.getOrderById(id);
+        if(order === null){
+          return res.render('errors/404');
+        }
+        const payment = await this.paymentService.findOrderPayment(id);
+        return res.render('user/order/detail', {
+          currentSite: UserNavBar.ORDER, 
+          user, 
+          order,
+          payment,
+          formatDate,
+        });
+      }else{
+        return res.redirect('/auth/login');
+      }
+    },
+  );
+
+  public updateOrderStatus = asyncHandler(
+    async(req: Request, res: Response) => {
+      const user = (req.session as CustomSessionData).user;
+      if(user!==undefined){
+        const updateOptions = plainToClass(UpdateOrderStatusDto, req.body);
+        const rawErrors = await validate(updateOptions);
+        if( rawErrors.length > 0 ){
+          res.status(400).send({
+            success: false,
+            message: t(Error.BAD_INPUT),
+          });
+        } else {
+          try {
+            await this.orderService.updateOrderStatus(updateOptions);
+          } catch (error) {
+            res.status(200).send({ 
+              success: true, 
+              message: t('order.update.success'), 
+            });
+          }
+        }
+      }else{
         return res.redirect('/auth/login');
       }
     },

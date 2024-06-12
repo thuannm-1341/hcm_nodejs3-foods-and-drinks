@@ -13,4 +13,5 @@ export enum Error {
   SAVE_PAYMENT_FAILED = 'error.payment.saveFailed',
   INVALID_ORDER_TYPE = 'error.order.invalidOrderType',
   INVALID_PAYMENT_TYPE = 'error.order.invalidPaymentType',
+  BAD_INPUT = 'error.badInput',
 }
