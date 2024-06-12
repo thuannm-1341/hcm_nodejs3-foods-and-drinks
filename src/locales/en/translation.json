@@ -94,7 +94,8 @@
     "sortField": "Sort fields",
     "sortOrder": "Order",
     "applyFilter": "Apply filter",
-    "order": "Order"
+    "order": "Order",
+    "notFound": "Page not found"
   },
   "page": {
     "previous": "Previous",
@@ -146,6 +147,47 @@
       "message": "Message",
       "title": "Payment information",
       "orderId": "Order ID"
+    },
+    "search": {
+      "order": "Sort order",
+      "ASC": "ASC",
+      "DESC": "DESC",
+      "take": "Records per page",
+      "sortField": "Sort field",
+      "createdAt": "Created at",
+      "total": "Order value",
+      "orderStatus": "Order status",
+      "pending": "Pending",
+      "approved": "Approved",
+      "ready": "Ready",
+      "completed": "Completed",
+      "rejected": "Rejected",
+      "paymentStatus": "Payment status",
+      "complete": "Complete",
+      "incomplete": "Incomplete",
+      "keyword": "Keyword",
+      "minValue": "Min value",
+      "maxValue": "Max value",
+      "filter": "Filter",
+      "orderType": "Order type",
+      "delivery": "Delivery",
+      "pickup": "Pickup",
+      "address": "Address"
+    }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "analytic": "Analytic",
+      "store": "Store management",
+      "product": "Product management",
+      "order": "Order management",
+      "logout": "Logout",
+      "user": "User management",
+      "default": "Admin site"
+    },
+    "home": {
+      "logout": "Logout"
     }
   }
 }

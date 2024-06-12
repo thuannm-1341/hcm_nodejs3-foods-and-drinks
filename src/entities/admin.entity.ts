@@ -7,7 +7,7 @@ export class AdminEntity extends BaseEntity {
   @Column({ name: 'user_name', length: EntityPropertyLength.MEDIUM })
   userName: string;
 
-  @Column({ length: EntityPropertyLength.SMALL })
+  @Column({ length: EntityPropertyLength.LARGE })
   password: string;
 
   @Column({ length: EntityPropertyLength.MEDIUM })

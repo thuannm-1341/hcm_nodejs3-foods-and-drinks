@@ -21,6 +21,9 @@ import {
 } from '../commons/dtos/vnpayReturnUrlQuery.dto';
 import { PaymentEntity } from '../entities/payment.entity';
 import { processPayment } from '../commons/utils';
+import { OrderPageOptions } from '../commons/dtos/orderPageOptions.dto';
+import { PageDto } from '../commons/dtos/page.dto';
+import { PageMetaDto } from '../commons/dtos/pageMeta.dto';
 export class OrderService {
   private readonly orderRepository: Repository<OrderEntity>;
   private readonly orderProductRepository: Repository<OrderProductEntity>;
@@ -49,52 +52,51 @@ export class OrderService {
     );
     await AppDataSource.transaction(
       async (transactionalEntityManager: EntityManager) => {
-    const newOrder = this.orderRepository.create({
-      orderType: createOptions.orderType,
-      paymentType: createOptions.paymentType,
-      deliveryAddress: createOptions.address,
-      note: createOptions.note,
-      total: orderTotal,
-      user,
-    });
-
-    if(createOptions.storeId){
-      const store = await this.storeService.findOneById(createOptions.storeId);
-      if(store) {
-        newOrder.store = store;
-        newOrder.deliveryAddress = store.address;
-      }
-    }
-
-    const savedOrder = await transactionalEntityManager.save(newOrder);
-    
-    const orderProducts = cartProducts.map((cartProduct) => {
-      return this.orderProductRepository.create({
-        quantity: cartProduct.quantity,
-        price: cartProduct.product.currentPrice,
-        product: cartProduct.product,
-        order: savedOrder,
+      const newOrder = this.orderRepository.create({
+        orderType: createOptions.orderType,
+        paymentType: createOptions.paymentType,
+        deliveryAddress: createOptions.address,
+        note: createOptions.note,
+        total: orderTotal,
+        user,
       });
+      if(createOptions.storeId){
+        const store = await this.storeService.findOneById(createOptions.storeId);
+        if(store) {
+          newOrder.store = store;
+          newOrder.deliveryAddress = store.address;
+        }
+      }
+
+      const savedOrder = await transactionalEntityManager.save(newOrder);
+      
+      const orderProducts = cartProducts.map((cartProduct) => {
+        return this.orderProductRepository.create({
+          quantity: cartProduct.quantity,
+          price: cartProduct.product.currentPrice,
+          product: cartProduct.product,
+          order: savedOrder,
+        });
+      });
+
+      await transactionalEntityManager
+      .insert(this.orderProductRepository.target, orderProducts);
+
+      // Remove products from cart
+      await this.cartService.removeProductFromCart(user);
+
+      switch(savedOrder.paymentType) {
+        case PaymentType.VNPAY: {
+          processPayment(req, res, savedOrder);
+          break;
+        }
+        default: {
+          res.render('user/order/thank-you', { user });
+        }
+      }
+    }).catch((error) => {
+      throw new Error('Transaction failed: ' + (error as Error).message);
     });
-
-    await transactionalEntityManager
-    .insert(this.orderProductRepository.target, orderProducts);
-
-    // Remove products from cart
-    await this.cartService.removeProductFromCart(user);
-
-    switch(savedOrder.paymentType) {
-      case PaymentType.VNPAY: {
-        processPayment(req, res, savedOrder);
-        break;
-      }
-      default: {
-        res.render('user/order/thank-you', { user });
-      }
-    }
-  }).catch((error) => {
-    throw new Error('Transaction failed: ' + (error as Error).message);
-  });
   }
 
   public calculateOrderTotal(
@@ -130,5 +132,73 @@ export class OrderService {
   public async findOneById(id: number | string): Promise<OrderEntity | null> {
     const orderId = (typeof id === 'number') ? id : parseInt(id);
     return this.orderRepository.findOne({where: {id: orderId}});
+  }
+
+  public async getOrderPage(pageOptionsDto: OrderPageOptions)
+  :Promise<PageDto<OrderEntity>> {
+    const {
+      order,
+      take,
+      skip,
+      sortField,
+      orderType,
+      orderStatus,
+      paymentStatus,
+      userId,
+      minValue,
+      maxValue,
+    } = pageOptionsDto;
+    const query = this.orderRepository.createQueryBuilder('order')
+    .leftJoinAndSelect('order.user', 'user')
+    .leftJoinAndSelect('order.store', 'store')
+    .leftJoinAndSelect('order.orderProducts', 'orderProduct')
+    .leftJoinAndSelect('orderProduct.product', 'product');
+
+    //Handle filter
+    if(userId) {
+      query.andWhere('user.id = :userId', {userId: userId});
+    }
+    if(orderType) {
+      query.andWhere(
+        'order.orderType = :orderType', 
+        {orderType: orderType},
+      );
+    }
+    if(orderStatus) {
+      query.andWhere(
+        'order.status = :orderStatus', 
+        {orderStatus: orderStatus},
+      );
+    }
+    if(paymentStatus) {
+      query.andWhere(
+        'order.paymentStatus = :paymentStatus', 
+        {paymentStatus: paymentStatus},
+      );
+    }
+    if(minValue) {
+      query.andWhere('order.total >= :minValue', 
+        {minValue: minValue},
+      );
+    }
+    if(maxValue) {
+      query.andWhere('order.total <= :maxValue', 
+        {maxValue: maxValue},
+      );
+    }
+    
+    //Handle sort
+    query.orderBy('order.' + sortField, order)
+    .addOrderBy('order.id', 'DESC');
+
+    //Handle paging
+    query.skip(skip).take(take);
+
+    // Retrieve entities
+    const itemCount = await query.getCount();
+    const entities = await query.getMany();
+
+    const pageMeta = new PageMetaDto({pageOptionsDto, itemCount});
+    return new PageDto(entities, pageMeta);
   }
 }

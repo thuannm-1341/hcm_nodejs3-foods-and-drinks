@@ -16,6 +16,7 @@ import { PaymentEntity } from '../entities/payment.entity';
 import { StoreEntity } from '../entities/store.entity';
 import { UserEntity } from '../entities/user.entity';
 import StoreSeeder from './store.seeder';
+import AdminSeeder from './admin.seeder';
 dotenv.config();
 
 const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE } = process.env;
@@ -42,7 +43,7 @@ async function executeSeeding() {
       StoreEntity,
       UserEntity,
     ],
-    seeds: [CategorySeeder, ProductSeeder, StoreSeeder],
+    seeds: [CategorySeeder, ProductSeeder, StoreSeeder, AdminSeeder],
   };
 
   const dataSource = new DataSource(options);

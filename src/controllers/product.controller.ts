@@ -31,7 +31,7 @@ export class ProductController {
       const product = await this.getProductFromIdParam(req, res);
       if(product === null) {
         req.flash('error', Error.PRODUCT_NOT_FOUND);
-        res.redirect('/');
+        res.redirect('/home');
       }
       return res.render('user/product/detail', {user, product});
     },
@@ -44,7 +44,7 @@ export class ProductController {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
       req.flash('error', 'error.invalidParameter');
-      res.redirect('/');
+      res.redirect('/home');
     }
     return await this.productService.getProductDetail(id);
   };
@@ -74,6 +74,12 @@ export class ProductController {
         meta: productPage.meta, 
         query: pageOptions,
       });
+    },
+  );
+
+  public getNotFoundPage = asyncHandler(
+    async (req: Request, res: Response) => {
+      return res.render('errors/404');
     },
   );
 }
