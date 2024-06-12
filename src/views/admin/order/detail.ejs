@@ -111,6 +111,18 @@
                         </div>
                       </div>
                       <% } %>
+                    <% if(order.status === 'REJECTED') { %>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p>
+                            <strong>
+                              <%= t('order.label.rejectReason') %>:
+                            </strong>
+                            <%= order.rejectReason %>
+                          </p>
+                        </div>
+                      </div>
+                      <% } %>
                   </div>
                   <div id="store-information" class="border-bottom">
                     <% if(order.orderType === 'DELIVERY' && order.status === 'PENDING') { %>

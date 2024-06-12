@@ -179,7 +179,8 @@
       "pickup": "Pickup",
       "address": "Address",
       "action": "Action",
-      "viewDetail": "View detail"
+      "viewDetail": "View detail",
+      "all": "All"
     },
     "detail": {
       "order": "Order"

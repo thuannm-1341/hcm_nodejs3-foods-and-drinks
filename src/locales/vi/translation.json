@@ -179,7 +179,8 @@
       "pickup": "Nhận tại cửa hàng",
       "address": "Địa chỉ",
       "action": "Hành động",
-      "viewDetail": "Chi tiết"
+      "viewDetail": "Chi tiết",
+      "all": "Tất cả"
     },
     "detail": {
       "order": "Đơn hàng"

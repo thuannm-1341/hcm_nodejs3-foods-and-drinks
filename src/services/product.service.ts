@@ -35,6 +35,7 @@ export class ProductService {
       .where('categories.id = :categoryId', {categoryId: category.id}).getMany();
       const item = {
         category: category.name,
+        categoryId: category.id,
         products: products,
       };
       result.push(item);
