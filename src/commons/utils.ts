@@ -51,3 +51,8 @@ export function sortObject(obj: CreateVNPayTransactionDto) {
 
   return sorted;
 }
+
+export function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString();
+}

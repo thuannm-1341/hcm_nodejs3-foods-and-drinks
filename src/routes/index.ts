@@ -5,6 +5,7 @@ import productRoute from './product.route';
 import cartRoute from './cart.route';
 import orderRoute from './order.route';
 import adminRoute from './admin.route';
+import userRoute from './user.route';
 const router: Router = Router();
 const productController = new ProductController();
 
@@ -13,6 +14,7 @@ router.use('/products', productRoute);
 router.use('/cart', cartRoute);
 router.use('/order', orderRoute);
 router.use('/admin', adminRoute);
+router.use('/user', userRoute);
 router.use('/home', productController.getHomePage);
 router.use('/', productController.getNotFoundPage);
 

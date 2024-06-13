@@ -10,10 +10,10 @@ import { CreateOrderDto } from '../commons/dtos/createOrder.dto';
 import { 
   VnpayReturnUrlQueryDto,
 } from '../commons/dtos/vnpayReturnUrlQuery.dto';
-import { handleError } from '../commons/utils';
+import { formatDate, handleError } from '../commons/utils';
 import { validate } from 'class-validator';
 import { OrderPageOptions } from '../commons/dtos/orderPageOptions.dto';
-import { AdminNavBar } from '../constants/admin';
+import { UserNavBar } from '../constants/user';
 
 export class OrderController {
   private readonly orderService: OrderService;
@@ -87,6 +87,37 @@ export class OrderController {
       const paymentInfo = plainToClass(VnpayReturnUrlQueryDto, req.query);
       await this.orderService.saveOrderTransaction(paymentInfo);
       res.render('user/order/thank-you', {user, paymentInfo});
+    },
+  );
+
+  public getUserOrderPage = asyncHandler(
+    async (req: Request, res: Response) => {
+      const user = (req.session as CustomSessionData).user;
+      if(user!==undefined){
+        const pageOptions = plainToClass(OrderPageOptions, req.query);
+        pageOptions.userId = user.id;
+        const rawErrors = await validate(pageOptions);
+        if( rawErrors.length > 0 ){
+          const errors = handleError(rawErrors, req, res);
+          return res.render('user/order/list', {
+            user,
+            currentSite: UserNavBar.ORDER,
+            errors, 
+            query: pageOptions,
+          });
+        }
+        const orderPage = await this.orderService.getOrderPage(pageOptions);
+        return res.render('user/order/list', {
+          user,
+          currentSite: UserNavBar.ORDER,
+          orders: orderPage.data, 
+          meta: orderPage.meta, 
+          query: pageOptions,
+          formatDate,
+        });
+      } else {
+        return res.redirect('/auth/login');
+      }
     },
   );
 }
