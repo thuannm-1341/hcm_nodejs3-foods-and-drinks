@@ -50,6 +50,12 @@ export class OrderEntity extends BaseEntity {
     nullable: true,
     length: EntityPropertyLength.EXTRA_LARGE,
   })
+  rejectReason?: string;
+
+  @Column({
+    nullable: true,
+    length: EntityPropertyLength.EXTRA_LARGE,
+  })
   note: string;
 
   @Column({ name: 'shipping_fee', default: 0 })

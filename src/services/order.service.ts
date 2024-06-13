@@ -1,6 +1,6 @@
 import { CartService } from './cart.service';
 import { Request, Response } from 'express';
-import { EntityManager, EntityNotFoundError, Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { AppDataSource } from '../config/ormConfig';
 import { OrderEntity } from '../entities/order.entity';
 import { CartProductEntity } from '../entities/cartProduct.entity';
@@ -26,6 +26,7 @@ import { OrderPageOptions } from '../commons/dtos/orderPageOptions.dto';
 import { PageDto } from '../commons/dtos/page.dto';
 import { PageMetaDto } from '../commons/dtos/pageMeta.dto';
 import { UpdateOrderStatusDto } from '../commons/dtos/updateOrderStatus.dto';
+import { UpdateOrderStoreDto } from '../commons/dtos/updateOrderStore.dto';
 export class OrderService {
   private readonly orderRepository: Repository<OrderEntity>;
   private readonly orderProductRepository: Repository<OrderProductEntity>;
@@ -234,10 +235,57 @@ export class OrderService {
           throw new Error(ErrorMessage.BAD_INPUT);
         }
         order.status = OrderStatus.CANCELED;
-        const savedOrder = await this.orderRepository.save(order);
-        break;
+        return this.orderRepository.save(order);
+      }
+      case OrderStatus.APPROVED: {
+        if(order.status !== OrderStatus.PENDING) {
+          throw new Error(ErrorMessage.BAD_INPUT);
+        }
+        order.status = OrderStatus.APPROVED;
+        return this.orderRepository.save(order);
+      }
+      case OrderStatus.REJECTED: {
+        if(order.status !== OrderStatus.PENDING) {
+          throw new Error(ErrorMessage.BAD_INPUT);
+        }
+        order.status = OrderStatus.REJECTED;
+        order.rejectReason = updateOption.rejectReason;
+        return this.orderRepository.save(order);
+      }
+      case OrderStatus.READY: {
+        if(order.status !== OrderStatus.APPROVED) {
+          throw new Error(ErrorMessage.BAD_INPUT);
+        }
+        order.status = OrderStatus.READY;
+        return this.orderRepository.save(order);
+      }
+      case OrderStatus.COMPLETED: {
+        if(order.status !== OrderStatus.READY) {
+          throw new Error(ErrorMessage.BAD_INPUT);
+        }
+        order.status = OrderStatus.COMPLETED;
+        return this.orderRepository.save(order);
       }
     }
     return order;
+  }
+
+  public async updateOrderStore(
+    updateOption: UpdateOrderStoreDto): Promise<OrderEntity> {
+    const store = await this.storeService.findOneById(updateOption.storeId);
+    if(store === null) {
+      throw new Error(ErrorMessage.STORE_NOT_FOUND);
+    }
+    const order = await this.orderRepository.findOne({where:{
+      id: updateOption.orderId,
+    }});
+    if(!order){
+      throw new Error(ErrorMessage.BAD_INPUT);
+    }
+    if(order.status !== OrderStatus.PENDING) {
+      throw new Error(ErrorMessage.BAD_INPUT);
+    }
+    order.store = store;
+    return this.orderRepository.save(order);
   }
 }

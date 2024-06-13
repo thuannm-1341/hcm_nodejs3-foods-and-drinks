@@ -1,0 +1,8 @@
+{
+  "order": {
+    "button": {
+      "ready": "order.button.ready",
+      "complete": "order.button.complete"
+    }
+  }
+}
