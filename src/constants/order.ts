@@ -9,6 +9,7 @@ export enum OrderStatus {
   READY = 'READY',
   COMPLETED = 'COMPLETED',
   REJECTED = 'REJECTED',
+  CANCELED = 'CANCELED',
 }
 
 export enum OrderSortField {

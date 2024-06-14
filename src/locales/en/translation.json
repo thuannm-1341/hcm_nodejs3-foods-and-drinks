@@ -58,7 +58,8 @@
     },
     "store": {
       "notFound": "Store not found"
-    }
+    },
+    "badInput": "Bad input"
   },
   "register": {
     "title": "CREATE YOUR ACCOUNT",
@@ -97,7 +98,8 @@
     "createOrder": "Create order",
     "order": "Order",
     "notFound": "Page not found",
-    "profile": "Profile"
+    "profile": "Profile",
+    "orderDetail": "Order detail"
   },
   "page": {
     "previous": "Previous",
@@ -164,6 +166,7 @@
       "ready": "Ready",
       "completed": "Completed",
       "rejected": "Rejected",
+      "canceled": "Canceled",
       "paymentStatus": "Payment status",
       "complete": "Complete",
       "incomplete": "Incomplete",
@@ -174,7 +177,38 @@
       "orderType": "Order type",
       "delivery": "Delivery",
       "pickup": "Pickup",
-      "address": "Address"
+      "address": "Address",
+      "action": "Action",
+      "viewDetail": "View detail"
+    },
+    "detail": {
+      "order": "Order"
+    },
+    "label": {
+      "orderStatus": "Order status",
+      "paymentType": "Payment type",
+      "paymentStatus": "Payment status",
+      "address": "Address",
+      "note": "Note",
+      "orderItem": "Order items",
+      "orderType": "Order type",
+      "storeInformation": "Store information",
+      "storeName": "Store name",
+      "storeAddress": "Store address",
+      "storePhone": "Phone number",
+      "paymentInformation": "Payment information",
+      "transactionTime": "Transaction time",
+      "bankCode": "Bank code",
+      "transactionCode": "Transaction code",
+      "paymentAmount": "Amount",
+      "paymentMessage": "Message",
+      "generalInformation": "General information"
+    },
+    "button": {
+      "cancel": "Cancel order"
+    },
+    "update": {
+      "success": "Update order successfully"
     }
   },
   "admin": {

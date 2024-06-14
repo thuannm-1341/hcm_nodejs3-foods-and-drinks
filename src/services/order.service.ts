@@ -1,11 +1,12 @@
 import { CartService } from './cart.service';
 import { Request, Response } from 'express';
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager, EntityNotFoundError, Repository } from 'typeorm';
 import { AppDataSource } from '../config/ormConfig';
 import { OrderEntity } from '../entities/order.entity';
 import { CartProductEntity } from '../entities/cartProduct.entity';
 import { 
-  Error as OrderError,   
+  Error as ErrorMessage,   
+  OrderStatus,   
   OrderType, 
   PaymentStatus, 
   PaymentType, 
@@ -24,6 +25,7 @@ import { processPayment } from '../commons/utils';
 import { OrderPageOptions } from '../commons/dtos/orderPageOptions.dto';
 import { PageDto } from '../commons/dtos/page.dto';
 import { PageMetaDto } from '../commons/dtos/pageMeta.dto';
+import { UpdateOrderStatusDto } from '../commons/dtos/updateOrderStatus.dto';
 export class OrderService {
   private readonly orderRepository: Repository<OrderEntity>;
   private readonly orderProductRepository: Repository<OrderProductEntity>;
@@ -57,15 +59,18 @@ export class OrderService {
         paymentType: createOptions.paymentType,
         deliveryAddress: createOptions.address,
         note: createOptions.note,
+        shippingFee: SHIPPING_FEE,
         total: orderTotal,
         user,
       });
       if(createOptions.storeId){
-        const store = await this.storeService.findOneById(createOptions.storeId);
+        const store = await this.storeService
+        .findOneById(createOptions.storeId);
         if(store) {
           newOrder.store = store;
           if(createOptions.orderType === OrderType.PICK_UP){
             newOrder.deliveryAddress = store.address;
+            newOrder.shippingFee = 0;
           }
         }
       }
@@ -117,10 +122,10 @@ export class OrderService {
   ): Promise<string | PaymentEntity> {
     const order = await this.findOneById(vnPayResponse.vnp_TxnRef);
     if (order === null) {
-      return OrderError.ORDER_NOT_FOUND;
+      return ErrorMessage.ORDER_NOT_FOUND;
     }
     if (order.paymentStatus === PaymentStatus.COMPLETE) {
-      return OrderError.ORDER_HAS_BEEN_PAID;
+      return ErrorMessage.ORDER_HAS_BEEN_PAID;
     }
     const saveResult = 
       await this.paymentService.saveTransaction(order, vnPayResponse);
@@ -202,5 +207,37 @@ export class OrderService {
 
     const pageMeta = new PageMetaDto({pageOptionsDto, itemCount});
     return new PageDto(entities, pageMeta);
+  }
+
+  public async getOrderById(id: number | string): Promise<OrderEntity | null> {
+    const orderId = typeof id === 'number' ? id : parseInt(id);
+    const query = this.orderRepository.createQueryBuilder('order')
+    .leftJoinAndSelect('order.user', 'user')
+    .leftJoinAndSelect('order.store', 'store')
+    .leftJoinAndSelect('order.orderProducts', 'orderProduct')
+    .leftJoinAndSelect('orderProduct.product', 'product')
+    .where('order.id = :orderId', {orderId: orderId});
+    return query.getOne();
+  }
+
+  public async updateOrderStatus(
+    updateOption: UpdateOrderStatusDto): Promise<OrderEntity> {
+    const order = await this.orderRepository.findOne({where:{
+      id: updateOption.id,
+    }});
+    if(!order){
+      throw new Error(ErrorMessage.BAD_INPUT);
+    }
+    switch(updateOption.orderStatus) {
+      case OrderStatus.CANCELED: {
+        if(order.status !== OrderStatus.PENDING) {
+          throw new Error(ErrorMessage.BAD_INPUT);
+        }
+        order.status = OrderStatus.CANCELED;
+        const savedOrder = await this.orderRepository.save(order);
+        break;
+      }
+    }
+    return order;
   }
 }
