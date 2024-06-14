@@ -215,7 +215,9 @@
       "confirmReject": "Confirm",
       "chooseOtherStore": "Choose other store",
       "confirmStore": "Confirm store",
-      "confirm": "Confirm"
+      "confirm": "Confirm",
+      "ready": "Ready",
+      "complete": "Complete"
     },
     "update": {
       "success": "Update order successfully"

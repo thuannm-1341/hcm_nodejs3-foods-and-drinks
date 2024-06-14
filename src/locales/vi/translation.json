@@ -215,7 +215,9 @@
       "confirmReject": "Xác nhận",
       "chooseOtherStore": "Chọn cửa hàng khác",
       "confirmStore": "Xác nhận cửa hàng",
-      "confirm": "Xác nhận"
+      "confirm": "Xác nhận",
+      "ready": "Đơn hàng sẵn sàng",
+      "complete": "Hoàn thành đơn hàng"
     },
     "update": {
       "success": "Cập nhật đơn hàng thành công"
