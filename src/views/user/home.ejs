@@ -47,11 +47,11 @@
                 </a>
                 <div class="d-flex justify-content-left mb-2">
                   <p class="card-price">
-                    <%= product.currentPrice %>₫
+                    <%= formatCurrency(product.currentPrice) %>
                   </p>
                   <% if(product.basePrice!==product.currentPrice) { %>
                     <p class="card-old-price">
-                      <%= product.basePrice %>₫
+                      <%= formatCurrency(product.basePrice) %>
                     </p>
                     <% } %>
                 </div>
@@ -91,11 +91,11 @@
                 </a>
                 <div class="d-flex justify-content-left mb-2">
                   <p class="card-price">
-                    <%= product.currentPrice %>₫
+                    <%= formatCurrency(product.currentPrice) %>
                   </p>
                   <% if(product.basePrice!==product.currentPrice) { %>
                     <p class="card-old-price">
-                      <%= product.basePrice %>₫
+                      <%= formatCurrency(product.basePrice) %>
                     </p>
                     <% } %>
                 </div>
@@ -143,11 +143,11 @@
                   </a>
                   <div class="d-flex justify-content-left mb-2">
                     <p class="card-price">
-                      <%= product.currentPrice %>₫
+                      <%= formatCurrency(product.currentPrice) %>
                     </p>
                     <% if(product.basePrice!==product.currentPrice) { %>
                       <p class="card-old-price">
-                        <%= product.basePrice %>₫
+                        <%= formatCurrency(product.basePrice) %>₫
                       </p>
                       <% } %>
                   </div>

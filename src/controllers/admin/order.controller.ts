@@ -6,7 +6,7 @@ import { CustomSessionData } from '../../interfaces/session.interface';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import { OrderPageOptions } from '../../commons/dtos/orderPageOptions.dto';
-import { formatDate, handleError } from '../../commons/utils';
+import { formatCurrency, formatDate, handleError } from '../../commons/utils';
 import { AdminNavBar } from '../../constants/admin';
 import { PaymentService } from '../../services/payment.service';
 import { UpdateOrderStatusDto } from '../../commons/dtos/updateOrderStatus.dto';
@@ -46,6 +46,7 @@ export class AdminOrderController {
         meta: orderPage.meta, 
         query: pageOptions,
         formatDate,
+        formatCurrency,
       });
     },
   );
@@ -68,6 +69,7 @@ export class AdminOrderController {
           payment,
           stores,
           formatDate,
+          formatCurrency,
         });
       }else{
         return res.redirect('/auth/admin-login');

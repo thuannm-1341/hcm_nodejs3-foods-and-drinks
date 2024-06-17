@@ -78,7 +78,7 @@
                   <option value="" <%=(typeof query !=='undefined' && query.orderStatus==='undefined' ) ? 'selected' : '' %>><%=
                       t('order.search.all')%>
                   </option>
-                  <% ['PENDING', 'APPROVED' , 'READY' , 'COMPLETED' , 'REJECTED', 'CANCELED' ].forEach(function(status) { %>
+                  <% ['PENDING', 'APPROVED' , 'READY', 'DELIVERED', 'COMPLETED' , 'REJECTED', 'CANCELED' ].forEach(function(status) { %>
                     <option value="<%= status %>" <%=(typeof query !=='undefined' && query.orderStatus===status) ? 'selected'
                       : '' %>>
                       <%= t(`order.search.${status.toLowerCase()}`) %>
@@ -172,7 +172,7 @@
                           <%= order.deliveryAddress %>
                         </td>
                         <td>
-                          <%= order.total %>₫
+                          <%= formatCurrency(order.total) %>
                         </td>
                         <td>
                           <a href="/user/order/<%=order.id%>">

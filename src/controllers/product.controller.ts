@@ -6,7 +6,7 @@ import { Error, ProductSortField } from '../constants';
 import { plainToClass } from 'class-transformer';
 import { ProductPageOptions } from '../commons/dtos/productPageOptions.dto';
 import { validate } from 'class-validator';
-import { handleError } from '../commons/utils';
+import { formatCurrency, handleError } from '../commons/utils';
 import { CustomSessionData } from '../interfaces/session.interface';
 
 export class ProductController {
@@ -17,11 +17,17 @@ export class ProductController {
   
   public getHomePage = asyncHandler(
     async (req: Request, res: Response) => {
-      const user = (req.session as CustomSessionData).user;
       const data = await this.productService.getAllProductsByCategory();
       const newProduct = await this.productService.getNewProduct();
       const discountProduct = await this.productService.getDiscountProduct();
-      return res.render('user/home', {user, newProduct, discountProduct, data});
+      return res.render('user/home', {
+        user: (req.session as CustomSessionData).user,
+        cartItem: (req.session as CustomSessionData).cartItem,
+        newProduct, 
+        discountProduct, 
+        data, 
+        formatCurrency,
+      });
     },
   );
 
@@ -33,7 +39,12 @@ export class ProductController {
         req.flash('error', Error.PRODUCT_NOT_FOUND);
         res.redirect('/home');
       }
-      return res.render('user/product/detail', {user, product});
+      return res.render('user/product/detail', {
+        user, 
+        cartItem: (req.session as CustomSessionData).cartItem,
+        product, 
+        formatCurrency,
+      });
     },
   );
 
@@ -59,20 +70,24 @@ export class ProductController {
         const errors = handleError(rawErrors, req, res);
         return res.render('user/product/search', {
           user,
+          cartItem: (req.session as CustomSessionData).cartItem,
           categories,
           sortField: ProductSortField,
           errors, 
           query: pageOptions,
+          formatCurrency,
         });
       }
       const productPage = await this.productService.getProductPage(pageOptions);
       return res.render('user/product/search', {
         user,
+        cartItem: (req.session as CustomSessionData).cartItem,
         categories,
         sortField: ProductSortField,
         products: productPage.data, 
         meta: productPage.meta, 
         query: pageOptions,
+        formatCurrency,
       });
     },
   );

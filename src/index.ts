@@ -9,6 +9,7 @@ import i18nextBackend from 'i18next-fs-backend';
 import i18nextMiddleware from 'i18next-http-middleware';
 import { AppDataSource } from './config/ormConfig';
 import router from './routes';
+import { updateSessionData } from './middlewares/auth.middleware';
 
 const port = process.env.PORT || 3000;
 const sessionSecret = process.env.SESSION_SECRET || 'food_and_drink';
@@ -50,6 +51,7 @@ app.use(
     cookie: { maxAge: 60000 },
   }),
 );
+app.use(updateSessionData);
 app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'public')));

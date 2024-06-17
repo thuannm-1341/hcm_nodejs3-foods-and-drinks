@@ -59,7 +59,11 @@
     "store": {
       "notFound": "Không tìm thấy cửa hàng"
     },
-    "badInput": "Dữ liệu không hợp lệ"
+    "badInput": "Dữ liệu không hợp lệ",
+    "phoneNumber": {
+      "minLength": "Độ dài tối thiểu của số điện thoại là 10",
+      "format": "Hãy nhập vào định dạng số điện thoại hợp lệ"
+    }
   },
   "register": {
     "title": "Tạo tài khoản mới",
@@ -119,6 +123,8 @@
     "emptyCart": "Giỏ hàng của bạn đang trống!"
   },
   "order": {
+    "phoneNumber": "Số điện thoại",
+    "phoneNumber_ph": "Nhập vào số điện thoại của bạn",
     "yourOrder": "Đơn hàng của bạn",
     "reviewItem": "Kiểm tra danh sách sản phẩm",
     "item": "sản phẩm",
@@ -164,6 +170,7 @@
       "pending": "Chờ duyệt",
       "approved": "Đã duyệt",
       "ready": "Sẵn sàng",
+      "delivered": "Đã giao hàng",
       "completed": "Hoàn thành",
       "rejected": "Bị từ chối",
       "canceled": "Bị hủy",
@@ -207,7 +214,8 @@
       "user": "Người đặt",
       "userEmail": "Email người đặt",
       "rejectReason": "Lý do từ chối",
-      "storeSelect": "Chọn cửa hàng"
+      "storeSelect": "Chọn cửa hàng",
+      "phoneNumber": "Số điện thoại"
     },
     "button": {
       "cancel": "Hủy đơn",
@@ -218,6 +226,7 @@
       "confirmStore": "Xác nhận cửa hàng",
       "confirm": "Xác nhận",
       "ready": "Đơn hàng sẵn sàng",
+      "delivered": "Đã giao hàng",
       "complete": "Hoàn thành đơn hàng"
     },
     "update": {

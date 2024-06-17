@@ -90,12 +90,20 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-6">
                         <p>
                           <strong>
                             <%= t('order.label.address') %>:
                           </strong>
                           <%= order.deliveryAddress %>
+                        </p>
+                      </div>
+                      <div class="col-md-6">
+                        <p>
+                          <strong>
+                            <%= t('order.label.phoneNumber') %>:
+                          </strong>
+                          <%= order.phoneNumber %>
                         </p>
                       </div>
                     </div>
@@ -195,7 +203,7 @@
                           <p><strong>
                               <%= t('order.label.paymentAmount') %>:
                             </strong>
-                            <%= payment.amount %>₫
+                            <%= formatCurrency(payment.amount) %>
                           </p>
                         </div>
                         <div class="col-md-6">
@@ -245,7 +253,7 @@
                             </p>
                           </td>
                           <td class="product-price align-middle">
-                            <%= item.price %>₫
+                            <%= formatCurrency(item.price) %>
                           </td>
                           <td class="product-quantity text-end align-middle">
                             <%= 'x' + item.quantity %>
@@ -264,7 +272,7 @@
                     </div>
                     <div class="col-md-6 text-end">
                       <p id="order-subtotal">
-                        <%= order.total - order.shippingFee %>₫
+                        <%= formatCurrency(order.total - order.shippingFee) %>
                       </p>
                     </div>
                   </div>
@@ -276,7 +284,7 @@
                     </div>
                     <div class="col-md-6 text-end">
                       <p id="shipping-fee">
-                        <%= order.shippingFee %>₫
+                        <%= formatCurrency(order.shippingFee) %>
                       </p>
                     </div>
                   </div>
@@ -288,7 +296,7 @@
                     </div>
                     <div class="col-md-6 text-end">
                       <h4 id="orderTotal">
-                        <%= order.total %>₫
+                        <%= formatCurrency(order.total) %>
                       </h4>
                     </div>
                   </div>
@@ -323,9 +331,9 @@
                     <% break; 
                     case 'READY' : %>
                       <div class="col text-end">
-                        <button class="btn btn-primary w-50" onclick="updateOrderStatus(event, '<%= order.id %>', 'COMPLETED')">
+                        <button class="btn btn-primary w-50" onclick="updateOrderStatus(event, '<%= order.id %>', 'DELIVERED')">
                           <strong>
-                            <%= t('order.button.complete') %>
+                            <%= t('order.button.delivered') %>
                           </strong>
                         </button>
                       </div>

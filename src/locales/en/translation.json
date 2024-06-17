@@ -59,7 +59,11 @@
     "store": {
       "notFound": "Store not found"
     },
-    "badInput": "Bad input"
+    "badInput": "Bad input",
+    "phoneNumber": {
+      "minLength": "Phone number min length is 10",
+      "format": "Please type in phone number format"
+    }
   },
   "register": {
     "title": "CREATE YOUR ACCOUNT",
@@ -119,6 +123,8 @@
     "emptyCart": "Your cart is empty!"
   },
   "order": {
+    "phoneNumber": "Phone number",
+    "phoneNumber_ph": "Add your phone number",
     "yourOrder": "Your order",
     "reviewItem": "Review your items",
     "item": "items",
@@ -164,6 +170,7 @@
       "pending": "Pending",
       "approved": "Approved",
       "ready": "Ready",
+      "delivered": "Delivered",
       "completed": "Completed",
       "rejected": "Rejected",
       "canceled": "Canceled",
@@ -207,7 +214,8 @@
       "user": "User",
       "userEmail": "User email",
       "rejectReason": "Reject reason",
-      "storeSelect": "Select store"
+      "storeSelect": "Select store",
+      "phoneNumber": "Phone number"
     },
     "button": {
       "cancel": "Cancel order",
@@ -218,6 +226,7 @@
       "confirmStore": "Confirm store",
       "confirm": "Confirm",
       "ready": "Ready",
+      "delivered": "Delivered",
       "complete": "Order complete"
     },
     "update": {

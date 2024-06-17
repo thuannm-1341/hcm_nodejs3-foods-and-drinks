@@ -36,6 +36,10 @@ const addToCart = (e, id) => {
         text: locale === 'en'? 'Product has been added to cart' : 'Bạn đã thêm vào giỏ hàng thành công',
         icon: 'success',
         confirmButtonText: 'OK',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload(); // Reload the page after user clicks "OK"
+        }
       });
     })
    .catch(error => {
@@ -58,14 +62,22 @@ document.addEventListener("DOMContentLoaded", function() {
         const decrementButton = form.querySelector('.quantity-decrement');
         const incrementButton = form.querySelector('.quantity-increment');
         const quantityInput = form.querySelector('.quantity-input');
+        let previousValue = quantityInput.value;
         
         decrementButton.addEventListener('click', function() {
             event.preventDefault();
             let currentQuantity = parseInt(quantityInput.value);
-            if (currentQuantity >= 1) {
+            if (currentQuantity > 1) {
                 quantityInput.value = currentQuantity - 1;
+                form.submit();
+            } else {
+              swal.fire({
+                title: locale === 'en'? 'Error' : 'Lỗi',
+                text: locale === 'en'? 'Minimum product quantity is 1' : 'Số lượng tối thiểu của một sản phẩm trong giỏ hàng là 1',
+                icon: 'error',
+                confirmButtonText: 'OK',
+              });
             }
-            form.submit();
         });
         
         incrementButton.addEventListener('click', function() {
@@ -85,9 +97,22 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
-        quantityInput.addEventListener('change', function() {
-            event.preventDefault();
+        quantityInput.addEventListener('input', function(event) {
+          event.preventDefault();
+
+          let currentQuantity = parseInt(quantityInput.value);
+
+          if (isNaN(currentQuantity) || currentQuantity < 1 || currentQuantity > 50) {
+            swal.fire({
+              title: locale === 'en' ? 'Error' : 'Lỗi',
+              text: locale === 'en' ? 'Minimum product quantity is 1 and maximum is 50' : 'Số lượng của một sản phẩm trong giỏ hàng tối thiểu là 1 và tối đa là 50',
+              icon: 'error',
+              confirmButtonText: 'OK',
+            });
+            quantityInput.value = previousValue;
+          } else {
             form.submit();
+          }
         });
     });
 });

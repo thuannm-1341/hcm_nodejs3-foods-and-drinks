@@ -64,6 +64,7 @@ export class OrderService {
         orderType: createOptions.orderType,
         paymentType: createOptions.paymentType,
         deliveryAddress: createOptions.address,
+        phoneNumber: createOptions.phoneNumber,
         note: createOptions.note,
         shippingFee: SHIPPING_FEE,
         total: orderTotal,
@@ -291,12 +292,21 @@ export class OrderService {
         this.sendOrderStatusUpdateMail(order, OrderStatus.APPROVED);
         return this.orderRepository.save(order);
       }
-      case OrderStatus.COMPLETED: {
+      case OrderStatus.DELIVERED: {
         if(order.status !== OrderStatus.READY) {
           throw new Error(ErrorMessage.BAD_INPUT);
         }
-        order.status = OrderStatus.COMPLETED;
+        order.status = OrderStatus.DELIVERED;
         this.sendOrderStatusUpdateMail(order, OrderStatus.READY);
+        return this.orderRepository.save(order);
+      }
+      case OrderStatus.COMPLETED: {
+        if(order.status !== OrderStatus.DELIVERED) {
+          throw new Error(ErrorMessage.BAD_INPUT);
+        }
+        order.status = OrderStatus.COMPLETED;
+        order.paymentStatus = PaymentStatus.COMPLETE;
+        this.sendOrderStatusUpdateMail(order, OrderStatus.DELIVERED);
         return this.orderRepository.save(order);
       }
     }

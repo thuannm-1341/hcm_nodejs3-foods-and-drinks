@@ -37,10 +37,10 @@
                     <%=t('title.priceRange')%>
                   </h6>
                   <div class="filter-filter-filter-input-group">
-                    <input type="number" class="form-control" placeholder="0đ" aria-label="Minimum Price" min="0"
+                    <input type="number" class="form-control" placeholder="0 đ" aria-label="Minimum Price" min="0"
                       name="minPrice" value="<%=query.minPrice%>">
                     <span class="filter-filter-input-group-text"><%= t('page.to')%></span>
-                    <input type="number" class="form-control" placeholder="500000đ" aria-label="Maximum Price" min="0"
+                    <input type="number" class="form-control" placeholder="500.000 đ" aria-label="Maximum Price" min="0"
                       max="1000000" value="<%=query.maxPrice%>" name="maxPrice">
                   </div>
                 </div>
@@ -139,11 +139,11 @@
                         </a>
                         <div class="d-flex justify-content-left mb-2">
                           <p class="card-price">
-                            <%= product.currentPrice %>₫
+                            <%= formatCurrency(product.currentPrice) %>
                           </p>
                           <% if(product.basePrice !==product.currentPrice) { %>
                             <p class="card-old-price">
-                              <%= product.basePrice %>₫
+                              <%= formatCurrency(product.basePrice) %>
                             </p>
                             <% } %>
                         </div>
