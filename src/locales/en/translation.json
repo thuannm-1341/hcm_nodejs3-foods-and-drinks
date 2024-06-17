@@ -202,13 +202,29 @@
       "transactionCode": "Transaction code",
       "paymentAmount": "Amount",
       "paymentMessage": "Message",
-      "generalInformation": "General information"
+      "generalInformation": "General information",
+      "user": "User",
+      "userEmail": "User email",
+      "rejectReason": "Reject reason",
+      "storeSelect": "Select store"
     },
     "button": {
-      "cancel": "Cancel order"
+      "cancel": "Cancel order",
+      "approve": "Approve order",
+      "reject": "Reject order",
+      "confirmReject": "Confirm",
+      "chooseOtherStore": "Choose other store",
+      "confirmStore": "Confirm store",
+      "confirm": "Confirm",
+      "ready": "Ready",
+      "complete": "Order complete"
     },
     "update": {
       "success": "Update order successfully"
+    },
+    "modal": {
+      "rejectReason": "Confirm reject order",
+      "chooseStore": "Choose other store"
     }
   },
   "admin": {

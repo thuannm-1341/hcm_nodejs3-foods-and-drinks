@@ -202,13 +202,29 @@
       "transactionCode": "Mã giao dịch",
       "paymentAmount": "Số tiền",
       "paymentMessage": "Thông tin giao dịch",
-      "generalInformation": "Thông tin chung"
+      "generalInformation": "Thông tin chung",
+      "user": "Người đặt",
+      "userEmail": "Email người đặt",
+      "rejectReason": "Lý do từ chối",
+      "storeSelect": "Chọn cửa hàng"
     },
     "button": {
-      "cancel": "Hủy đơn"
+      "cancel": "Hủy đơn",
+      "approve": "Chấp nhận đơn hàng",
+      "reject": "Từ chối đơn hàng",
+      "confirmReject": "Xác nhận",
+      "chooseOtherStore": "Chọn cửa hàng khác",
+      "confirmStore": "Xác nhận cửa hàng",
+      "confirm": "Xác nhận",
+      "ready": "Đơn hàng sẵn sàng",
+      "complete": "Hoàn thành đơn hàng"
     },
     "update": {
       "success": "Cập nhật đơn hàng thành công"
+    },
+    "modal": {
+      "rejectReason": "Xác nhận từ chối đơn hàng",
+      "chooseStore": "Chọn cửa hàng khác"
     }
   },
   "admin": {

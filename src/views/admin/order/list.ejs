@@ -120,12 +120,27 @@
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
-                      <th scope="col"><%= t('order.search.createdAt') %></th>
-                      <th scope="col"><%= t('order.search.orderType') %></th>
-                      <th scope="col"><%= t('order.search.orderStatus') %></th>
-                      <th scope="col"><%= t('order.search.paymentStatus') %></th>
-                      <th scope="col"><%= t('order.search.address') %></th>
-                      <th scope="col"><%= t('order.search.total') %></th>
+                      <th scope="col">
+                        <%= t('order.search.createdAt') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.orderType') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.orderStatus') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.paymentStatus') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.address') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.total') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('order.search.action') %>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -151,6 +166,13 @@
                         </td>
                         <td>
                           <%= order.total %>₫
+                        </td>
+                        <td>
+                          <a href="/admin/order/<%=order.id%>">
+                            <button type="button" class="btn btn-primary">
+                              <%=t('order.search.viewDetail')%>
+                            </button>
+                          </a>
                         </td>
                       </tr>
                       <% }); %>
