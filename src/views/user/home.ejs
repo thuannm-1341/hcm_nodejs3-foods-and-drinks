@@ -118,9 +118,16 @@
           <% }) %>
       </div>
       <% data.forEach((item)=> { %>
-        <h3 class="my-4">
-          <%= item.category %>
-        </h3>
+        <form action="/products/search" method="get" id="category-search-form-<%=item.categoryId%>"
+          style="display: inline;">
+          <input type="hidden" name="categoryIds" value="<%= item.categoryId %>">
+          <a href="#" class="breadcrumb-link text-decoration-none text-dark"
+            onclick="document.getElementById('category-search-form-<%=item.categoryId%>').submit();">
+            <h3 class="my-4">
+              <%= item.category %>
+            </h3>
+          </a>
+        </form>
         <div class="row g-4">
           <% item.products.forEach((product)=> { %>
             <div class="col-md-3">

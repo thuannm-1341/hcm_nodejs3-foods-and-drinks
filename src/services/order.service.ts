@@ -21,18 +21,22 @@ import {
   VnpayReturnUrlQueryDto, 
 } from '../commons/dtos/vnpayReturnUrlQuery.dto';
 import { PaymentEntity } from '../entities/payment.entity';
-import { processPayment } from '../commons/utils';
+import { formatDate, processPayment } from '../commons/utils';
 import { OrderPageOptions } from '../commons/dtos/orderPageOptions.dto';
 import { PageDto } from '../commons/dtos/page.dto';
 import { PageMetaDto } from '../commons/dtos/pageMeta.dto';
 import { UpdateOrderStatusDto } from '../commons/dtos/updateOrderStatus.dto';
 import { UpdateOrderStoreDto } from '../commons/dtos/updateOrderStore.dto';
+import { NodeMailerService } from '../third-party-services/nodemailer.service';
+import { MailTitle } from '../constants/email';
+
 export class OrderService {
   private readonly orderRepository: Repository<OrderEntity>;
   private readonly orderProductRepository: Repository<OrderProductEntity>;
   private readonly storeService: StoreService;
   private readonly cartService: CartService;
   private readonly paymentService: PaymentService;
+  private readonly mailService: NodeMailerService;
   constructor() {
     this.orderRepository = AppDataSource.getRepository(OrderEntity);
     this.orderProductRepository = 
@@ -40,6 +44,7 @@ export class OrderService {
     this.storeService = new StoreService();
     this.cartService = new CartService();
     this.paymentService = new PaymentService();
+    this.mailService = new NodeMailerService();
   }
 
   public async createOrder(
@@ -93,6 +98,17 @@ export class OrderService {
       // Remove products from cart
       await this.cartService.removeProductFromCart(user);
 
+      this.mailService.sendEmail(
+        user.email, 
+        MailTitle.PLACE_ORDER_SUCCESS,
+        'create-order-success',
+        {
+          order: savedOrder,
+          orderProducts: orderProducts,
+          formatDate,
+        },
+      );
+
       switch(savedOrder.paymentType) {
         case PaymentType.VNPAY: {
           processPayment(req, res, savedOrder);
@@ -132,6 +148,16 @@ export class OrderService {
       await this.paymentService.saveTransaction(order, vnPayResponse);
     if(saveResult instanceof PaymentEntity){
       order.paymentStatus = PaymentStatus.COMPLETE;
+      this.mailService.sendEmail(
+        order.user.email, 
+        MailTitle.PAYMENT_SUCCESS,
+        'payment-success',
+        {
+          order,
+          formatDate,
+          payment: saveResult,
+        },
+      );
       await this.orderRepository.save(order);
     }
     return saveResult;
@@ -139,7 +165,10 @@ export class OrderService {
 
   public async findOneById(id: number | string): Promise<OrderEntity | null> {
     const orderId = (typeof id === 'number') ? id : parseInt(id);
-    return this.orderRepository.findOne({where: {id: orderId}});
+    return this.orderRepository.findOne({
+      where: { id: orderId },
+      relations: ['user', 'store', 'orderProducts'],
+    });
   }
 
   public async getOrderPage(pageOptionsDto: OrderPageOptions)
@@ -223,9 +252,7 @@ export class OrderService {
 
   public async updateOrderStatus(
     updateOption: UpdateOrderStatusDto): Promise<OrderEntity> {
-    const order = await this.orderRepository.findOne({where:{
-      id: updateOption.id,
-    }});
+    const order = await this.getOrderById(updateOption.id);
     if(!order){
       throw new Error(ErrorMessage.BAD_INPUT);
     }
@@ -235,6 +262,7 @@ export class OrderService {
           throw new Error(ErrorMessage.BAD_INPUT);
         }
         order.status = OrderStatus.CANCELED;
+        this.sendOrderStatusUpdateMail(order, OrderStatus.PENDING);
         return this.orderRepository.save(order);
       }
       case OrderStatus.APPROVED: {
@@ -242,7 +270,9 @@ export class OrderService {
           throw new Error(ErrorMessage.BAD_INPUT);
         }
         order.status = OrderStatus.APPROVED;
-        return this.orderRepository.save(order);
+        this.sendOrderStatusUpdateMail(order, OrderStatus.PENDING);
+        const savedOrder = await this.orderRepository.save(order);
+        return savedOrder; 
       }
       case OrderStatus.REJECTED: {
         if(order.status !== OrderStatus.PENDING) {
@@ -250,6 +280,7 @@ export class OrderService {
         }
         order.status = OrderStatus.REJECTED;
         order.rejectReason = updateOption.rejectReason;
+        this.sendOrderStatusUpdateMail(order, OrderStatus.PENDING);
         return this.orderRepository.save(order);
       }
       case OrderStatus.READY: {
@@ -257,6 +288,7 @@ export class OrderService {
           throw new Error(ErrorMessage.BAD_INPUT);
         }
         order.status = OrderStatus.READY;
+        this.sendOrderStatusUpdateMail(order, OrderStatus.APPROVED);
         return this.orderRepository.save(order);
       }
       case OrderStatus.COMPLETED: {
@@ -264,6 +296,7 @@ export class OrderService {
           throw new Error(ErrorMessage.BAD_INPUT);
         }
         order.status = OrderStatus.COMPLETED;
+        this.sendOrderStatusUpdateMail(order, OrderStatus.READY);
         return this.orderRepository.save(order);
       }
     }
@@ -287,5 +320,22 @@ export class OrderService {
     }
     order.store = store;
     return this.orderRepository.save(order);
+  }
+
+  private async sendOrderStatusUpdateMail(
+    order: OrderEntity, 
+    oldStatus: OrderStatus,
+  ) {
+    await this.mailService.sendEmail(
+      order.user.email, 
+      MailTitle.ORDER_STATUS_UPDATE,
+      'order-status-update',
+      {
+        order,
+        orderProducts: order.orderProducts,
+        oldStatus,
+        formatDate,
+      },
+    );
   }
 }

@@ -89,6 +89,18 @@
                     </div>
                   </div>
                   <% } %>
+                <% if(order.status==='REJECTED' ) { %>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p>
+                        <strong>
+                          <%= t('order.label.rejectReason') %>:
+                        </strong>
+                        <%= order.rejectReason %>
+                      </p>
+                    </div>
+                  </div>
+                  <% } %>
               </div>
               <div id="store-information" class="border-bottom">
                 <h4 class="mt-2">
@@ -249,6 +261,15 @@
                 <button class="btn btn-danger" onclick="updateOrderStatus(event, '<%= order.id %>', 'CANCELED')">
                   <strong>
                     <%= t('order.button.cancel') %>
+                  </strong>
+                </button>
+              </div>
+              <% } %>
+            <% if(order.status==='READY' && order.paymentStatus === 'COMPLETE') { %>
+              <div class="text-end">
+                <button class="btn btn-primary" onclick="updateOrderStatus(event, '<%= order.id %>', 'COMPLETED')">
+                  <strong>
+                    <%= t('order.button.complete') %>
                   </strong>
                 </button>
               </div>
