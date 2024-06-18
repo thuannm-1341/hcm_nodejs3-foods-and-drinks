@@ -1,19 +1,23 @@
+import { CategoryService } from './category.service';
 import { CategoryEntity } from './../entities/category.entity';
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../config/ormConfig';
 import { ProductEntity } from '../entities/product.entity';
 import { ProductsByCategoryDto } from '../commons/dtos/productsByCategory.dto';
-import { NUM_OF_PRODUCT_CARD } from '../constants';
+import { Error, NUM_OF_PRODUCT_CARD } from '../constants';
 import { ProductPageOptions } from '../commons/dtos/productPageOptions.dto';
 import { PageDto } from '../commons/dtos/page.dto';
 import { PageMetaDto } from '../commons/dtos/pageMeta.dto';
+import { CreateProductDto } from '../commons/dtos/createProduct.dto';
 
 export class ProductService {
   private readonly productRepository: Repository<ProductEntity>;
+  private readonly categoryService: CategoryService;
   private readonly categoryRepository: Repository<CategoryEntity>;
   constructor() {
     this.productRepository = AppDataSource.getRepository(ProductEntity);
     this.categoryRepository = AppDataSource.getRepository(CategoryEntity);
+    this.categoryService = new CategoryService();
   }
 
   public async getDiscountProduct(): Promise<ProductEntity[]> {
@@ -123,5 +127,19 @@ export class ProductService {
 
   public getAllCategories(): Promise<CategoryEntity[]> {
     return this.categoryRepository.find();
+  }
+
+  public async createProduct(createOption: CreateProductDto)
+  : Promise<ProductEntity> {
+    const category = await this.categoryService
+    .findOneById(createOption.categoryId);
+    if(category === null) {
+      throw Error.CATEGORY_NOT_FOUND;
+    }
+    const newProduct = this.productRepository.create({
+      ...createOption,
+      categories: [category],
+    });
+    return this.productRepository.save(newProduct);
   }
 }

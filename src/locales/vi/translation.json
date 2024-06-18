@@ -50,7 +50,10 @@
       "notFound": "Không tìm thấy người dùng"
     },
     "product": {
-      "notFound": "Không tìm thấy sản phẩm"
+      "notFound": "Không tìm thấy sản phẩm",
+      "invalidCurrentPrice": "Giá hiện tại phải nhỏ hơn hoặc bằng giá gốc",
+      "nameMinLength": "Tên phải có độ dài tối thiểu là 5",
+      "descriptionMinLength": "Mô tả phải có độ dài tối thiểu là 5"
     },
     "invalidCredential": "Thông tin đăng nhập không hợp lệ",
     "address": {
@@ -63,6 +66,10 @@
     "phoneNumber": {
       "minLength": "Độ dài tối thiểu của số điện thoại là 10",
       "format": "Hãy nhập vào định dạng số điện thoại hợp lệ"
+    },
+    "file": {
+      "uploadError": "Có lỗi trong quá trình upload file",
+      "invalidType": "Định dạng file không hợp lệ"
     }
   },
   "register": {
@@ -82,6 +89,8 @@
   },
   "product": {
     "category_ph": "Chọn phân loại",
+    "name_ph": "Nhập vào tên sản phẩm",
+    "description_ph": "Nhập vào mô tả sản phẩm",
     "search": {
       "createdAt": "Tạo lúc",
       "image": "Hình ảnh",
@@ -109,6 +118,17 @@
       "category": "Phân loại",
       "averageRating": "Đánh giá trung bình",
       "description": "Mô tả"
+    },
+    "create": {
+      "title": "Thêm sản phẩm",
+      "label": {
+        "name": "Tên",
+        "description": "Mô tả",
+        "basePrice": "Giá gốc",
+        "currentPrice": "Giá hiện tại",
+        "category": "Chọn phân loại",
+        "image": "Tải ảnh sản phẩm lên"
+      }
     }
   },
   "title": {
@@ -239,7 +259,6 @@
       "phoneNumber": "Số điện thoại"
     },
     "button": {
-      "cancel": "Hủy đơn",
       "approve": "Chấp nhận đơn hàng",
       "reject": "Từ chối đơn hàng",
       "confirmReject": "Xác nhận",
@@ -248,7 +267,8 @@
       "confirm": "Xác nhận",
       "ready": "Đơn hàng sẵn sàng",
       "delivered": "Đã giao hàng",
-      "complete": "Hoàn thành đơn hàng"
+      "complete": "Hoàn thành đơn hàng",
+      "cancel": "Hủy đơn hàng"
     },
     "update": {
       "success": "Cập nhật đơn hàng thành công"
@@ -278,5 +298,12 @@
       "profile": "Hồ sơ",
       "order": "Đơn hàng"
     }
+  },
+  "file": {
+    "uploadSuccessfully": "Tải file lên thành công"
+  },
+  "button": {
+    "createProduct": "Tạo sản phẩm mới",
+    "cancel": "Hủy"
   }
 }

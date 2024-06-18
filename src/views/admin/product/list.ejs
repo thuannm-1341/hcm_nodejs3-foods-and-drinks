@@ -25,7 +25,7 @@
         <%- include('../../layouts/admin/top-navbar') -%>
           <div class="container-fluid px-4">
             <form id="orderFilterForm" class="row g-3 mb-4" method="GET">
-              <div class="row g-3 mb-4">
+              <div class="row g-3">
                 <div class="col">
                   <label for="take" class="form-label">
                     <%= t('order.search.take') %>
@@ -95,8 +95,8 @@
                   <select multiple name="categoryIds" class="form-select w-100 p-0" id="categories-select"
                     placeholder="<%=t('product.category_ph')%>" data-search="false" data-silent-initial-value-set="true">
                     <% categories.forEach(function(category) { %>
-                      <option value="<%= category.id %>" <%=(typeof query.categoryIds !=='undefined' &&
-                        query.categoryIds.includes(category.id.toString())) ? 'selected' : '' %>>
+                      <option value="<%= category.id %>" <%=(typeof query.categoryIds ==='undefined' || (typeof query.categoryIds !=='undefined' &&
+                        query.categoryIds.includes(category.id.toString()))) ? 'selected' : '' %>>
                         <%= category.name %>
                       </option>
                       <% }); %>
@@ -108,7 +108,11 @@
                   </button>
                 </div>
               </div>
-
+              <a href="/admin/product/create">
+                <button type="button" class="btn btn-primary">
+                  <%=t('button.createProduct')%>
+                </button>
+              </a>
               <div id="productsTableContainer">
                 <% if (typeof products !=='undefined' && products.length> 0) { %>
                   <table class="table">
