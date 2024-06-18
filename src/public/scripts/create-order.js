@@ -1,25 +1,29 @@
 $(document).ready(function () {
   const orderSubtotal = parseInt($('#order-subtotal').attr('data'));
   const shippingFee = parseInt($('#shipping-fee').attr('data'));
-  const orderType = $('#order-type').attr('data');
+  let orderType = $('#order-type').attr('data');
 
   function updateOrderDisplay(orderType) {
     if (orderType === 'DELIVERY') {
       $('#deliveryAddressContainer').show();
       $('#storeSelectionContainer').hide();
-      $('#shipping-fee').text(shippingFee + '₫');
-      $('#orderTotal').text(orderSubtotal + shippingFee + '₫');
+      $('#shipping-fee').text(formatCurrency(shippingFee));
+      $('#orderTotal').text(formatCurrency(orderSubtotal + shippingFee));
     } else if (orderType === 'PICKUP') {
       $('#deliveryAddressContainer').hide();
       $('#storeSelectionContainer').show();
-      $('#shipping-fee').text('0₫');
-      $('#orderTotal').text(orderSubtotal + '₫');
+      $('#shipping-fee').text(formatCurrency(0));
+      $('#orderTotal').text(formatCurrency(orderSubtotal));
     }
   }
 
-  if (typeof orderType !== 'undefined') {
-    updateOrderDisplay(orderType);
+  // Set default order type to DELIVERY if undefined or invalid
+  if (typeof orderType === 'undefined' || (orderType !== 'DELIVERY' && orderType !== 'PICKUP')) {
+    orderType = 'DELIVERY';
+    $('#order-type').attr('data', orderType);
   }
+
+  updateOrderDisplay(orderType);
 
   // Optionally, update the visibility if the delivery type changes due to user action
   $('input[name="orderType"]').on('change', function () {

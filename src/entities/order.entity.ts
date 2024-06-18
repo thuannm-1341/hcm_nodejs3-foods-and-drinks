@@ -54,6 +54,12 @@ export class OrderEntity extends BaseEntity {
 
   @Column({
     nullable: true,
+    length: EntityPropertyLength.SMALL,
+  })
+  phoneNumber?: string;
+
+  @Column({
+    nullable: true,
     length: EntityPropertyLength.EXTRA_LARGE,
   })
   note: string;

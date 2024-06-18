@@ -87,4 +87,9 @@ export class CartService {
     .leftJoinAndSelect('cartProduct.user', 'user')
     .delete().where('user.id = :userId', {userId: user.id}).execute();
   }
+
+  public async countCartItem(user: UserEntity): Promise<number>{
+    const cartProducts = await this.getCartProducts(user);
+    return cartProducts.reduce((sum, current) => sum + current.quantity, 0);
+  }
 }

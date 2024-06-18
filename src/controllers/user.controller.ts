@@ -15,6 +15,7 @@ export class UserController {
       const user = (req.session as CustomSessionData).user;
       return res.render('user/profile', {
         user, 
+        cartItem: (req.session as CustomSessionData).cartItem,
         currentSite: UserNavBar.PROFILE,
       });
     },

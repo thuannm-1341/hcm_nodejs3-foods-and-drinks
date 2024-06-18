@@ -1,5 +1,10 @@
-import { IsEnum, IsOptional } from 'class-validator';
-import { Error, MIN_ADDRESS_LENGTH, OrderType, PaymentType } from '../../constants';
+import { IsEnum, IsNumberString, IsOptional, MinLength } from 'class-validator';
+import { 
+  Error, 
+  MIN_ADDRESS_LENGTH, 
+  OrderType, 
+  PaymentType, 
+} from '../../constants';
 import { IsValidOrderAddress, IsValidStoreId } from '../../decorators';
 
 export class CreateOrderDto {
@@ -8,6 +13,10 @@ export class CreateOrderDto {
 
   @IsEnum(PaymentType, { message: Error.INVALID_PAYMENT_TYPE })
   paymentType: PaymentType;
+
+  @IsNumberString()
+  @MinLength(10, { message: Error.PHONE_NUMBER_MIN_LENGTH })
+  phoneNumber: string;
 
   @IsOptional()
   @IsValidOrderAddress(

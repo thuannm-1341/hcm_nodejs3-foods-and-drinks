@@ -56,3 +56,13 @@ export function formatDate(dateString: string) {
   const date = new Date(dateString);
   return date.toLocaleString();
 }
+
+export function formatCurrency(value: string | number): string {
+  const number: number = typeof value === 'string' ? parseFloat(value) : value;
+
+  if (isNaN(number)) {
+    return 'Invalid number';
+  }
+
+  return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+}

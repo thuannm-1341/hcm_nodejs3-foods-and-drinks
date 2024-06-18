@@ -54,8 +54,12 @@
             <img src="/images/sample-avatar.png" alt="Avatar" class="header-avatar rounded-circle">
           </a>
           <% } %>
-      <a class="navbar-brand" href="/cart">
-        <img src="/images/cart.png" alt="Cart" class="header-icon">
+      <a class="navbar-brand cart-icon-container" href="/cart">
+        <% if(typeof cartItem !=='undefined' ) { %>
+          <span class="cart-item-count">
+            <%= cartItem %>
+          </span>
+          <% } %>
       </a>
     </div>
   </div>

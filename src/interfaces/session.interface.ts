@@ -5,4 +5,5 @@ import { AdminEntity } from '../entities/admin.entity';
 export interface CustomSessionData extends SessionData {
   user?: UserEntity;
   admin?: AdminEntity;
+  cartItem?: number;
 }

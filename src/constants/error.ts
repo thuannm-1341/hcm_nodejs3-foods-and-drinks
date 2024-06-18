@@ -14,4 +14,5 @@ export enum Error {
   INVALID_ORDER_TYPE = 'error.order.invalidOrderType',
   INVALID_PAYMENT_TYPE = 'error.order.invalidPaymentType',
   BAD_INPUT = 'error.badInput',
+  PHONE_NUMBER_MIN_LENGTH = 'error.phoneNumber.minLength',
 }

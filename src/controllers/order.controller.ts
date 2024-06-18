@@ -11,7 +11,7 @@ import { CreateOrderDto } from '../commons/dtos/createOrder.dto';
 import { 
   VnpayReturnUrlQueryDto,
 } from '../commons/dtos/vnpayReturnUrlQuery.dto';
-import { formatDate, handleError } from '../commons/utils';
+import { formatCurrency, formatDate, handleError } from '../commons/utils';
 import { validate } from 'class-validator';
 import { OrderPageOptions } from '../commons/dtos/orderPageOptions.dto';
 import { UserNavBar } from '../constants/user';
@@ -41,9 +41,11 @@ export class OrderController {
         return res.render('user/order/create', {
           orderSubtotal,
           user,
+          cartItem: (req.session as CustomSessionData).cartItem,
           products, 
           stores, 
           shippingFee: SHIPPING_FEE,
+          formatCurrency,
         });
       }else{
         return res.redirect('/auth/login');
@@ -68,9 +70,11 @@ export class OrderController {
             data: createOptions,
             orderSubtotal,
             user,
+            cartItem: (req.session as CustomSessionData).cartItem,
             products, 
             stores, 
             shippingFee: SHIPPING_FEE,
+            formatCurrency,
           });
         }
         try{
@@ -91,7 +95,7 @@ export class OrderController {
       const user = (req.session as CustomSessionData).user;
       const paymentInfo = plainToClass(VnpayReturnUrlQueryDto, req.query);
       await this.orderService.saveOrderTransaction(paymentInfo);
-      res.render('user/order/thank-you', {user, paymentInfo});
+      res.render('user/order/thank-you', {user, paymentInfo, formatCurrency});
     },
   );
 
@@ -106,19 +110,23 @@ export class OrderController {
           const errors = handleError(rawErrors, req, res);
           return res.render('user/order/list', {
             user,
+            cartItem: (req.session as CustomSessionData).cartItem,
             currentSite: UserNavBar.ORDER,
             errors, 
             query: pageOptions,
+            formatCurrency,
           });
         }
         const orderPage = await this.orderService.getOrderPage(pageOptions);
         return res.render('user/order/list', {
           user,
+          cartItem: (req.session as CustomSessionData).cartItem,
           currentSite: UserNavBar.ORDER,
           orders: orderPage.data, 
           meta: orderPage.meta, 
           query: pageOptions,
           formatDate,
+          formatCurrency,
         });
       } else {
         return res.redirect('/auth/login');
@@ -138,9 +146,11 @@ export class OrderController {
       return res.render('user/order/detail', {
         currentSite: UserNavBar.ORDER, 
         user, 
+        cartItem: (req.session as CustomSessionData).cartItem,
         order,
         payment,
         formatDate,
+        formatCurrency,
       });
     },
   );

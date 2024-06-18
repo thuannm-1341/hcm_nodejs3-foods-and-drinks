@@ -46,11 +46,11 @@
               </div>
               <% if(item.product.basePrice !== item.product.currentPrice) { %>
                 <p class="product-info-text">
-                  <%= item.product.currentPrice %>₫ <span class="product-old-price">(<%= item.product.basePrice %>₫)</span>
+                  <%= formatCurrency(item.product.currentPrice) %> <span class="product-old-price">(<%= formatCurrency(item.product.basePrice) %>)</span>
                 </p>
               <% } else { %>
                 <p class="product-info-text">
-                  <%= item.product.currentPrice %>₫
+                  <%= formatCurrency(item.product.currentPrice) %>
                 </p>
               <% } %>
               <p class="product-info-text">
@@ -69,7 +69,7 @@
                 </div>
                 <div class="col-md-4 text-end">
                   <h3>
-                    <%=item.quantity * item.product.currentPrice%>₫
+                    <%=formatCurrency(item.quantity * item.product.currentPrice)%>
                   </h3>
                 </div>
               </div>
@@ -94,7 +94,7 @@
             </div>
             <div class="col-md-6 text-end">
               <h2 class="total">
-                <%=totalValue%>₫
+                <%=formatCurrency(totalValue)%>
               </h2>
             </div>
           </div>

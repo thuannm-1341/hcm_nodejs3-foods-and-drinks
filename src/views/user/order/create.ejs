@@ -52,7 +52,7 @@
                 </p>
                 <div class="row mb-0">
                   <p class="col-md-8">
-                    <%= item.product.currentPrice %>₫
+                    <%= formatCurrency(item.product.currentPrice) %>
                   </p>
                   <p class="col-md-4 text-end">
                     <%= 'x' + item.quantity %>
@@ -70,22 +70,21 @@
                 <%=t('order.info')%>
               </h3>
               <div>
-                <label 
-                id="order-type" 
-                data="<%=typeof data!=='undefined' ? data.orderType : undefined %>"
-                >
+                <label id="order-type" data="<%=typeof data!=='undefined' ? data.orderType : 'DELIVERY' %>">
                   <%=t('order.orderType')%>:
                 </label>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="orderType" id="orderType1" value="DELIVERY" <%=(typeof data!=='undefined' &&
-                    data.orderType==='DELIVERY' ) ? 'checked' : '' %> required>
+                  <input class="form-check-input" type="radio" name="orderType" id="orderType1" value="DELIVERY" <%=(typeof
+                    data==='undefined' || (typeof data!=='undefined' && data.orderType==='DELIVERY' )) ? 'checked' : '' %>
+                  required>
                   <label class="form-check-label" for="orderType1">
                     <%=t('order.deliveryType')%>
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="orderType" id="orderType2" value="PICKUP" <%=(typeof data!=='undefined' &&
-                    data.orderType==='PICKUP' ) ? 'checked' : '' %> required>
+                  <input class="form-check-input" type="radio" name="orderType" id="orderType2" value="PICKUP" <%=(typeof
+                    data!=='undefined' && data.orderType==='PICKUP' ) ? 'checked' : '' %>
+                  required>
                   <label class="form-check-label" for="orderType2">
                     <%=t('order.pickUpType')%>
                   </label>
@@ -115,12 +114,24 @@
                     <% }); %>
                 </select>
               </div>
+              <div id="phoneNumberContainer">
+                <label>
+                  <%=t('order.phoneNumber')%>:
+                </label>
+                <input type="tel" class="form-control" name="phoneNumber" placeholder="<%= t('order.phoneNumber_ph') %>" required
+                  value="<%= typeof data !=='undefined' ? data.phoneNumber : '' %>">
+                <% if (typeof errors !=='undefined' && errors.phoneNumber!==undefined) { %>
+                  <p class="text-danger pt-2 mb-0">
+                    <%= t(errors.phoneNumber) %>
+                  </p>
+                  <% } %>
+              </div>
               <div id="noteContainer">
                 <label>
                   <%=t('order.note')%>:
                 </label>
                 <input type="text" class="form-control" name="note" placeholder="<%= t('order.note_ph') %>"
-                  value="<%= typeof data !=='undefined' ? data.note : user.note %>">
+                  value="<%= typeof data !=='undefined' ? data.note : '' %>">
               </div>
             </div>
             <hr>
@@ -137,7 +148,7 @@
                   </div>
                   <div class="col-md-6 text-end">
                     <p id="order-subtotal" data="<%=orderSubtotal%>">
-                      <%=orderSubtotal%>₫
+                      <%=formatCurrency(orderSubtotal)%>
                     </p>
                   </div>
                 </div>
@@ -149,7 +160,7 @@
                   </div>
                   <div class="col-md-6 text-end">
                     <p id="shipping-fee" data="<%=shippingFee%>">
-                      <%=shippingFee%>₫
+                      <%=formatCurrency(shippingFee)%>
                     </p>
                   </div>
                 </div>
@@ -161,7 +172,7 @@
                   </div>
                   <div class="col-md-6 text-end">
                     <h4 id="orderTotal">
-                      <%=orderSubtotal + shippingFee%>₫
+                      <%=formatCurrency(orderSubtotal + shippingFee)%>
                     </h4>
                   </div>
                 </div>

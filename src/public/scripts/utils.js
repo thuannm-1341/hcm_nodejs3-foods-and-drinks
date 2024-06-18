@@ -8,3 +8,10 @@ function getCookie(cname) {
   }
   return '';
 }
+
+function formatCurrency(value) {
+  if (isNaN(value)) {
+    return 'Invalid number';
+  }
+  return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+}
