@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="/stylesheets/virtual-select.min.css" />
+  <link rel="stylesheet" href="/stylesheets/admin-layout.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+  <title>
+    <%= (typeof currentSite !='undefined' ) ? t(currentSite) : t('admin.nav.default') %>
+  </title>
+</head>
+
+<body>
+  <div class="d-flex" id="wrapper">
+
+    <%- include('../../layouts/admin/sidebar') -%>
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <%- include('../../layouts/admin/top-navbar') -%>
+          <div class="container-fluid px-4">
+            <form id="orderFilterForm" class="row g-3 mb-4" method="GET">
+              <div class="row g-3 mb-4">
+                <div class="col">
+                  <label for="take" class="form-label">
+                    <%= t('order.search.take') %>
+                  </label>
+                  <input type="number" class="form-control" id="take" name="take" min="10" max="20"
+                    value="<%= typeof query !== 'undefined' ? query.take : '12' %>">
+                </div>
+                <div class="col">
+                  <label for="sortField" class="form-label">
+                    <%= t('title.sortField') %>
+                  </label>
+                  <select class="form-select" id="sortField" name="sortField">
+                    <option value="createdAt" <%=(typeof query !=='undefined' && query.sortField==='createdAt' )
+                      ? 'selected' : '' %>>
+                      <%= t('product.sortField.createdAt') %>
+                    </option>
+                    <option value="currentPrice" <%=(typeof query !=='undefined' && query.sortField==='currentPrice' ) ? 'selected'
+                      : '' %>>
+                      <%= t('product.sortField.currentPrice') %>
+                    </option>
+                    <option value="averageRating" <%=(typeof query !=='undefined' && query.sortField==='averageRating' ) ? 'selected' : '' %>>
+                      <%= t('product.sortField.averageRating') %>
+                    </option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="order" class="form-label">
+                    <%= t('title.sortOrder') %>
+                  </label>
+                  <select class="form-select" id="order" name="order">
+                    <option value="ASC" <%=(typeof query !=='undefined' && query.order==='ASC' ) ? 'selected' : '' %>>
+                      <%= t('product.sortOrder.ASC') %>
+                    </option>
+                    <option value="DESC" <%=(typeof query !=='undefined' && query.order==='DESC' ) ? 'selected' : '' %>>
+                      <%= t('order.search.DESC') %>
+                    </option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="minValue" class="form-label">
+                    <%= t('order.search.minValue') %>
+                  </label>
+                  <input type="number" class="form-control" placeholder="0 đ" aria-label="Minimum Price" min="0" name="minPrice"
+                    value="<%=query.minPrice%>">
+                </div>
+                <div class="col">
+                  <label for="maxValue" class="form-label">
+                    <%= t('order.search.maxValue') %>
+                  </label>
+                  <input type="number" class="form-control" placeholder="500.000 đ" aria-label="Maximum Price" min="0" max="1000000"
+                    value="<%=query.maxPrice%>" name="maxPrice">
+                </div>
+                <div class="col">
+                  <label for="order" class="form-label">
+                    <%= t('title.onSale') %>
+                  </label>
+                  <div class="form-check form-switch" id="trueFalseToggle">
+                    <input class="form-check-input" type="checkbox" name="onSale" value="true" <%=query.onSale==='true' ? 'checked' : ''
+                      %>>
+                    <label class="form-check-label" for="trueFalseToggle"></label>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <label for="take" class="form-label w-100">
+                    <%=t('title.category')%>
+                  </label>
+                  <select multiple name="categoryIds" class="form-select w-100 p-0" id="categories-select"
+                    placeholder="<%=t('product.category_ph')%>" data-search="false" data-silent-initial-value-set="true">
+                    <% categories.forEach(function(category) { %>
+                      <option value="<%= category.id %>" <%=(typeof query.categoryIds !=='undefined' &&
+                        query.categoryIds.includes(category.id.toString())) ? 'selected' : '' %>>
+                        <%= category.name %>
+                      </option>
+                      <% }); %>
+                  </select>
+                </div>
+                <div class="col d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary">
+                    <%= t('order.search.filter') %>
+                  </button>
+                </div>
+              </div>
+
+              <div id="productsTableContainer">
+                <% if (typeof products !=='undefined' && products.length> 0) { %>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">
+                          <%= t('product.search.createdAt') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('product.search.image') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('product.search.name') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('product.search.description') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('product.search.averageRating') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('product.search.currentPrice') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('order.search.action') %>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% products.forEach(function(product) { %>
+                        <tr>
+                          <td>
+                            <%= product.id %>
+                          </td>
+                          <td>
+                            <%= formatDate(product.createdAt) %>
+                          </td>
+                          <td>
+                            <img src="<%= product.image %>" class="img-fluid rounded" alt="Product Image" style="max-width: 100px;">
+                          </td>
+                          <td>
+                            <%= product.name %>
+                          </td>
+                          <td>
+                            <%= product.description %>
+                          </td>
+                          <td>
+                            <%= product.averageRating %>
+                          </td>
+                          <td>
+                            <%= formatCurrency(product.currentPrice) %>
+                          </td>
+                          <td>
+                            <a href="/admin/product/<%=product.id%>">
+                              <button type="button" class="btn btn-primary">
+                                <%=t('product.search.viewDetail')%>
+                              </button>
+                            </a>
+                          </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                  </table>
+                  <% } %>
+              </div>
+              <div class="pagination d-flex justify-content-end">
+                <% if (meta.pageCount> 1) { %>
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                      <% if (meta.hasPreviousPage) { %>
+                        <li class="page-item">
+                          <button type="submit" class="page-link" name="page" value="<%= parseInt(meta.page) - 1 %>">
+                            <%=t('page.previous')%>
+                          </button>
+                        </li>
+                        <% } %>
+                      <% for (let i=1; i <=meta.pageCount; i++) { %>
+                        <li class="page-item <%= parseInt(meta.page) === i ? 'active' : '' %>">
+                          <button type="submit" class="page-link" name="page" value="<%= i %>">
+                            <%= i %>
+                          </button>
+                        </li>
+                        <% } %>
+                      <% if (meta.hasNextPage) { %>
+                        <li class="page-item">
+                          <button type="submit" class="page-link" name="page" value="<%= parseInt(meta.page) + 1 %>">
+                            <%=t('page.next')%>
+                          </button>
+                        </li>
+                        <% } %>
+                    </ul>
+                  </nav>
+                <% } %>
+              </div>  
+            </form>
+          </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+  </div>
+  <script src="/scripts/jquery.min.js"></script>
+  <script src="/scripts/bootstrap.bundle.min.js"></script>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/virtual-select.min.js"></script>
+  <script src="/scripts/admin-layout.js"></script>
+  <script src="/scripts/admin-product-list.js"></script>
+</body>
+
+</html>

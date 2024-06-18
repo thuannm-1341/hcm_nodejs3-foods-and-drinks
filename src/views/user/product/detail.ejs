@@ -22,14 +22,10 @@
             <%=t('header.homePage') %>
           </a>
           <span>/</span>
-          <form action="/products/search" method="get" id="category-search-form-<%=product.categories[0].id%>"
-            style="display: inline;">
-            <input type="hidden" name="categoryIds" value="<%= product.categories[0].id %>">
-            <a href="#" class="breadcrumb-link"
-              onclick="document.getElementById('category-search-form-<%=product.categories[0].id%>').submit();">
-              <%= product.categories[0].name %>
-            </a>
-          </form>
+          <a href="/products/search?categoryIds=<%=product.categories[0].id%>" class="breadcrumb-link"
+            onclick="document.getElementById('category-search-form-<%=product.categories[0].id%>').submit();">
+            <%= product.categories[0].name %>
+          </a>
           <span>/</span>
           <a href="#" class="breadcrumb-current-link">
             <%=product.name%>

@@ -3,7 +3,7 @@ import { PageOptionsDto } from './pageOptions.dto';
 import { 
   ProductSortField, 
 } from '../../constants';
-import { GreaterThanOrEqual } from '../../decorators';
+import { GreaterThanOrEqual, TransformStringToArray } from '../../decorators';
 
 export class ProductPageOptions extends PageOptionsDto {
   @IsEnum(ProductSortField, { message: 'error.enumNotMatch.productSortField' })
@@ -13,6 +13,9 @@ export class ProductPageOptions extends PageOptionsDto {
 
   rating?: number;
 
+  onSale?: boolean;
+
+  @TransformStringToArray()
   categoryIds?: number[];
 
   @GreaterThanOrEqual(0, { message: 'error.price.minValue' })

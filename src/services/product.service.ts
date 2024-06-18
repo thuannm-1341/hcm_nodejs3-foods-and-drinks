@@ -18,7 +18,9 @@ export class ProductService {
 
   public async getDiscountProduct(): Promise<ProductEntity[]> {
     return await this.productRepository.createQueryBuilder('products')
-    .where('products.basePrice != products.currentPrice').getMany();
+    .where('products.basePrice != products.currentPrice')
+    .limit(NUM_OF_PRODUCT_CARD)
+    .getMany();
   }
 
   public async getNewProduct(): Promise<ProductEntity[]> {
@@ -26,13 +28,17 @@ export class ProductService {
     .orderBy('products.id', 'DESC').limit(NUM_OF_PRODUCT_CARD).getMany();
   }
 
-  public async getAllProductsByCategory(): Promise<ProductsByCategoryDto[]> {
-    const categories = await this.categoryRepository.createQueryBuilder('category').getMany();
+  public async getProductsByCategory(): Promise<ProductsByCategoryDto[]> {
+    const categories = await this.categoryRepository
+    .createQueryBuilder('category').getMany();
     const result: ProductsByCategoryDto[] = [];
     for(const category of categories) {
-      const products = await this.productRepository.createQueryBuilder('products')
+      const products = await this.productRepository
+      .createQueryBuilder('products')
       .leftJoinAndSelect('products.categories', 'categories')
-      .where('categories.id = :categoryId', {categoryId: category.id}).getMany();
+      .where('categories.id = :categoryId', {categoryId: category.id})
+      .limit(NUM_OF_PRODUCT_CARD)
+      .getMany();
       const item = {
         category: category.name,
         categoryId: category.id,
@@ -60,7 +66,8 @@ export class ProductService {
       skip,
       sortField, 
       keyword, 
-      rating, 
+      rating,
+      onSale, 
       categoryIds, 
       minPrice, 
       maxPrice,
@@ -95,6 +102,9 @@ export class ProductService {
       query.andWhere('MATCH(product.name) AGAINST( :keyword IN BOOLEAN MODE)',
        {keyword: keyword},
       );
+    }
+    if(onSale) {
+      query.andWhere('product.currentPrice != product.basePrice');
     }
     //Handle sort
     query.orderBy('product.' + sortField, order)

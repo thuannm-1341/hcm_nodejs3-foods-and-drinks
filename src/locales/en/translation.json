@@ -81,7 +81,16 @@
     "email_ph": "Fill in your email"
   },
   "product": {
-    "search": "Search product",
+    "category_ph": "Choose categories",
+    "search": {
+      "createdAt": "Created at",
+      "image": "Image",
+      "name": "Name",
+      "description": "Description",
+      "averageRating": "Rating",
+      "viewDetail": "Detail",
+      "currentPrice": "Current price"
+    },
     "sortField": {
       "createdAt": "Created at",
       "currentPrice": "Price",
@@ -103,7 +112,9 @@
     "order": "Order",
     "notFound": "Page not found",
     "profile": "Profile",
-    "orderDetail": "Order detail"
+    "orderDetail": "Order detail",
+    "searchProduct": "Search product",
+    "onSale": "On sale"
   },
   "page": {
     "previous": "Previous",
