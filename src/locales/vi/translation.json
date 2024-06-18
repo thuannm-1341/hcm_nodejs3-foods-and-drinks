@@ -81,7 +81,16 @@
     "email_ph": "Điền email của bạn"
   },
   "product": {
-    "search": "Tìm sản phẩm",
+    "category_ph": "Chọn phân loại",
+    "search": {
+      "createdAt": "Tạo lúc",
+      "image": "Hình ảnh",
+      "name": "Tên",
+      "description": "Mô tả",
+      "averageRating": "Đánh giá",
+      "viewDetail": "Xem chi tiết",
+      "currentPrice": "Giá hiện tại"
+    },
     "sortField": {
       "createdAt": "Ngày tạo",
       "currentPrice": "Giá",
@@ -103,7 +112,9 @@
     "order": "Đơn hàng",
     "notFound": "Không tìm thấy trang này",
     "profile": "Hồ sơ",
-    "orderDetail": "Chi tiết đơn hàng"
+    "orderDetail": "Chi tiết đơn hàng",
+    "searchProduct": "Tìm kiếm sản phẩm",
+    "onSale": "Đang giảm giá"
   },
   "page": {
     "previous": "Trang trước",

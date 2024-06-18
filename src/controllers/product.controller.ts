@@ -17,7 +17,7 @@ export class ProductController {
   
   public getHomePage = asyncHandler(
     async (req: Request, res: Response) => {
-      const data = await this.productService.getAllProductsByCategory();
+      const data = await this.productService.getProductsByCategory();
       const newProduct = await this.productService.getNewProduct();
       const discountProduct = await this.productService.getDiscountProduct();
       return res.render('user/home', {

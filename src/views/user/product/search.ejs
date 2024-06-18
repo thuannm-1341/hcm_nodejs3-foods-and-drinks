@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
-    <%= t('product.search') %>
+    <%= t('title.searchProduct') %>
   </title>
   <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
   <link rel="stylesheet" href="/stylesheets/style.css" />
@@ -99,6 +99,17 @@
                         </label>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div class="filter-card-divider"></div>
+                <div class="mb-3">
+                  <h6 class="filter-card-title mb-2">
+                    <%= t('title.onSale') %>
+                  </h6>
+                  <div class="form-check form-switch" id="trueFalseToggle">
+                    <input class="form-check-input" type="checkbox" name="onSale" value="true" <%=query.onSale==='true' ? 'checked' : ''
+                      %>>
+                    <label class="form-check-label" for="trueFalseToggle"></label>
                   </div>
                 </div>
                 <div class="filter-card-divider"></div>

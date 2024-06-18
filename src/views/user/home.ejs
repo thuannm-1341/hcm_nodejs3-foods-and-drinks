@@ -29,10 +29,12 @@
           </form>
         </div>
       </div>
-      <h3 class="mb-4">
-        <%= t('home.newProduct') %>
-      </h3>
-      <div class="row g-4">
+      <a href="/products/search?sortField=createdAt&order=DESC" class="link-danger link-offset-2 link-underline-opacity-0 link-opacity-50-hover">
+        <h3 class="mb-4">
+          <%= t('home.newProduct') %>
+        </h3>
+      </a>
+      <div class="row g-4 mb-4">
         <% newProduct.forEach((product)=> { %>
           <div class="col-md-3">
             <div class="card">
@@ -73,10 +75,12 @@
           </div>
           <% }) %>
       </div>
-      <h3 class="my-4">
-        <%= t('home.discount') %>
-      </h3>
-      <div class="row g-4">
+      <a href="/products/onSale?true" class="link-danger link-offset-2 link-underline-opacity-0 link-opacity-50-hover">
+        <h3 class="mb-4">
+          <%= t('home.discount') %>
+        </h3>
+      </a>
+      <div class="row g-4 mb-4">
         <% discountProduct.forEach((product)=> { %>
           <div class="col-md-3">
             <div class="card">
@@ -118,19 +122,14 @@
           <% }) %>
       </div>
       <% data.forEach((item)=> { %>
-        <form action="/products/search" method="get" id="category-search-form-<%=item.categoryId%>"
-          style="display: inline;">
-          <input type="hidden" name="categoryIds" value="<%= item.categoryId %>">
-          <a href="#" class="breadcrumb-link text-decoration-none text-dark"
-            onclick="document.getElementById('category-search-form-<%=item.categoryId%>').submit();">
-            <h3 class="my-4">
-              <%= item.category %>
-            </h3>
-          </a>
-        </form>
+        <a href="/products/search?categoryIds=<%=item.categoryId%>" class="link-danger link-offset-2 link-underline-opacity-0 link-opacity-50-hover">
+          <h3 class="mb-4">
+            <%= item.category %>
+          </h3>
+        </a>
         <div class="row g-4">
           <% item.products.forEach((product)=> { %>
-            <div class="col-md-3">
+            <div class="col-md-3 mb-4">
               <div class="card">
                 <a href="/products/<%= product.id %>">
                   <img src="<%= product.image %>" class="card-img-top" alt="Product Image">
