@@ -4,3 +4,5 @@ export enum ProductSortField {
   CREATED_AT = 'createdAt',
   RATING = 'averageRating',
 }
+export const NAME_MIN_LENGTH = 5;
+export const DESCRIPTION_MIN_LENGTH = 5;

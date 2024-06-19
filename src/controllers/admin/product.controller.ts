@@ -9,7 +9,7 @@ import { formatCurrency, formatDate, handleError } from '../../commons/utils';
 import { AdminNavBar } from '../../constants/admin';
 import { ProductEntity } from '../../entities/product.entity';
 import { Error } from '../../constants';
-
+import { CreateProductDto } from '../../commons/dtos/createProduct.dto';
 export class AdminProductController {
   private readonly productService: ProductService;
   constructor() {
@@ -77,4 +77,37 @@ export class AdminProductController {
     }
     return await this.productService.getProductDetail(id);
   };
+
+  public adminCreateProductGet = asyncHandler(
+    async (req: Request, res: Response) => {
+      const admin = (req.session as CustomSessionData).admin;
+      const categories = await this.productService.getAllCategories();
+      return res.render('admin/product/create', {
+          admin,
+          currentSite: AdminNavBar.PRODUCT,
+          categories,
+        });
+    },
+  );
+
+  public adminCreateProductPost = asyncHandler(
+    async (req: Request, res: Response) => {
+      const admin = (req.session as CustomSessionData).admin;
+      const categories = await this.productService.getAllCategories();
+      const createOptions = plainToClass(CreateProductDto, req.body);
+      const rawErrors = await validate(createOptions);
+      if(rawErrors.length > 0) {
+        const errors = handleError(rawErrors, req, res);
+        return res.render('admin/product/create',{
+          admin,
+          currentSite: AdminNavBar.PRODUCT,
+          categories,
+          data: createOptions,
+          errors,
+        });
+      }
+      const product = await this.productService.createProduct(createOptions);
+      return res.redirect(`/admin/product/${product.id}`);
+    },
+  );
 }

@@ -5,10 +5,10 @@ import {
 } from 'class-validator';
 import { StoreService } from '../services/store.service';
 import { OrderType } from '../constants';
-import { UserService } from '../services/user.service';
+import { CategoryService } from '../services/category.service';
 
 const storeService = new StoreService();
-const userService = new UserService();
+const categoryService = new CategoryService();
 
 export function GreaterThanOrEqual(
   min: number,
@@ -124,6 +124,43 @@ export function IsValidStoreId(validationOptions?: ValidationOptions) {
             }
           }
           return true;
+        },
+      },
+    });
+  };
+}
+
+export function IsValidCategoryId(validationOptions?: ValidationOptions) {
+  return function (object: object, propertyName: string) {
+    registerDecorator({
+      name: 'isValidCategoryId',
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      constraints: [],
+      validator: {
+        async validate(value: any, args: ValidationArguments) {
+          const store = await categoryService.findOneById(value);
+          return store !== null;
+        },
+      },
+    });
+  };
+}
+
+export function IsCurrentPriceLessThanOrEqualBasePrice(
+  validationOptions?: ValidationOptions,
+) {
+  return function (object: object, propertyName: string) {
+    registerDecorator({
+      name: 'isCurrentPriceGreaterThanOrEqualBasePrice',
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      validator: {
+        validate(value: any, args: ValidationArguments) {
+          const object = args.object as any;
+          return value <= object.basePrice;
         },
       },
     });

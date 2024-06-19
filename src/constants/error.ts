@@ -15,4 +15,8 @@ export enum Error {
   INVALID_PAYMENT_TYPE = 'error.order.invalidPaymentType',
   BAD_INPUT = 'error.badInput',
   PHONE_NUMBER_MIN_LENGTH = 'error.phoneNumber.minLength',
+  CATEGORY_NOT_FOUND = 'error.category.notFound',
+  NAME_MIN_LENGTH = 'error.product.nameMinLength',
+  DESCRIPTION_MIN_LENGTH = 'error.product.descriptionMinLength',
+  INVALID_CURRENT_PRICE = 'error.product.invalidCurrentPrice',
 }

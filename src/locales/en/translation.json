@@ -50,7 +50,10 @@
       "notFound": "User not found"
     },
     "product": {
-      "notFound": "Product not found"
+      "notFound": "Product not found",
+      "invalidCurrentPrice": "Current price must less than or equal base price",
+      "nameMinLength": "Name min length is 5",
+      "descriptionMinLength": "Description min length is 5"
     },
     "invalidCredential": "Invalid credentials",
     "address": {
@@ -63,6 +66,10 @@
     "phoneNumber": {
       "minLength": "Phone number min length is 10",
       "format": "Please type in phone number format"
+    },
+    "file": {
+      "uploadError": "Error while uploading file",
+      "invalidType": "Invalid file type"
     }
   },
   "register": {
@@ -82,6 +89,8 @@
   },
   "product": {
     "category_ph": "Choose categories",
+    "name_ph": "Type in product name",
+    "description_ph": "Type in product description",
     "search": {
       "createdAt": "Created at",
       "image": "Image",
@@ -109,6 +118,17 @@
       "category": "Category",
       "averageRating": "Average rating",
       "description": "Description"
+    },
+    "create": {
+      "title": "Create new product",
+      "label": {
+        "name": "Name",
+        "description": "Description",
+        "basePrice": "Base price",
+        "currentPrice": "Current price",
+        "category": "Choose category",
+        "image": "Upload image"
+      }
     }
   },
   "title": {
@@ -239,7 +259,6 @@
       "phoneNumber": "Phone number"
     },
     "button": {
-      "cancel": "Cancel order",
       "approve": "Approve order",
       "reject": "Reject order",
       "confirmReject": "Confirm",
@@ -248,7 +267,8 @@
       "confirm": "Confirm",
       "ready": "Ready",
       "delivered": "Delivered",
-      "complete": "Order complete"
+      "complete": "Order complete",
+      "cancel": "Cancel order"
     },
     "update": {
       "success": "Update order successfully"
@@ -278,5 +298,12 @@
       "profile": "Profile",
       "order": "Order"
     }
+  },
+  "file": {
+    "uploadSuccessfully": "Upload file successfully"
+  },
+  "button": {
+    "createProduct": "Create product",
+    "cancel": "Cancel"
   }
 }
