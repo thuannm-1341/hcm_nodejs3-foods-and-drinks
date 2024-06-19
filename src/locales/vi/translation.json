@@ -99,6 +99,16 @@
     "sortOrder": {
       "ASC": "Tăng dần",
       "DESC": "Giảm dần"
+    },
+    "detail": {
+      "name": "Tên sản phẩm",
+      "id": "Id",
+      "createdAt": "Tạo lúc",
+      "currentPrice": "Giá hiện tại",
+      "basePrice": "Giá gốc",
+      "category": "Phân loại",
+      "averageRating": "Đánh giá trung bình",
+      "description": "Mô tả"
     }
   },
   "title": {

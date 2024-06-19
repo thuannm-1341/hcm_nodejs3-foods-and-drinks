@@ -99,6 +99,16 @@
     "sortOrder": {
       "ASC": "Ascending",
       "DESC": "Descending"
+    },
+    "detail": {
+      "name": "Product name",
+      "id": "Id",
+      "createdAt": "Created at",
+      "currentPrice": "Current price",
+      "basePrice": "Base price",
+      "category": "Category",
+      "averageRating": "Average rating",
+      "description": "Description"
     }
   },
   "title": {
