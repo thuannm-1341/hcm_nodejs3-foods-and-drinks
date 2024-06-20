@@ -60,7 +60,9 @@
       "minLength": "Address min length is 5"
     },
     "store": {
-      "notFound": "Store not found"
+      "notFound": "Store not found",
+      "nameMinLength": "Store name min length is 5",
+      "cannotDelete": "The store that received the order cannot be deleted"
     },
     "badInput": "Bad input",
     "phoneNumber": {
@@ -352,6 +354,40 @@
   "button": {
     "createProduct": "Create product",
     "cancel": "Cancel",
-    "updateProduct": "Update product"
+    "updateProduct": "Update product",
+    "create": "Create",
+    "update": "Update",
+    "delete": "Delete"
+  },
+  "store": {
+    "search": {
+      "keyword": "Key word",
+      "take": "Records / page",
+      "sortOrder": "Sort order",
+      "ASC": "Oldest",
+      "DESC": "Latest",
+      "filter": "Filter",
+      "name": "Name",
+      "address": "Address",
+      "phoneNumber": "Phone number",
+      "update": "Update"
+    },
+    "create": {
+      "new": "Create new store",
+      "name": "Store name",
+      "address": "Store address",
+      "phoneNumber": "Phone number",
+      "success": "Create new store successfully!"
+    },
+    "update": {
+      "title": "Update store",
+      "name": "Name",
+      "address": "Address",
+      "phoneNumber": "Phone number",
+      "success": "Update store successfully"
+    },
+    "delete": {
+      "success": "Delete store successfully"
+    }
   }
 }

@@ -60,7 +60,9 @@
       "minLength": "Độ dài địa chỉ tối thiểu là 5"
     },
     "store": {
-      "notFound": "Không tìm thấy cửa hàng"
+      "notFound": "Không tìm thấy cửa hàng",
+      "nameMinLength": "Độ dài tên cửa hàng tối thiểu là 5",
+      "cannotDelete": "Không thể xóa cửa hàng đã nhận đơn hàng"
     },
     "badInput": "Dữ liệu không hợp lệ",
     "phoneNumber": {
@@ -352,6 +354,40 @@
   "button": {
     "createProduct": "Tạo sản phẩm mới",
     "cancel": "Hủy",
-    "updateProduct": "Cập nhật sản phẩm"
+    "updateProduct": "Cập nhật sản phẩm",
+    "create": "Tạo",
+    "update": "Cập nhật",
+    "delete": "Xóa"
+  },
+  "store": {
+    "search": {
+      "keyword": "Từ khóa",
+      "take": "Bản ghi / trang",
+      "sortOrder": "Sắp xếp theo",
+      "ASC": "Cũ nhất",
+      "DESC": "Mới nhất",
+      "filter": "Lọc",
+      "name": "Tên cửa hàng",
+      "address": "Địa chỉ",
+      "phoneNumber": "Số điện thoại",
+      "update": "Cập nhật"
+    },
+    "create": {
+      "new": "Tạo cửa hàng mới",
+      "name": "Tên cửa hàng",
+      "address": "Địa chỉ",
+      "phoneNumber": "Số điện thoại",
+      "success": "Tạo cửa hàng mới thành công!"
+    },
+    "update": {
+      "title": "Cập nhật cửa hàng",
+      "name": "Tên cửa hàng",
+      "address": "Địa chỉ",
+      "phoneNumber": "Số điện thoại",
+      "success": "Cập nhật cửa hàng thành công!"
+    },
+    "delete": {
+      "success": "Xóa cửa hàng thành công!"
+    }
   }
 }

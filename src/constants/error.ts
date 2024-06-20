@@ -19,4 +19,6 @@ export enum Error {
   NAME_MIN_LENGTH = 'error.product.nameMinLength',
   DESCRIPTION_MIN_LENGTH = 'error.product.descriptionMinLength',
   INVALID_CURRENT_PRICE = 'error.product.invalidCurrentPrice',
+  STORE_NAME_MIN_LENGTH = 'error.store.nameMinLength',
+  CANNOT_DELETE_STORE = 'error.store.cannotDelete',
 }

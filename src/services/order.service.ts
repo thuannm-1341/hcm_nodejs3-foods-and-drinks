@@ -359,4 +359,15 @@ export class OrderService {
     }
     return query.getCount();
   }
+
+  public async getStoreOrderNumber(storeId: number, orderStatus?: OrderStatus)
+  :Promise<number> {
+    const query = this.orderRepository.createQueryBuilder('order')
+    .leftJoin('order.store', 'store')
+    .where('store.id = :storeId', {storeId: storeId});
+    if(orderStatus){
+      query.andWhere('order.status = :status', {status: orderStatus});
+    }
+    return query.getCount();
+  }
 }
