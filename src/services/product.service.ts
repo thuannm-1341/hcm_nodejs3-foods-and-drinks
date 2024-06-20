@@ -142,4 +142,21 @@ export class ProductService {
     });
     return this.productRepository.save(newProduct);
   }
+
+  public async updateProduct(
+    product: ProductEntity, 
+    updateOptions: CreateProductDto)
+  : Promise<ProductEntity> {
+    const category = await this.categoryService
+    .findOneById(updateOptions.categoryId);
+    if(category === null){
+      throw Error.CATEGORY_NOT_FOUND;
+    }
+    this.productRepository.merge(
+      product, 
+      updateOptions, 
+      {categories: [category]},
+    );
+    return this.productRepository.save(product);
+  }
 }
