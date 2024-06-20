@@ -207,7 +207,7 @@
       "order": "Sort order",
       "ASC": "ASC",
       "DESC": "DESC",
-      "take": "Records per page",
+      "take": "Records / page",
       "sortField": "Sort field",
       "createdAt": "Created at",
       "total": "Order value",
@@ -299,9 +299,51 @@
     }
   },
   "user": {
+    "title": {
+      "detail": "User detail"
+    },
     "nav": {
       "profile": "Profile",
       "order": "Order"
+    },
+    "search": {
+      "take": "Records / page",
+      "sortOrder": "Sort order",
+      "keyword_ph": "Type in user keyword",
+      "ASC": "Oldest",
+      "DESC": "Latest",
+      "keyword": "Key word",
+      "isActive": "Account type",
+      "filter": "Filter",
+      "avatar": "Avatar",
+      "userName": "User name",
+      "fullName": "Full name",
+      "email": "Email",
+      "phoneNumber": "Phone number",
+      "createdAt": "Created at",
+      "action": "Action",
+      "viewDetail": "Detail",
+      "allUser": "All",
+      "activeUser": "Active account",
+      "inactiveUser": "Inactive account",
+      "notUpdate": "No data"
+    },
+    "detail": {
+      "accountInformation": "Account information",
+      "userName": "User name",
+      "accountStatus": "Account status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "email": "Email",
+      "createdAt": "Created at",
+      "personalInformation": "Personal information",
+      "gender": "Gender",
+      "dob": "Date of birth",
+      "noData": "No data",
+      "fullName": "Full name",
+      "address": "Address",
+      "phoneNumber": "Phone number",
+      "numOfOrder": "Total order"
     }
   },
   "file": {

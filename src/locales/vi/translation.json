@@ -207,7 +207,7 @@
       "order": "Thứ tự sắp xếp",
       "ASC": "Tăng dần",
       "DESC": "Giảm dần",
-      "take": "Số bản ghi",
+      "take": "Bản ghi / trang",
       "sortField": "Sắp xếp theo",
       "createdAt": "Ngày tạo",
       "total": "Giá trị đơn hàng",
@@ -299,9 +299,51 @@
     }
   },
   "user": {
+    "title": {
+      "detail": "Thông tin người dùng"
+    },
     "nav": {
       "profile": "Hồ sơ",
       "order": "Đơn hàng"
+    },
+    "search": {
+      "take": "Bản ghi / trang",
+      "sortOrder": "Thứ tự",
+      "keyword_ph": "Nhập vào từ khóa tìm kiếm",
+      "ASC": "Cũ nhất",
+      "DESC": "Mới nhất",
+      "keyword": "Từ khóa",
+      "isActive": "Loại tài khoản",
+      "filter": "Lọc",
+      "avatar": "Ảnh đại diện",
+      "userName": "Tên đăng nhập",
+      "fullName": "Tên người dùng",
+      "email": "Email",
+      "phoneNumber": "Số điện thoại",
+      "createdAt": "Thời điểm đăng ký",
+      "action": "Hành động",
+      "viewDetail": "Chi tiết",
+      "allUser": "Tất cả",
+      "activeUser": "Tài khoản bình thường",
+      "inactiveUser": "Tài khoản bị vô hiệu hóa",
+      "notUpdate": "Không có dữ liệu"
+    },
+    "detail": {
+      "accountInformation": "Thông tin tài khoản",
+      "userName": "Tên đăng nhập",
+      "accountStatus": "Trạng thái tài khoản",
+      "active": "Hoạt động",
+      "inactive": "Bị vô hiệu hóa",
+      "email": "Email",
+      "createdAt": "Thời điểm tạo",
+      "personalInformation": "Thông tin cá nhân",
+      "gender": "Giới tính",
+      "dob": "Ngày sinh",
+      "noData": "Chưa có dữ liệu",
+      "fullName": "Tên đầy đủ",
+      "address": "Địa chỉ",
+      "phoneNumber": "Số điện thoại",
+      "numOfOrder": "Tổng số đơn hàng"
     }
   },
   "file": {

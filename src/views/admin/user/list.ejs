@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="/stylesheets/virtual-select.min.css" />
+  <link rel="stylesheet" href="/stylesheets/admin-layout.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+  <title>
+    <%= (typeof currentSite !='undefined' ) ? t(currentSite) : t('admin.nav.default') %>
+  </title>
+</head>
+
+<body>
+  <div class="d-flex" id="wrapper">
+
+    <%- include('../../layouts/admin/sidebar') -%>
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <%- include('../../layouts/admin/top-navbar') -%>
+          <div class="container-fluid px-4">
+            <form id="orderFilterForm" class="row g-3 mb-4" method="GET">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label for="minValue" class="form-label">
+                    <%= t('user.search.keyword') %>
+                  </label>
+                  <input type="text" class="form-control rounded" placeholder="<%=t('user.search.keyword_ph')%>" name="keyword"
+                    value="<%=query.keyword%>">
+                </div>
+                <div class="col-md-2">
+                  <label for="order" class="form-label">
+                    <%= t('user.search.isActive') %>
+                  </label>
+                  <select class="form-control" id="isActive" name="isActive">
+                    <option value="" <%=(typeof query ==='undefined'||(typeof query !=='undefined' && query.isActive==='' )) ? 'selected' : '' %>><%=t('user.search.allUser')%></option>
+                    <option value="true" <%=(typeof query !=='undefined' && query.isActive===true ) ? 'selected' : '' %>><%=t('user.search.activeUser')%></option>
+                    <option value="false" <%=(typeof query !=='undefined' && query.isActive===false ) ? 'selected' : '' %>><%=t('user.search.inactiveUser')%></option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label for="take" class="form-label">
+                    <%= t('user.search.take') %>
+                  </label>
+                  <input type="number" class="form-control" id="take" name="take" min="10" max="20"
+                    value="<%= typeof query !== 'undefined' ? query.take : '12' %>">
+                </div>
+                <div class="col-md-2">
+                  <label for="order" class="form-label">
+                    <%= t('user.search.sortOrder') %>
+                  </label>
+                  <select class="form-select" id="order" name="order">
+                    <option value="ASC" <%=(typeof query !=='undefined' && query.order==='ASC' ) ? 'selected' : '' %>>
+                      <%= t('user.search.ASC') %>
+                    </option>
+                    <option value="DESC" <%=(typeof query !=='undefined' && query.order==='DESC' ) ? 'selected' : '' %>>
+                      <%= t('user.search.DESC') %>
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary">
+                    <%= t('user.search.filter') %>
+                  </button>
+                </div>
+              </div>
+              <div id="usersTableContainer">
+                <% if (typeof users !=='undefined' && users.length> 0) { %>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">
+                          <%= t('user.search.avatar') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('user.search.userName') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('user.search.fullName') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('user.search.email') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('user.search.phoneNumber') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('user.search.createdAt') %>
+                        </th>
+                        <th scope="col">
+                          <%= t('user.search.action') %>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% users.forEach(function(user) { %>
+                        <tr>
+                          <td>
+                            <%= user.id %>
+                          </td>
+                          <td>
+                            <img src="<%= user.avatar ? user.avatar : '/images/sample-avatar.png' %>" class="img-fluid rounded" alt="Product Image"
+                              style="max-width: 100px;">
+                          </td>
+                          <td>
+                            <%= user.userName %>
+                          </td>
+                          <td>
+                            <%= user.fullName %>
+                          </td>
+                          <td>
+                            <%= user.email %>
+                          </td>
+                          <td>
+                            <%= user.phoneNumber ? user.phoneNumber : t('user.search.notUpdate') %>
+                          </td>
+                          <td>
+                            <%= formatDate(user.createdAt) %>
+                          </td>
+                          <td>
+                            <a href="/admin/user/<%=user.id%>">
+                              <button type="button" class="btn btn-primary">
+                                <%=t('user.search.viewDetail')%>
+                              </button>
+                            </a>
+                          </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                  </table>
+                  <% } %>
+              </div>
+              <div class="pagination d-flex justify-content-end">
+                <% if (typeof meta !=='undefined' && meta.pageCount> 1) { %>
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                      <% if (meta.hasPreviousPage) { %>
+                        <li class="page-item">
+                          <button type="submit" class="page-link" name="page" value="<%= parseInt(meta.page) - 1 %>">
+                            <%=t('page.previous')%>
+                          </button>
+                        </li>
+                        <% } %>
+                          <% for (let i=1; i <=meta.pageCount; i++) { %>
+                            <li class="page-item <%= parseInt(meta.page) === i ? 'active' : '' %>">
+                              <button type="submit" class="page-link" name="page" value="<%= i %>">
+                                <%= i %>
+                              </button>
+                            </li>
+                            <% } %>
+                              <% if (meta.hasNextPage) { %>
+                                <li class="page-item">
+                                  <button type="submit" class="page-link" name="page"
+                                    value="<%= parseInt(meta.page) + 1 %>">
+                                    <%=t('page.next')%>
+                                  </button>
+                                </li>
+                                <% } %>
+                    </ul>
+                  </nav>
+                  <% } %>
+              </div>
+            </form>
+          </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+  </div>
+  <script src="/scripts/jquery.min.js"></script>
+  <script src="/scripts/bootstrap.bundle.min.js"></script>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/virtual-select.min.js"></script>
+  <script src="/scripts/admin-layout.js"></script>
+  <script src="/scripts/admin-product-list.js"></script>
+</body>
+
+</html>

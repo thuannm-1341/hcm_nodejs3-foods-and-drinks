@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="/stylesheets/virtual-select.min.css" />
+  <link rel="stylesheet" href="/stylesheets/admin-layout.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+  <title>
+    <%= (typeof currentSite !='undefined' ) ? t(currentSite) : t('admin.nav.default') %>
+  </title>
+</head>
+
+<body>
+  <div class="d-flex" id="wrapper">
+    <%- include('../../layouts/admin/sidebar') -%>
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <%- include('../../layouts/admin/top-navbar') -%>
+          <div class="container-fluid px-4">
+            <div class="container bg-white p-4 rounded shadow-sm">
+              <div class="mb-2">
+                <h2 class="mb-1" id="user-id" data="<%= user.id %>">
+                  <%= t('user.title.detail') %>
+                </h2>
+              </div>
+              <div class="row">
+                <!-- Avatar Section -->
+                <div class="col-md-4 mt-4">
+                  <div class="card">
+                    <img src="<%= user.avatar ? user.avatar : '/images/sample-avatar.png' %>"
+                      class="card-img-top img-fluid rounded mx-auto d-block" alt="User Avatar">
+                    <div class="card-body text-center">
+                      <h5 class="card-title">
+                        <%= user.userName %>
+                      </h5>
+                      <p class="card-text">
+                        <%= user.email %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Account Information Section -->
+                <div class="col-md-8 mt-4">
+                  <div class="card mb-4">
+                    <div class="card-header">
+                      <h4>
+                        <%= t('user.detail.accountInformation') %>
+                      </h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <p><strong>
+                              <%= t('user.detail.userName') %>:
+                            </strong>
+                            <%= user.userName %>
+                          </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <p><strong>
+                              <%= t('user.detail.accountStatus') %>:
+                            </strong>
+                            <%= user.isActive ? t('user.detail.active') : t('user.detail.inactive') %>
+                          </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <p><strong>
+                              <%= t('user.detail.email') %>:
+                            </strong>
+                            <%= user.email %>
+                          </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <p><strong>
+                              <%= t('user.detail.createdAt') %>:
+                            </strong>
+                            <%= formatDate(user.createdAt) %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Personal Information Section -->
+                  <div class="card">
+                    <div class="card-header">
+                      <h4>
+                        <%= t('user.detail.personalInformation') %>
+                      </h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <p><strong>
+                              <%= t('user.detail.gender') %>:
+                            </strong>
+                            <%= user.gender ? user.gender : t('user.detail.noData') %>
+                          </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <p><strong>
+                              <%= t('user.detail.dob') %>:
+                            </strong>
+                            <%= user.dob ? formatDate(user.dob) : t('user.detail.noData') %>
+                          </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <p><strong>
+                              <%= t('user.detail.fullName') %>:
+                            </strong>
+                            <%= user.fullName %>
+                          </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <p><strong>
+                              <%= t('user.detail.address') %>:
+                            </strong>
+                            <%= user.address ? user.address : t('user.detail.noData') %>
+                          </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <p><strong>
+                              <%= t('user.detail.phoneNumber') %>:
+                            </strong>
+                            <%= user.phoneNumber ? user.phoneNumber : t('user.detail.noData') %>
+                          </p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <p><strong>
+                              <%= t('user.detail.numOfOrder') %>:
+                            </strong>
+                            <%= userTotalOrder %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+  </div>
+  <script src="/scripts/jquery.min.js"></script>
+  <script src="/scripts/bootstrap.bundle.min.js"></script>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/virtual-select.min.js"></script>
+  <script src="/scripts/admin-layout.js"></script>
+</body>
+
+</html>
