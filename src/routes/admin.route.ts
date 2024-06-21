@@ -17,6 +17,14 @@ adminRoute.post(
   '/product/create',
   adminProductController.adminCreateProductPost,
 );
+adminRoute.get(
+  '/product/:id/update',
+  adminProductController.adminUpdateProductGet,
+);
+adminRoute.post(
+  '/product/:id/update',
+  adminProductController.adminUpdateProductPost,
+);
 adminRoute.get('/product/:id', adminProductController.getAdminProductDetail);
 adminRoute.put('/order/update-store', adminOrderController.updateOrderStore);
 adminRoute.put('/order/update', adminOrderController.updateOrderStatus);

@@ -98,7 +98,8 @@
       "description": "Mô tả",
       "averageRating": "Đánh giá",
       "viewDetail": "Xem chi tiết",
-      "currentPrice": "Giá hiện tại"
+      "currentPrice": "Giá hiện tại",
+      "update": "Cập nhật"
     },
     "sortField": {
       "createdAt": "Ngày tạo",
@@ -129,6 +130,9 @@
         "category": "Chọn phân loại",
         "image": "Tải ảnh sản phẩm lên"
       }
+    },
+    "update": {
+      "title": "Cập nhật sản phẩm"
     }
   },
   "title": {
@@ -268,7 +272,8 @@
       "ready": "Đơn hàng sẵn sàng",
       "delivered": "Đã giao hàng",
       "complete": "Hoàn thành đơn hàng",
-      "cancel": "Hủy đơn hàng"
+      "cancel": "Hủy đơn hàng",
+      "updateProduct": "Cập nhật sản phẩm"
     },
     "update": {
       "success": "Cập nhật đơn hàng thành công"
@@ -304,6 +309,7 @@
   },
   "button": {
     "createProduct": "Tạo sản phẩm mới",
-    "cancel": "Hủy"
+    "cancel": "Hủy",
+    "updateProduct": "Cập nhật sản phẩm"
   }
 }

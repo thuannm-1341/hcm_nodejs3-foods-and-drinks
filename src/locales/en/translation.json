@@ -98,7 +98,8 @@
       "description": "Description",
       "averageRating": "Rating",
       "viewDetail": "Detail",
-      "currentPrice": "Current price"
+      "currentPrice": "Current price",
+      "update": "Update"
     },
     "sortField": {
       "createdAt": "Created at",
@@ -129,6 +130,9 @@
         "category": "Choose category",
         "image": "Upload image"
       }
+    },
+    "update": {
+      "title": "Update product"
     }
   },
   "title": {
@@ -268,7 +272,8 @@
       "ready": "Ready",
       "delivered": "Delivered",
       "complete": "Order complete",
-      "cancel": "Cancel order"
+      "cancel": "Cancel order",
+      "updateProduct": "Update product"
     },
     "update": {
       "success": "Update order successfully"
@@ -304,6 +309,7 @@
   },
   "button": {
     "createProduct": "Create product",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "updateProduct": "Update product"
   }
 }

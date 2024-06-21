@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="/stylesheets/admin-layout.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+  <title>
+    <%= (typeof currentSite !='undefined' ) ? t(currentSite) : t('admin.nav.default') %>
+  </title>
+</head>
+
+<body>
+  <div class="d-flex" id="wrapper">
+
+    <%- include('../../layouts/admin/sidebar') -%>
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <%- include('../../layouts/admin/top-navbar') -%>
+          <div class="container-fluid px-4">
+            <div class="container-fluid bg-white p-4 rounded">
+              <h2>
+                <%=t('product.update.title')%>#<%=product.id%>
+              </h2>
+              <form action="" method="POST" id="product-form">
+                <div class="mb-4">
+                  <div>
+                    <label class="my-2">
+                      <%=t('product.create.label.name')%>:
+                    </label>
+                    <input type="text" class="form-control" name="name" placeholder="<%= t('product.name_ph') %>"
+                      value="<%= typeof data !=='undefined' ? data.name : product.name %>" required>
+                    <% if (typeof errors !=='undefined' && errors.name!==undefined) { %>
+                      <p class="text-danger pt-2 mb-0">
+                        <%= t(errors.name) %>
+                      </p>
+                      <% } %>
+                  </div>
+                  <div>
+                    <label class="my-2">
+                      <%=t('product.create.label.description')%>:
+                    </label>
+                    <input type="text" class="form-control" name="description"
+                      placeholder="<%= t('product.description_ph') %>"
+                      value="<%= typeof data !=='undefined' ? data.description : product.name %>" required>
+                    <% if (typeof errors !=='undefined' && errors.description!==undefined) { %>
+                      <p class="text-danger pt-2 mb-0">
+                        <%= t(errors.description) %>
+                      </p>
+                      <% } %>
+                  </div>
+                  <div>
+                    <label class="my-2">
+                      <%=t('product.create.label.basePrice')%>:
+                    </label>
+                    <input type="number" class="form-control" name="basePrice" placeholder="0" min="0"
+                      value="<%= typeof data !=='undefined' ? data.basePrice : product.basePrice %>" required>
+                    <% if (typeof errors !=='undefined' && errors.basePrice!==undefined) { %>
+                      <p class="text-danger pt-2 mb-0">
+                        <%= t(errors.basePrice) %>
+                      </p>
+                      <% } %>
+                  </div>
+                  <div>
+                    <label class="my-2">
+                      <%=t('product.create.label.currentPrice')%>:
+                    </label>
+                    <input type="number" class="form-control" name="currentPrice" placeholder="0" min="0"
+                      value="<%= typeof data !=='undefined' ? data.currentPrice : product.currentPrice %>" required>
+                    <% if (typeof errors !=='undefined' && errors.currentPrice!==undefined) { %>
+                      <p class="text-danger pt-2 mb-0">
+                        <%= t(errors.currentPrice) %>
+                      </p>
+                      <% } %>
+                  </div>
+                  <div>
+                    <label class="my-2">
+                      <%=t('product.create.label.category')%>:
+                    </label>
+                    <select name="categoryId" class="form-select" id="categories" required>
+                      <% categories.forEach(category=> { %>
+                        <option value="<%= category.id %>">
+                          <%= category.name %>
+                        </option>
+                        <% }); %>
+                    </select>
+                    <% if (typeof errors !=='undefined' && errors.categories!==undefined) { %>
+                      <p class="text-danger pt-2 mb-0">
+                        <%= t(errors.categories) %>
+                      </p>
+                      <% } %>
+                  </div>
+                  <div>
+                    <label class="my-2">
+                      <%=t('product.create.label.image')%>:
+                    </label>
+                    <input type="file" class="form-control" name="imageFile" id="image-input" accept="image/*">
+                    <img id="image-preview" src="<%=product.image%>" alt="Image Preview"
+                      class="w-25 mt-2"/>
+                    <% if (typeof errors !=='undefined' && errors.image !==undefined) { %>
+                      <p class="text-danger pt-2 mb-0">
+                        <%= t(errors.image) %>
+                      </p>
+                      <% } %>
+                        <input type="hidden" name="image" id="image-url" value="<%=product.image%>">
+                  </div>
+                </div>
+                <div class="form-buttons text-end">
+                  <button type="submit" class="btn btn-primary btn-custom"><strong>
+                      <%= t('button.updateProduct') %>
+                    </strong></button>
+                  <a href="/admin/product/search" class="btn btn-danger btn-custom"><strong>
+                      <%= t('button.cancel') %>
+                    </strong></a>
+                </div>
+              </form>
+            </div>
+          </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+  </div>
+  <script src="/scripts/jquery.min.js"></script>
+  <script src="/scripts/bootstrap.bundle.min.js"></script>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/admin-layout.js"></script>
+  <script src="/scripts/utils.js"></script>
+  <script src="/scripts/sweetalert.min.js"></script>
+  <script src="/scripts/update-product.js"></script>
+</body>
+
+</html>

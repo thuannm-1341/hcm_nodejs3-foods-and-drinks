@@ -54,7 +54,7 @@ export class AdminProductController {
       const product = await this.getProductFromIdParam(req, res);
       if(product === null) {
         req.flash('error', Error.PRODUCT_NOT_FOUND);
-        res.redirect('/admin/product');
+        res.redirect('/admin/product/search');
       }
       return res.render('admin/product/detail', {
         admin, 
@@ -73,7 +73,7 @@ export class AdminProductController {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
       req.flash('error', 'error.invalidParameter');
-      res.redirect('/admin/product');
+      res.redirect('/admin/product/search');
     }
     return await this.productService.getProductDetail(id);
   };
@@ -108,6 +108,56 @@ export class AdminProductController {
       }
       const product = await this.productService.createProduct(createOptions);
       return res.redirect(`/admin/product/${product.id}`);
+    },
+  );
+
+  public adminUpdateProductGet = asyncHandler(
+    async (req: Request, res: Response) => {
+      const admin = (req.session as CustomSessionData).admin;
+      const product = await this.getProductFromIdParam(req, res);
+      const categories = await this.productService.getAllCategories();
+      if(product === null) {
+        req.flash('error', Error.PRODUCT_NOT_FOUND);
+        res.redirect('/admin/product/search');
+      }
+      return res.render('admin/product/update', {
+        admin, 
+        currentSite: AdminNavBar.PRODUCT,
+        product, 
+        categories,
+        formatDate,
+        formatCurrency,
+      });
+    },
+  );
+
+  public adminUpdateProductPost = asyncHandler(
+    async (req: Request, res: Response) => {
+      const admin = (req.session as CustomSessionData).admin;
+      const product = await this.getProductFromIdParam(req, res);
+      const categories = await this.productService.getAllCategories();
+      if(product === null) {
+        req.flash('error', Error.PRODUCT_NOT_FOUND);
+        return res.redirect('/admin/product/search');
+      }
+      const updateOptions = plainToClass(CreateProductDto, req.body);
+      const rawErrors = await validate(updateOptions);
+      if(rawErrors.length > 0) {
+        const errors = handleError(rawErrors, req, res);
+        return res.render('admin/product/update',{
+          admin,
+          currentSite: AdminNavBar.PRODUCT,
+          product,
+          categories,
+          data: updateOptions,
+          errors,
+        });
+      }
+      const updatedProduct = await this.productService
+      .updateProduct(product, updateOptions);
+      if(updatedProduct instanceof ProductEntity) {
+        return res.redirect(`/admin/product/${updatedProduct.id}`);
+      }
     },
   );
 }
