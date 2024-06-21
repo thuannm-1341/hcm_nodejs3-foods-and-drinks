@@ -1,11 +1,12 @@
 import { EntityPropertyLength, Gender } from '../constants';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { CartProductEntity } from './cartProduct.entity';
 import { FeedbackEntity } from './feedback.entity';
 import { OrderEntity } from './order.entity';
 import { BaseEntity } from './base.entity';
 
 @Entity('user')
+@Index(['userName', 'email', 'fullName'], { fulltext: true })
 export class UserEntity extends BaseEntity {
   @Column({
     name: 'user_name',

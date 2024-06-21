@@ -348,4 +348,15 @@ export class OrderService {
       },
     );
   }
+
+  public async getUserOrderNumber(userId: number, orderStatus?: OrderStatus)
+  :Promise<number> {
+    const query = this.orderRepository.createQueryBuilder('order')
+    .leftJoin('order.user', 'user')
+    .where('user.id = :userId', {userId: userId});
+    if(orderStatus){
+      query.andWhere('order.status = :status', {status: orderStatus});
+    }
+    return query.getCount();
+  }
 }

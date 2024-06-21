@@ -5,6 +5,9 @@ import { AppDataSource } from '../config/ormConfig';
 import { Error } from '../constants';
 import bcryptjs from 'bcryptjs';
 import { LoginDto } from '../commons/dtos/login.dto';
+import { UserPageOptions } from '../commons/dtos/userPageOptions.dto';
+import { PageDto } from '../commons/dtos/page.dto';
+import { PageMetaDto } from '../commons/dtos/pageMeta.dto';
 
 export class UserService {
   private readonly userRepository: Repository<UserEntity>;
@@ -65,5 +68,39 @@ export class UserService {
 
   public async findById(id: number ): Promise<UserEntity | null> {
     return this.userRepository.findOne({where: {id: id}});
+  }
+
+  public async getUserPage(pageOptionsDto: UserPageOptions)
+  : Promise<PageDto<UserEntity>> {
+    const {
+      order,
+      take,
+      skip,
+      keyword,
+      isActive,
+    } = pageOptionsDto;
+    const query = this.userRepository.createQueryBuilder('user');
+    // Handle filter
+    if(isActive !== undefined){
+      query.andWhere('user.isActive = :isActive', {isActive: isActive});
+    }
+    if(keyword){
+      query.andWhere(
+        'MATCH(user.userName, user.email, user.fullName) AGAINST(:keyword IN BOOLEAN MODE)',
+        { keyword: `*${keyword}*` },
+      );
+    }
+    // Handle sort
+    query.orderBy('user.id', order);
+
+    // Handle paging
+    query.skip(skip).take(take);
+
+    // Retrieve entities
+    const itemCount = await query.getCount();
+    const entities = await query.getMany();
+
+    const pageMeta = new PageMetaDto({pageOptionsDto, itemCount});
+    return new PageDto(entities, pageMeta);
   }
 }
