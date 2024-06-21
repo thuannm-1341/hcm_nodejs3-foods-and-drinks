@@ -8,16 +8,18 @@
     <%= t('title.orderDetail') %>
   </title>
   <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/star-rating.css" />
   <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
 </head>
 
 <body class="secondary-bg">
   <%- include('../../layouts/users/header') -%>
-    <div class="container mt-4">
+    <div class="container mt-0">
       <%- include('../../layouts/users/top-navbar') -%>
         <div id="content">
-          <div class="container-fluid bg-white p-4 rounded">
+          <div class="container-fluid bg-white p-4 rounded mb-2">
             <div id="title" class="mb-2 border-bottom">
               <h2 class="mb-1">
                 <%= t('order.detail.order') + ' #' + order.id %>
@@ -282,9 +284,258 @@
                 </button>
               </div>
               <% } %>
+          </div> 
+          <div class="container-fluid bg-white p-4 rounded">
+            <div id="title" class="mb-2">
+              <h2 class="mb-3">
+                <%= t('order.detail.feedback')%>
+              </h2>
+            </div>
+            <div id="order-item" class="mb-2">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <%= t('order.feedback.productName') %>
+                    </th>
+                    <th scope="col">
+                      <%= t('order.feedback.image') %>
+                    </th>
+                    <th scope="col">
+                      <%= t('order.feedback.star') %>
+                    </th>
+                    <th scope="col">
+                      <%= t('order.feedback.content') %>
+                    </th>
+                    <th scope="col">
+                      <%= t('order.search.action') %>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% userProductFeedbacks.forEach(function(item) { %>
+                    <tr>
+                      <td>
+                        <a href="/products/<%= item.product.id %>" class="text-decoration-none text-dark">
+                          <%= item.product.name %>
+                        </a>
+                      </td>
+                      <td>
+                        <% if (item.feedback !== null && item.feedback.image) { %> 
+                          <img src="<%= item.feedback.image %>" class="img-fluid rounded" alt="Feedback Image" style="max-width: 100px;">
+                        <% } else { %>
+                          <%=t('order.feedback.noData')%>
+                        <% } %>
+                      </td>
+                      <td>
+                        <% if (item.feedback !== null && item.feedback.star !==undefined) { %>
+                          <span class="star-rating-display" data-rating="<%= item.feedback.star %>"></span>
+                        <% } else { %>
+                          <%=t('order.feedback.noData')%>
+                        <% } %>
+                      </td>
+                      <td>
+                        <% if (item.feedback !== null && item.feedback.content !==undefined) { %>
+                          <%= item.feedback.content %>
+                        <% } else { %>
+                          <%=t('order.feedback.noData')%>
+                        <% } %>
+                      </td>
+                      <td>
+                        <% if (item.feedback !==null) { %>
+                          <button type="button" class="btn btn-primary my-1" 
+                          onclick="openUpdateFeedbackModal('<%=item.feedback.id%>','<%=item.feedback.star%>','<%=item.feedback.image%>','<%=item.feedback.content%>')">
+                            <%=t('order.feedback.update')%>
+                          </button>
+                        <% } else if(order.status==='COMPLETED' ) { %>
+                          <button type="button" class="btn btn-primary my-1" onclick="openCreateFeedbackModal('<%=item.product.id%>')">
+                            <%=t('order.feedback.create')%>
+                          </button>
+                        <% } %>
+                      </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
     </div>
+
+    <!-- Create feedback modal -->
+    <div class="modal fade" id="createFeedbackModal" tabindex="-1" aria-labelledby="createFeedbackModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createFeedbackModalLabel">
+              <%= t('order.detail.createFeedback') %>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="createFeedbackForm">
+              <input type="hidden" name="userId" value="<%=order.user.id%>" id="create-feedback-user-id">
+              <input type="hidden" name="productId" id="create-feedback-product-id">
+              <div class="mb-3">
+                <label for="feedbackStar" class="form-label">
+                  <strong>
+                    <%= t('order.feedback.star') %>:
+                  </strong>
+                </label>
+                <div class="rating-wrapper">
+                  <div class="star-rating-container">
+                    <!-- star 1 -->
+                    <input type="radio" id="1-star-rating" name="create-feedback-star" value="5">
+                    <label for="1-star-rating" class="star-rating">
+                      <i class="fas fa-star d-inline-block"></i>
+                    </label>
+                
+                    <!-- star 2 -->
+                    <input type="radio" id="2-star-rating" name="create-feedback-star" value="4">
+                    <label for="2-star-rating" class="star-rating star">
+                      <i class="fas fa-star d-inline-block"></i>
+                    </label>
+                
+                    <!-- star 3 -->
+                    <input type="radio" id="3-star-rating" name="create-feedback-star" value="3">
+                    <label for="3-star-rating" class="star-rating star">
+                      <i class="fas fa-star d-inline-block"></i>
+                    </label>
+                
+                    <!-- star 4 -->
+                    <input type="radio" id="4-star-rating" name="create-feedback-star" value="2">
+                    <label for="4-star-rating" class="star-rating star">
+                      <i class="fas fa-star d-inline-block"></i>
+                    </label>
+                
+                    <!-- star 5 -->
+                    <input type="radio" id="5-star-rating" name="create-feedback-star" value="1">
+                    <label for="5-star-rating" class="star-rating star">
+                      <i class="fas fa-star d-inline-block"></i>
+                    </label>
+                  </div>
+                </div>
+                <p class="text-danger pt-2 mb-0" id="create-feedback-star-error"></p>
+              </div>
+              <div class="mb-3">
+                <label for="feedbackImage" class="form-label">
+                  <strong>
+                    <%= t('order.feedback.image') %>:
+                  </strong>
+                </label>
+                <input type="file" class="form-control" name="imageFile" id="create-feedback-image-input" accept="image/*">
+                <img id="create-feedback-image-preview" src="#" alt="Image Preview" style="display: none; max-width: 200px; margin-top: 10px;" />
+                <p class="text-danger pt-2 mb-0" id="create-feedback-image-error"></p>
+                <input type="hidden" name="image" id="create-feedback-image-url">
+              </div>
+              <div class="mb-3">
+                <label for="feedbackContent" class="form-label">
+                  <strong>
+                    <%= t('order.feedback.content') %>:
+                  </strong>
+                </label>
+                <input type="text" class="form-control" id="create-feedback-content" name="content">
+                <p class="text-danger pt-2 mb-0" id="create-feedback-content-error"></p>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <%= t('button.cancel') %>
+            </button>
+            <button type="submit" form="createFeedbackForm" class="btn btn-primary">
+              <%= t('button.create') %>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update feedback modal -->
+    <div class="modal fade" id="updateFeedbackModal" tabindex="-1" aria-labelledby="updateFeedbackModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateFeedbackModalLabel">
+              <%= t('order.detail.updateFeedback') %>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="updateFeedbackForm">
+              <input type="hidden" name="feedbackId" id="update-feedback-feedback-id">
+              <div class="mb-3">
+                <label for="feedbackStar" class="form-label">
+                  <strong>
+                    <%= t('order.feedback.star') %>:
+                  </strong>
+                </label>
+                <div class="rating-wrapper">
+                  <div class="star-rating-container">
+                    <input type="radio" id="update-1-star-rating" name="update-feedback-star" value="5">
+                    <label for="update-1-star-rating" class="star-rating">
+                      <i class="fas fa-star d-inline-block"></i>
+                    </label>
+    
+                    <input type="radio" id="update-2-star-rating" name="update-feedback-star" value="4">
+                    <label for="update-2-star-rating" class="star-rating star">
+                      <i class="fas fa-star d-inline-block"></i>
+                    </label>
+    
+                    <input type="radio" id="update-3-star-rating" name="update-feedback-star" value="3">
+                    <label for="update-3-star-rating" class="star-rating star">
+                      <i class="fas fa-star d-inline-block"></i>
+                    </label>
+    
+                    <input type="radio" id="update-4-star-rating" name="update-feedback-star" value="2">
+                    <label for="update-4-star-rating" class="star-rating star">
+                      <i class="fas fa-star d-inline-block"></i>
+                    </label>
+    
+                    <input type="radio" id="update-5-star-rating" name="update-feedback-star" value="1">
+                    <label for="update-5-star-rating" class="star-rating star">
+                      <i class="fas fa-star d-inline-block"></i>
+                    </label>
+                  </div>
+                </div>
+                <p class="text-danger pt-2 mb-0" id="update-feedback-star-error"></p>
+              </div>
+              <div class="mb-3">
+                <label for="feedbackImage" class="form-label">
+                  <strong>
+                    <%= t('order.feedback.image') %>:
+                  </strong>
+                </label>
+                <input type="file" class="form-control" name="imageFile" id="update-feedback-image-input" accept="image/*">
+                <img id="update-feedback-image-preview" src="#" alt="Image Preview"
+                  style="max-width: 200px; margin-top: 10px;" />
+                <p class="text-danger pt-2 mb-0" id="update-feedback-image-error"></p>
+                <input type="hidden" name="image" id="update-feedback-image-url">
+              </div>
+              <div class="mb-3">
+                <label for="feedbackContent" class="form-label">
+                  <strong>
+                    <%= t('order.feedback.content') %>:
+                  </strong>
+                </label>
+                <input type="text" class="form-control" id="update-feedback-content" name="content">
+                <p class="text-danger pt-2 mb-0" id="update-feedback-content-error"></p>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <%= t('button.cancel') %>
+            </button>
+            <button type="submit" form="updateFeedbackForm" class="btn btn-primary">
+              <%= t('button.update') %>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </body>
 <script src="/scripts/jquery.min.js"></script>
 <script src="/scripts/bootstrap.bundle.min.js"></script>
@@ -293,5 +544,6 @@
 <script src="/scripts/utils.js"></script>   
 <script src="/scripts/sweetalert.min.js"></script>
 <script src="/scripts/update-order.js"></script>
+<script src="/scripts/create-and-update-feedback.js"></script>
 
 </html>

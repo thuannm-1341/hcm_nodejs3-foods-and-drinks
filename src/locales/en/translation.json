@@ -237,7 +237,10 @@
       "all": "All"
     },
     "detail": {
-      "order": "Order"
+      "order": "Order",
+      "feedback": "Feedback",
+      "createFeedback": "Create feedback",
+      "updateFeedback": "Update feedback"
     },
     "label": {
       "orderStatus": "Order status",
@@ -283,6 +286,16 @@
     "modal": {
       "rejectReason": "Confirm reject order",
       "chooseStore": "Choose other store"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "productName": "Product name",
+      "image": "Feedback image",
+      "star": "Feedback star",
+      "content": "Content",
+      "noData": "No data",
+      "create": "Create feedback",
+      "update": "Update feedback"
     }
   },
   "admin": {
@@ -388,6 +401,22 @@
     },
     "delete": {
       "success": "Delete store successfully"
+    }
+  },
+  "feedback": {
+    "label": {
+      "starRating": "Rating",
+      "feedbackContent": "Content",
+      "uploadImage": "Upload image"
+    },
+    "placeholder": {
+      "feedbackContent": "Type in your thought"
+    },
+    "create": {
+      "success": "Create feedback successfully!"
+    },
+    "update": {
+      "success": "Update feedback successfully!"
     }
   }
 }

@@ -21,4 +21,7 @@ export enum Error {
   INVALID_CURRENT_PRICE = 'error.product.invalidCurrentPrice',
   STORE_NAME_MIN_LENGTH = 'error.store.nameMinLength',
   CANNOT_DELETE_STORE = 'error.store.cannotDelete',
+  MIN_RATING_STAR = 'error.rating.minValue',
+  MAX_RATING_STAR = 'error.rating.maxValue',
+  FEEDBACK_NOT_FOUND = 'error.feedback.notFound',
 }

@@ -237,7 +237,10 @@
       "all": "Tất cả"
     },
     "detail": {
-      "order": "Đơn hàng"
+      "order": "Đơn hàng",
+      "feedback": "Đánh giá",
+      "createFeedback": "Tạo đánh giá",
+      "updateFeedback": "Chỉnh sửa đánh giá"
     },
     "label": {
       "orderStatus": "Trạng thái",
@@ -283,6 +286,16 @@
     "modal": {
       "rejectReason": "Xác nhận từ chối đơn hàng",
       "chooseStore": "Chọn cửa hàng khác"
+    },
+    "feedback": {
+      "title": "Đánh giá",
+      "productName": "Tên sản phẩm",
+      "image": "Hình ảnh đánh giá",
+      "star": "Số sao",
+      "content": "Nội dung",
+      "noData": "Chưa có dữ liệu",
+      "create": "Tạo đánh giá",
+      "update": "Chỉnh sửa đánh giá"
     }
   },
   "admin": {
@@ -388,6 +401,22 @@
     },
     "delete": {
       "success": "Xóa cửa hàng thành công!"
+    }
+  },
+  "feedback": {
+    "label": {
+      "starRating": "Đánh giá",
+      "feedbackContent": "Nội dung",
+      "uploadImage": "Tải hình ảnh lên"
+    },
+    "placeholder": {
+      "feedbackContent": "Suy nghĩ của bạn về sản phẩm"
+    },
+    "create": {
+      "success": "Tạo đánh giá thành công!"
+    },
+    "update": {
+      "success": "Cập nhật đánh giá thành công!"
     }
   }
 }
