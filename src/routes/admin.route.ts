@@ -1,3 +1,4 @@
+import { AdminStoreController } from './../controllers/admin/store.controller';
 import { AdminOrderController } from '../controllers/admin/order.controller';
 import { authenticateAdminRole } from '../middlewares/auth.middleware';
 import { AdminController } from '../controllers/admin/admin.controller';
@@ -9,6 +10,7 @@ const adminController = new AdminController();
 const adminOrderController = new AdminOrderController();
 const adminProductController = new AdminProductController();
 const adminUserController = new AdminUserController();
+const adminStoreController = new AdminStoreController();
 
 adminRoute.use(authenticateAdminRole);
 adminRoute.get('/home', adminController.getAdminDashboard);
@@ -36,5 +38,10 @@ adminRoute.get('/product/:id', adminProductController.getAdminProductDetail);
 
 adminRoute.get('/user', adminUserController.getAdminUserPage);
 adminRoute.get('/user/:id', adminUserController.adminGetUserDetail);
+
+adminRoute.get('/store', adminStoreController.getAdminStorePage);
+adminRoute.post('/store', adminStoreController.createStorePost);
+adminRoute.put('/store', adminStoreController.updateStore);
+adminRoute.delete('/store/:id', adminStoreController.deleteStore);
 
 export default adminRoute;

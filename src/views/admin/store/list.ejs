@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="/stylesheets/virtual-select.min.css" />
+  <link rel="stylesheet" href="/stylesheets/admin-layout.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+  <title>
+    <%= (typeof currentSite !='undefined' ) ? t(currentSite) : t('admin.nav.default') %>
+  </title>
+</head>
+
+<body>
+  <div class="d-flex" id="wrapper">
+    <%- include('../../layouts/admin/sidebar') -%>
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <%- include('../../layouts/admin/top-navbar') -%>
+          <div class="container-fluid px-4">
+            <form id="orderFilterForm" class="row g-3 mb-4" method="GET">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label for="keyword" class="form-label">
+                    <%= t('store.search.keyword') %>
+                  </label>
+                  <input type="text" class="form-control rounded" placeholder="<%= t('user.search.keyword_ph') %>"
+                    name="keyword" value="<%= query.keyword %>">
+                </div>
+                <div class="col-md-2">
+                  <label for="take" class="form-label">
+                    <%= t('store.search.take') %>
+                  </label>
+                  <input type="number" class="form-control" id="take" name="take" min="10" max="20"
+                    value="<%= typeof query !== 'undefined' ? query.take : '12' %>">
+                </div>
+                <div class="col-md-2">
+                  <label for="order" class="form-label">
+                    <%= t('store.search.sortOrder') %>
+                  </label>
+                  <select class="form-select" id="order" name="order">
+                    <option value="ASC" <%=(typeof query !=='undefined' && query.order==='ASC' ) ? 'selected' : '' %>>
+                      <%= t('store.search.ASC') %>
+                    </option>
+                    <option value="DESC" <%=(typeof query !=='undefined' && query.order==='DESC' ) ? 'selected' : '' %>>
+                      <%= t('store.search.DESC') %>
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary">
+                    <%= t('store.search.filter') %>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <!-- Button to trigger modal -->
+            <button type="button" class="btn btn-primary mb-4" onclick="openCreateStoreModal()">
+              <i class="fas fa-plus"></i>
+              <%= t('store.create.new') %>
+            </button>
+            <div id="usersTableContainer">
+              <% if (typeof stores !=='undefined' && stores.length> 0) { %>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">
+                        <%= t('store.search.name') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('store.search.address') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('store.search.phoneNumber') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('user.search.action') %>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% stores.forEach(function(store) { %>
+                      <tr>
+                        <td>
+                          <%= store.id %>
+                        </td>
+                        <td>
+                          <%= store.name %>
+                        </td>
+                        <td>
+                          <%= store.address %>
+                        </td>
+                        <td>
+                          <%= store.phoneNumber %>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-primary" 
+                          onclick="openUpdateStoreModal('<%=store.id%>','<%=store.name%>','<%=store.address%>','<%=store.phoneNumber%>')">
+                            <%= t('store.search.update') %>
+                          </button>
+                        </td>
+                      </tr>
+                      <% }); %>
+                  </tbody>
+                </table>
+                <% } %>
+            </div>
+            <div class="pagination d-flex justify-content-end">
+              <% if (typeof meta !=='undefined' && meta.pageCount> 1) { %>
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <% if (meta.hasPreviousPage) { %>
+                      <li class="page-item">
+                        <button type="submit" class="page-link" name="page" value="<%= parseInt(meta.page) - 1 %>">
+                          <%= t('page.previous') %>
+                        </button>
+                      </li>
+                      <% } %>
+                        <% for (let i=1; i <=meta.pageCount; i++) { %>
+                          <li class="page-item <%= parseInt(meta.page) === i ? 'active' : '' %>">
+                            <button type="submit" class="page-link" name="page" value="<%= i %>">
+                              <%= i %>
+                            </button>
+                          </li>
+                          <% } %>
+                            <% if (meta.hasNextPage) { %>
+                              <li class="page-item">
+                                <button type="submit" class="page-link" name="page"
+                                  value="<%= parseInt(meta.page) + 1 %>">
+                                  <%= t('page.next') %>
+                                </button>
+                              </li>
+                              <% } %>
+                  </ul>
+                </nav>
+                <% } %>
+            </div>
+          </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="createStoreModal" tabindex="-1" aria-labelledby="createStoreModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createStoreModalLabel">
+            <%= t('store.create.new') %>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="createStoreForm">
+            <div class="mb-3">
+              <label for="storeName" class="form-label">
+                <strong><%= t('store.create.name') %>:</strong>
+              </label>
+              <input type="text" class="form-control" id="create-store-name" name="name" required>
+              <p class="text-danger pt-2 mb-0" id="create-store-name-error"></p>
+            </div>
+            <div class="mb-3">
+              <label for="storeAddress" class="form-label">
+                <strong><%= t('store.create.address') %>:</strong>
+              </label>
+              <input type="text" class="form-control" id="create-store-address" name="address" required>
+              <p class="text-danger pt-2 mb-0" id="create-store-address-error"></p>
+            </div>
+            <div class="mb-3">
+              <label for="storePhoneNumber" class="form-label">
+                <strong><%= t('store.create.phoneNumber') %>:</strong>
+              </label>
+              <input type="text" class="form-control" id="create-store-phone" name="phoneNumber" required>
+              <p class="text-danger pt-2 mb-0" id="create-store-phoneNumber-error"></p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <%= t('button.cancel') %>
+          </button>
+          <button type="submit" form="createStoreForm" class="btn btn-primary">
+            <%= t('button.create') %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="updateStoreModal" tabindex="-1" aria-labelledby="updateStoreModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateStoreModalLabel">
+            <%= t('store.update.title') %>#<span id="display-store-id"></span>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="updateStoreForm">
+            <input type="hidden" id="update-store-id">
+            <div class="mb-3">
+              <label for="storeName" class="form-label">
+                <strong>
+                  <%= t('store.update.name') %>:
+                </strong>
+              </label>
+              <input type="text" class="form-control" id="update-store-name" name="name" required>
+              <p class="text-danger pt-2 mb-0" id="update-store-name-error"></p>
+            </div>
+            <div class="mb-3">
+              <label for="storeAddress" class="form-label">
+                <strong>
+                  <%= t('store.update.address') %>:
+                </strong>
+              </label>
+              <input type="text" class="form-control" id="update-store-address" name="address" required>
+              <p class="text-danger pt-2 mb-0" id="update-store-address-error"></p>
+            </div>
+            <div class="mb-3">
+              <label for="storePhoneNumber" class="form-label">
+                <strong>
+                  <%= t('store.update.phoneNumber') %>:
+                </strong>
+              </label>
+              <input type="text" class="form-control" id="update-store-phone" name="phoneNumber" required>
+              <p class="text-danger pt-2 mb-0" id="update-store-phoneNumber-error"></p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <%= t('button.cancel') %>
+          </button>
+          <button type="button" class="btn btn-danger" onclick="deleteStore()">
+            <%= t('button.delete') %>
+          </button>
+          <button type="submit" form="updateStoreForm" class="btn btn-primary">
+            <%= t('button.update') %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/scripts/jquery.min.js"></script>
+  <script src="/scripts/bootstrap.bundle.min.js"></script>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/admin-layout.js"></script>
+  <script src="/scripts/utils.js"></script>
+  <script src="/scripts/sweetalert.min.js"></script>
+  <script src="/scripts/admin-store-list.js"></script>
+</body>
+
+</html>
