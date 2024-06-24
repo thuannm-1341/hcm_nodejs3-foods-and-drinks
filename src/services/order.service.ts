@@ -29,6 +29,7 @@ import { UpdateOrderStatusDto } from '../commons/dtos/updateOrderStatus.dto';
 import { UpdateOrderStoreDto } from '../commons/dtos/updateOrderStore.dto';
 import { NodeMailerService } from '../third-party-services/nodemailer.service';
 import { MailTitle } from '../constants/email';
+import { ProductEntity } from '../entities/product.entity';
 
 export class OrderService {
   private readonly orderRepository: Repository<OrderEntity>;

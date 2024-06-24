@@ -143,6 +143,11 @@ export class ProductService {
     return this.productRepository.save(newProduct);
   }
 
+  public async saveProduct(product: ProductEntity)
+  : Promise<ProductEntity> {
+    return this.productRepository.save(product);
+  }
+
   public async updateProduct(
     product: ProductEntity, 
     updateOptions: CreateProductDto)

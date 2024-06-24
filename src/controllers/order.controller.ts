@@ -17,17 +17,21 @@ import { OrderPageOptions } from '../commons/dtos/orderPageOptions.dto';
 import { UserNavBar } from '../constants/user';
 import { UpdateOrderStatusDto } from '../commons/dtos/updateOrderStatus.dto';
 import { t } from 'i18next';
+import { FeedbackService } from '../services/feedback.service';
+import { UserProductFeedbackDto } from '../commons/dtos/userProductFeedback.dto';
 
 export class OrderController {
   private readonly orderService: OrderService;
   private readonly storeService: StoreService;
   private readonly cartService: CartService;
   private readonly paymentService: PaymentService;
+  private readonly feedbackService: FeedbackService;
   constructor(){
     this.orderService = new OrderService();
     this.storeService = new StoreService();
     this.cartService = new CartService();
     this.paymentService = new PaymentService();
+    this.feedbackService = new FeedbackService();
   }
 
   public createOrderGet = asyncHandler(
@@ -142,6 +146,13 @@ export class OrderController {
       if(order === null){
         return res.render('errors/404');
       }
+      const userProductFeedbacks = await Promise.all(
+        order.orderProducts.map(async (item) => {
+          const feedback = await this.feedbackService
+            .findOneByUserAndProduct(order.user.id, item.product.id);
+          return new UserProductFeedbackDto(order.user, item.product, feedback);
+        }),
+      );
       const payment = await this.paymentService.findOrderPayment(id);
       return res.render('user/order/detail', {
         currentSite: UserNavBar.ORDER, 
@@ -149,6 +160,7 @@ export class OrderController {
         cartItem: (req.session as CustomSessionData).cartItem,
         order,
         payment,
+        userProductFeedbacks,
         formatDate,
         formatCurrency,
       });

@@ -8,6 +8,7 @@ import orderRoute from './order.route';
 import adminRoute from './admin.route';
 import userRoute from './user.route';
 import fileRoute from './file.route';
+import feedbackRoute from './feedback.route';
 const router: Router = Router();
 const productController = new ProductController();
 const storeController = new StoreController();
@@ -21,6 +22,7 @@ router.use('/user', userRoute);
 router.use('/file', fileRoute);
 router.use('/home', productController.getHomePage);
 router.use('/store', storeController.getAllStore);
+router.use('/feedback', feedbackRoute);
 router.use('/', productController.getNotFoundPage);
 
 export default router;
