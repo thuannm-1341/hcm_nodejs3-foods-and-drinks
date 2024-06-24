@@ -37,10 +37,17 @@ export class FeedbackService {
 
   public async createFeedback(createOption: createFeedbackDto, user: UserEntity)
   :Promise<FeedbackEntity> {
+    const { productId , ...createData} = createOption;
     const product = await this.productService
-    .getProductDetail(createOption.productId);
+    .getProductDetail(productId);
     if(product === null) {
       throw Error.PRODUCT_NOT_FOUND;
+    }
+    const existingFeedback = 
+    await this.findOneByUserAndProduct(user.id, productId);
+    if(existingFeedback) {
+      this.feedbackRepository.merge(existingFeedback, createData);
+      return existingFeedback;
     }
     const newFeedback = this.feedbackRepository.create({
       ...createOption,
@@ -75,7 +82,7 @@ export class FeedbackService {
       order,
       take,
       skip,
-      userId,
+      star,
       productId,
       haveImage,
       haveContent,
@@ -84,11 +91,11 @@ export class FeedbackService {
     .leftJoinAndSelect('feedback.user', 'user')
     .leftJoinAndSelect('feedback.product', 'product');
     // Handle filter
-    if(userId !== undefined){
-      query.andWhere('user.id = :userId', {userId: userId});
-    }
     if(productId !== undefined){
       query.andWhere('product.id = :productId', {productId: productId});
+    }
+    if(star !== undefined){
+      query.andWhere('feedback.star >= :star', {star: star});
     }
     if(haveImage) {
       query.andWhere('feedback.image IS NOT NULL');
@@ -98,7 +105,7 @@ export class FeedbackService {
     }
     // Handle sort
     query.orderBy('feedback.' + sortField, order)
-    .orderBy('feedback.id', 'DESC');
+    .addOrderBy('feedback.id', 'DESC');
 
     // Handle paging
     query.skip(skip).take(take);

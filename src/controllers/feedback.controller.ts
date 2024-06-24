@@ -79,4 +79,34 @@ export class FeedbackController {
       }
     },
   );
+  
+  public getProductFeedback = asyncHandler(
+    async (req: Request, res: Response) => {
+      const pageOptions = plainToClass(FeedbackPageOptions, req.query);
+      const rawErrors = await validate(pageOptions);
+      if(rawErrors.length > 0) {
+        const errors = handleError(rawErrors, req, res);
+        res.status(400).send({
+          success: false,
+          errors,
+        });
+      } else {
+        try {
+          const feedbackPage = 
+          await this.feedbackService.getFeedbackPage(pageOptions);
+          res.status(200).send({
+            success:true,
+            query: pageOptions,
+            feedbacks: feedbackPage.data,
+            meta: feedbackPage.meta,
+          });
+        } catch (error) {
+          res.status(400).send({
+            success: false,
+            error,
+          });
+        }
+      }
+    },
+  );
 }

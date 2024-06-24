@@ -8,45 +8,46 @@
     <%= product.name %>
   </title>
   <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link rel="stylesheet" href="/stylesheets/style.css" />
   <link rel="stylesheet" href="/stylesheets/product-detail.css" />
   <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
 </head>
 
-<body>
+<body class="secondary-bg">
   <%- include('../../layouts/users/header') -%>
     <div class="container">
       <div class="col-md-12">
         <div class="breadcrumb">
           <a href="/home" class="breadcrumb-link">
-            <%=t('header.homePage') %>
+            <%= t('header.homePage') %>
           </a>
           <span>/</span>
-          <a href="/products/search?categoryIds=<%=product.categories[0].id%>" class="breadcrumb-link"
-            onclick="document.getElementById('category-search-form-<%=product.categories[0].id%>').submit();">
+          <a href="/products/search?categoryIds=<%= product.categories[0].id %>" class="breadcrumb-link"
+            onclick="document.getElementById('category-search-form-<%= product.categories[0].id %>').submit();">
             <%= product.categories[0].name %>
           </a>
           <span>/</span>
           <a href="#" class="breadcrumb-current-link">
-            <%=product.name%>
+            <%= product.name %>
           </a>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6 mt-4">
-          <img src="<%=product.image%>" class="img-fluid rounded mx-auto d-block" alt="product image">
+      <div class="row bg-white rounded px-2">
+        <div class="col-md-6 my-4">
+          <img src="<%= product.image %>" class="img-fluid rounded mx-auto d-block" alt="product image">
         </div>
         <div class="col-md-6 mt-4">
           <div class="card">
             <div class="card-body">
               <h2 class="card-title">
-                <%=product.name%>
+                <%= product.name %>
               </h2>
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <p class="card-price">
                   <%= formatCurrency(product.currentPrice) %>
                 </p>
-                <% if(product.basePrice!==product.currentPrice) { %>
+                <% if(product.basePrice !==product.currentPrice) { %>
                   <p class="card-old-price">
                     <%= formatCurrency(product.basePrice) %>
                   </p>
@@ -60,7 +61,8 @@
               <p class="card-text">
                 <%= product.description %>
               </p>
-              <button type="submit" class="btn btn-primary addToCartBtn" onclick="addToCart(event, '<%= product.id %>')">
+              <button type="submit" class="btn btn-primary addToCartBtn"
+                onclick="addToCart(event, '<%= product.id %>')">
                 <strong>
                   <%= t('home.addToCartBtn') %>
                 </strong>
@@ -68,6 +70,126 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row bg-white rounded mt-4 px-2 py-2">
+        <div class="title mb-2 border-bottom">
+          <h3>
+            <%= t('feedback.title') %>
+          </h3>
+        </div>
+        <% if (feedbacks && feedbacks.length> 0) { %>
+          <div class="">
+            <form id="filterFeedbackForm">
+              <input type="hidden" id="productId" name="productId" value="<%= product.id %>">
+              <input type="hidden" id="page" name="page" value="1">
+              <div class="row margin-bottom mb-4">
+                <div class="col">
+                  <label for="sortField" class="form-label">
+                    <%= t('title.sortField') %>
+                  </label>
+                  <select class="form-select" id="sortField" name="sortField">
+                    <option value="createdAt" <%=(typeof query !=='undefined' && query.sortField==='createdAt' )
+                      ? 'selected' : '' %>>
+                      <%= t('feedback.sortField.createdAt') %>
+                    </option>
+                    <option value="star" <%=(typeof query !=='undefined' && query.sortField==='star' ) ? 'selected' : ''
+                      %>>
+                      <%= t('feedback.sortField.star') %>
+                    </option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="order" class="form-label">
+                    <%= t('title.sortOrder') %>
+                  </label>
+                  <select class="form-select" id="order" name="order">
+                    <option value="ASC" <%=(typeof query !=='undefined' && query.order==='ASC' ) ? 'selected' : '' %>>
+                      <%= t('product.sortOrder.ASC') %>
+                    </option>
+                    <option value="DESC" <%=(typeof query !=='undefined' && query.order==='DESC' ) ? 'selected' : '' %>>
+                      <%= t('product.sortOrder.DESC') %>
+                    </option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="star" class="form-label">
+                    <%= t('title.star') %>
+                  </label>
+                  <select class="form-select" id="star" name="star">
+                    <option value="">
+                      <%= t('title.all') %>
+                    </option>
+                    <% [1, 2, 3, 4, 5].forEach(function (star) { %>
+                      <option value="<%= star %>">
+                        <%= star %>
+                      </option>
+                      <% }); %>
+                  </select>
+                </div>
+                <div class="col">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="haveImage" name="haveImage" <%=(typeof query
+                      !=='undefined' && query.haveImage) ? 'checked' : '' %>>
+                    <label class="form-check-label" for="haveImage">
+                      <%= t('feedback.filter.haveImage') %>
+                    </label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="haveContent" name="haveContent" <%=(typeof query
+                      !=='undefined' && query.haveContent) ? 'checked' : '' %>>
+                    <label class="form-check-label" for="haveContent">
+                      <%= t('feedback.filter.haveContent') %>
+                    </label>
+                  </div>
+                </div>
+                <div class="col d-flex align-items-end">
+                  <button type="button" class="btn btn-primary" onclick="fetchAndRenderFeedback()">
+                    <%= t('order.search.filter') %>
+                  </button>
+                </div>
+              </div>
+              <div id="product-feedback">
+                <% feedbacks.forEach((feedback)=> { %>
+                  <div class="mt-2 border-bottom">
+                    <div class="row g-8 mb-2">
+                      <div class="col-md-8 d-flex align-items-center">
+                        <img src="<%= feedback.user.avatar ? feedback.user.avatar : '/images/sample-avatar.png' %>"
+                          class="img-fluid rounded-circle" style="width: 50px; margin-right: 10px;" alt="User avatar">
+                        <div>
+                          <h5 class="card-title mb-0">
+                            <%= feedback.user.fullName %>
+                          </h5>
+                          <span class="star-rating-display" data-rating="<%= feedback.star %>"></span>
+                        </div>
+                      </div>
+                      <div class="col-md-4 text-end">
+                        <p class="card-text"><small class="text-muted">
+                            <%= new Date(feedback.updatedAt).toLocaleString() %>
+                          </small></p>
+                      </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                      <p class="card-text">
+                        <%= feedback.content !=='undefined' ? feedback.content : '' %>
+                      </p>
+                    </div>
+                    <% if (feedback.image) { %>
+                      <img src="<%= feedback.image %>" class="img-fluid rounded mb-2"
+                        style="width: 100px; margin-right: 10px;" alt="Feedback Image">
+                      <% } %>
+                  </div>
+                  <% }) %>
+              </div>
+              <div id="pagination-controls" class="d-flex justify-content-end mt-2">
+                <% if (typeof meta !=='undefined' && meta.pageCount> 1) { %>
+                  <!-- Pagination buttons will be rendered here by JavaScript -->
+                  <% } %>
+              </div>
+            </form>
+          </div>
+          <% } %>
       </div>
     </div>
 </body>
@@ -78,4 +200,6 @@
 <script src="/scripts/utils.js"></script>
 <script src="/scripts/sweetalert.min.js"></script>
 <script src="/scripts/cart.js"></script>
+<script src="/scripts/filter-feedback.js"></script>
+
 </html>
