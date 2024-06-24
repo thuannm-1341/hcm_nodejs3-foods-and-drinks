@@ -50,3 +50,13 @@
   color: white !important;
   width: 100%;
 }
+
+.feedback-avatar-image {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.feedback-image {
+  width: 100px;
+  margin-right: 10px;
+}

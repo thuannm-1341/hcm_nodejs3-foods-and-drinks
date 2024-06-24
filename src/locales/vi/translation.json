@@ -150,7 +150,9 @@
     "profile": "Hồ sơ",
     "orderDetail": "Chi tiết đơn hàng",
     "searchProduct": "Tìm kiếm sản phẩm",
-    "onSale": "Đang giảm giá"
+    "onSale": "Đang giảm giá",
+    "star": "Số sao",
+    "all": "Tất cả"
   },
   "page": {
     "previous": "Trang trước",
@@ -404,6 +406,7 @@
     }
   },
   "feedback": {
+    "title": "Đánh giá",
     "label": {
       "starRating": "Đánh giá",
       "feedbackContent": "Nội dung",
@@ -417,6 +420,14 @@
     },
     "update": {
       "success": "Cập nhật đánh giá thành công!"
+    },
+    "sortField": {
+      "createdAt": "Thời gian",
+      "star": "Số sao"
+    },
+    "filter": {
+      "haveImage": "Có hình ảnh",
+      "haveContent": "Có nội dung"
     }
   }
 }

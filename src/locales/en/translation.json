@@ -150,7 +150,9 @@
     "profile": "Profile",
     "orderDetail": "Order detail",
     "searchProduct": "Search product",
-    "onSale": "On sale"
+    "onSale": "On sale",
+    "star": "Star",
+    "all": "All"
   },
   "page": {
     "previous": "Previous",
@@ -404,6 +406,7 @@
     }
   },
   "feedback": {
+    "title": "Feedback",
     "label": {
       "starRating": "Rating",
       "feedbackContent": "Content",
@@ -417,6 +420,14 @@
     },
     "update": {
       "success": "Update feedback successfully!"
+    },
+    "sortField": {
+      "createdAt": "Created at",
+      "star": "Star"
+    },
+    "filter": {
+      "haveImage": "Have image",
+      "haveContent": "Have content"
     }
   }
 }

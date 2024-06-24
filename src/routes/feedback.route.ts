@@ -4,6 +4,7 @@ import { Router } from 'express';
 const feedbackRoute: Router = Router();
 const feedbackController = new FeedbackController();
 
+feedbackRoute.get('/', feedbackController.getProductFeedback);
 feedbackRoute.post('/', feedbackController.createFeedback);
 feedbackRoute.put('/', feedbackController.updateFeedback);
 
