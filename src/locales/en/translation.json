@@ -72,6 +72,9 @@
     "file": {
       "uploadError": "Error while uploading file",
       "invalidType": "Invalid file type"
+    },
+    "category": {
+      "minLength": "Category name min length is 2 characters"
     }
   },
   "register": {
@@ -309,6 +312,7 @@
       "order": "Order management",
       "logout": "Logout",
       "user": "User management",
+      "category": "Category management",
       "default": "Admin site"
     },
     "home": {
@@ -428,6 +432,28 @@
     "filter": {
       "haveImage": "Have image",
       "haveContent": "Have content"
+    }
+  },
+  "category": {
+    "search": {
+      "keyword": "Keyword",
+      "take": "Records / page",
+      "sortOrder": "Sort order",
+      "ASC": "Ascending",
+      "DESC": "Descending",
+      "filter": "Filter",
+      "name": "Name",
+      "action": "Action",
+      "update": "Update"
+    },
+    "create": {
+      "new": "Create new category",
+      "name": "Name"
+    },
+    "update": {
+      "title": "Update category",
+      "name": "Name",
+      "success": "Update category successfully!"
     }
   }
 }

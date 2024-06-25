@@ -14,3 +14,4 @@ export * from './cart';
 export * from './fee';
 export * from './order';
 export * from './store';
+export * from './category';
