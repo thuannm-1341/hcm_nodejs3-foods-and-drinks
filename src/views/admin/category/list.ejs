@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="/stylesheets/virtual-select.min.css" />
+  <link rel="stylesheet" href="/stylesheets/admin-layout.css" />
+  <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
+  <title>
+    <%= (typeof currentSite !='undefined' ) ? t(currentSite) : t('admin.nav.default') %>
+  </title>
+</head>
+
+<body>
+  <div class="d-flex" id="wrapper">
+    <%- include('../../layouts/admin/sidebar') -%>
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <%- include('../../layouts/admin/top-navbar') -%>
+          <div class="container-fluid px-4">
+            <form id="orderFilterForm" class="row g-3 mb-4" method="GET">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label for="keyword" class="form-label">
+                    <%= t('category.search.keyword') %>
+                  </label>
+                  <input type="text" class="form-control rounded" placeholder="<%= t('user.search.keyword_ph') %>"
+                    name="keyword" value="<%= query.keyword %>">
+                </div>
+                <div class="col-md-2">
+                  <label for="take" class="form-label">
+                    <%= t('category.search.take') %>
+                  </label>
+                  <input type="number" class="form-control" id="take" name="take" min="10" max="20"
+                    value="<%= typeof query !== 'undefined' ? query.take : '12' %>">
+                </div>
+                <div class="col-md-2">
+                  <label for="order" class="form-label">
+                    <%= t('category.search.sortOrder') %>
+                  </label>
+                  <select class="form-select" id="order" name="order">
+                    <option value="ASC" <%=(typeof query !=='undefined' && query.order==='ASC' ) ? 'selected' : '' %>>
+                      <%= t('category.search.ASC') %>
+                    </option>
+                    <option value="DESC" <%=(typeof query !=='undefined' && query.order==='DESC' ) ? 'selected' : '' %>>
+                      <%= t('category.search.DESC') %>
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary">
+                    <%= t('category.search.filter') %>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <!-- Button to trigger modal -->
+            <button type="button" class="btn btn-primary mb-4" onclick="openCreateCategoryModal()">
+              <i class="fas fa-plus"></i>
+              <%= t('category.create.new') %>
+            </button>
+            <div id="categoriesTableContainer">
+              <% if (typeof categories !=='undefined' && categories.length> 0) { %>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">
+                        <%= t('category.search.name') %>
+                      </th>
+                      <th scope="col">
+                        <%= t('category.search.action') %>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% categories.forEach(function(category) { %>
+                      <tr>
+                        <td>
+                          <%= category.id %>
+                        </td>
+                        <td>
+                          <%= category.name %>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-primary"
+                            onclick="openUpdateCategoryModal('<%=category.id%>','<%=category.name%>')">
+                            <%= t('category.search.update') %>
+                          </button>
+                        </td>
+                      </tr>
+                      <% }); %>
+                  </tbody>
+                </table>
+                <% } %>
+            </div>
+            <div class="pagination d-flex justify-content-end">
+              <% if (typeof meta !=='undefined' && meta.pageCount> 1) { %>
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <% if (meta.hasPreviousPage) { %>
+                      <li class="page-item">
+                        <button type="submit" class="page-link" name="page" value="<%= parseInt(meta.page) - 1 %>">
+                          <%= t('page.previous') %>
+                        </button>
+                      </li>
+                      <% } %>
+                        <% for (let i=1; i <=meta.pageCount; i++) { %>
+                          <li class="page-item <%= parseInt(meta.page) === i ? 'active' : '' %>">
+                            <button type="submit" class="page-link" name="page" value="<%= i %>">
+                              <%= i %>
+                            </button>
+                          </li>
+                          <% } %>
+                            <% if (meta.hasNextPage) { %>
+                              <li class="page-item">
+                                <button type="submit" class="page-link" name="page"
+                                  value="<%= parseInt(meta.page) + 1 %>">
+                                  <%= t('page.next') %>
+                                </button>
+                              </li>
+                              <% } %>
+                  </ul>
+                </nav>
+                <% } %>
+            </div>
+          </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+  </div>
+
+  <!-- Create category modal -->
+  <div class="modal fade" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createCategoryModalLabel">
+            <%= t('category.create.new') %>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="createCategoryForm">
+            <div class="mb-3">
+              <label for="categoryName" class="form-label">
+                <strong>
+                  <%= t('category.create.name') %>:
+                </strong>
+              </label>
+              <input type="text" class="form-control" id="create-category-name" name="name" required>
+              <p class="text-danger pt-2 mb-0" id="create-category-name-error"></p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <%= t('button.cancel') %>
+          </button>
+          <button type="submit" form="createCategoryForm" class="btn btn-primary">
+            <%= t('button.create') %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update category modal -->
+  <div class="modal fade" id="updateCategoryModal" tabindex="-1" aria-labelledby="updateCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateCategoryModalLabel">
+            <%= t('category.update.title') %>#<span id="display-category-id"></span>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="updateCategoryForm">
+            <input type="hidden" id="update-category-id">
+            <div class="mb-3">
+              <label for="categoryName" class="form-label">
+                <strong>
+                  <%= t('category.update.name') %>:
+                </strong>
+              </label>
+              <input type="text" class="form-control" id="update-category-name" name="name" required>
+              <p class="text-danger pt-2 mb-0" id="update-category-name-error"></p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <%= t('button.cancel') %>
+          </button>
+          <button type="button" class="btn btn-danger" onclick="deleteCategory()">
+            <%= t('button.delete') %>
+          </button>
+          <button type="submit" form="updateCategoryForm" class="btn btn-primary">
+            <%= t('button.update') %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/scripts/jquery.min.js"></script>
+  <script src="/scripts/bootstrap.bundle.min.js"></script>
+  <script src="/scripts/slim.min.js"></script>
+  <script src="/scripts/admin-layout.js"></script>
+  <script src="/scripts/utils.js"></script>
+  <script src="/scripts/sweetalert.min.js"></script>
+  <script src="/scripts/admin-category-list.js"></script>
+</body>
+
+</html>

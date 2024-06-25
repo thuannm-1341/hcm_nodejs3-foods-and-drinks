@@ -26,4 +26,6 @@ export enum Error {
   FEEDBACK_NOT_FOUND = 'error.feedback.notFound',
   FEEDBACK_MIN_STAR = 'error.feedback.minStar',
   FEEDBACK_MAX_STAR = 'error.feedback.maxStar',
+  CATEGORY_MIN_LENGTH = 'error.category.minLength',
+  CANNOT_DELETE_CATEGORY = 'error.category.cannotDelete',
 }

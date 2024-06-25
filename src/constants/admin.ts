@@ -5,4 +5,5 @@ export enum AdminNavBar {
   PRODUCT = 'admin.nav.product',
   USER = 'admin.nav.user',
   ORDER = 'admin.nav.order',
+  CATEGORY = 'admin.nav.category',
 }

@@ -1,44 +1,31 @@
 const locale = getCookie('locale');
-const openCreateStoreModal = () => {
-  const createStoreModal = new bootstrap.Modal(document.getElementById('createStoreModal'));
-  createStoreModal.show();
+const openCreateCategoryModal = () => {
+  const createCategoryModal = new bootstrap.Modal(document.getElementById('createCategoryModal'));
+  createCategoryModal.show();
 }
 
-const closeCreateStoreModal = () => {
-  const createStoreModal = bootstrap.Modal.getInstance(document.getElementById('createStoreModal'));
-  createStoreModal.hide();
+const openUpdateCategoryModal = (id, name) => {
+  const updateCategoryModal = new bootstrap.Modal(document.getElementById('updateCategoryModal'));
+  const updateCategoryIdInput = document.getElementById('update-category-id');
+  const updateCategoryNameInput = document.getElementById('update-category-name');
+  updateCategoryIdInput.value = id;
+  updateCategoryNameInput.value = name;
+  document.getElementById('display-category-id').innerText = id;
+  updateCategoryModal.show();
 }
 
-const openUpdateStoreModal = (id, name, address, phoneNumber) => {
-  const updateStoreModal = new bootstrap.Modal(document.getElementById('updateStoreModal'));
-  const updateStoreIdInput = document.getElementById('update-store-id');
-  const updateStoreNameInput = document.getElementById('update-store-name');
-  const updateStoreAddressInput = document.getElementById('update-store-address');
-  const updateStorePhoneNumberInput = document.getElementById('update-store-phone');
-  updateStoreIdInput.value = id;
-  updateStoreNameInput.value = name;
-  updateStoreAddressInput.value = address;
-  updateStorePhoneNumberInput.value = phoneNumber;
-  document.getElementById('display-store-id').innerText = id;
-  updateStoreModal.show();
-}
-
-document.getElementById('createStoreForm').addEventListener('submit', async function (event) {
+document.getElementById('createCategoryForm').addEventListener('submit', async function (event) {
   event.preventDefault();
 
   // Clear previous error messages
-  document.getElementById('create-store-name-error').textContent = '';
-  document.getElementById('create-store-address-error').textContent = '';
-  document.getElementById('create-store-phoneNumber-error').textContent = '';
+  document.getElementById('create-category-name-error').textContent = '';
 
   const data = {
-    name: document.getElementById('create-store-name').value,
-    address: document.getElementById('create-store-address').value,
-    phoneNumber: document.getElementById('create-store-phone').value
+    name: document.getElementById('create-category-name').value,
   };
 
   try {
-    const response = await fetch(`/admin/store`, {
+    const response = await fetch(`/admin/category`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,14 +37,14 @@ document.getElementById('createStoreForm').addEventListener('submit', async func
       const errorData = await response.json();
       if (errorData.errors) {
         for (const [key, value] of Object.entries(errorData.errors)) {
-          document.getElementById(`create-store-${key}-error`).textContent = value[0];
+          document.getElementById(`create-category-${key}-error`).textContent = value[0];
         }
       } else {
         throw new Error('Network response was not ok');
       }
     } else {
       const confirmResult = await swal.fire({
-        title: locale === 'en' ? 'Create new store successfully!' : 'Tạo cửa hàng mới thành công!',
+        title: locale === 'en' ? 'Create new category successfully!' : 'Tạo phân loại mới thành công!',
         icon: 'success',
         confirmButtonText: locale === 'en' ? 'Close' : 'Đóng',
       });
@@ -79,12 +66,12 @@ document.getElementById('createStoreForm').addEventListener('submit', async func
   }
 });
 
-document.getElementById('updateStoreForm').addEventListener('submit', async function (event) {
+document.getElementById('updateCategoryForm').addEventListener('submit', async function (event) {
   event.preventDefault();
 
   const confirmUpdate = await swal.fire({
     title: locale === 'en' ? 'Confirm' : 'Xác nhận',
-    text: locale === 'en' ? 'Confirm update store' : 'Xác nhận cập nhật cửa hàng?',
+    text: locale === 'en' ? 'Confirm update category' : 'Xác nhận cập nhật phân loại này?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: locale === 'en' ? 'Yes' : 'Có',
@@ -93,19 +80,15 @@ document.getElementById('updateStoreForm').addEventListener('submit', async func
 
   if(confirmUpdate.isConfirmed) {
       // Clear previous error messages
-    document.getElementById('update-store-name-error').textContent = '';
-    document.getElementById('update-store-address-error').textContent = '';
-    document.getElementById('update-store-phoneNumber-error').textContent = '';
+    document.getElementById('update-category-name-error').textContent = '';
 
     const data = {
-      id: document.getElementById('update-store-id').value,
-      name: document.getElementById('update-store-name').value,
-      address: document.getElementById('update-store-address').value,
-      phoneNumber: document.getElementById('update-store-phone').value
+      id: document.getElementById('update-category-id').value,
+      name: document.getElementById('update-category-name').value,
     };
 
     try {
-      const response = await fetch(`/admin/store`, {
+      const response = await fetch(`/admin/category`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -117,14 +100,14 @@ document.getElementById('updateStoreForm').addEventListener('submit', async func
         const errorData = await response.json();
         if (errorData.errors) {
           for (const [key, value] of Object.entries(errorData.errors)) {
-            document.getElementById(`update-store-${key}-error`).textContent = value[0];
+            document.getElementById(`update-category-${key}-error`).textContent = value[0];
           }
         } else {
           throw new Error('Network response was not ok');
         }
       } else {
         const confirmResult = await swal.fire({
-          title: locale === 'en' ? 'Update store successfully!' : 'Cập nhật thông tin cửa hàng thành công!',
+          title: locale === 'en' ? 'Update category successfully!' : 'Cập nhật thông tin phân loại thành công!',
           icon: 'success',
           confirmButtonText: locale === 'en' ? 'Close' : 'Đóng',
         });
@@ -147,10 +130,10 @@ document.getElementById('updateStoreForm').addEventListener('submit', async func
   }
 });
 
-const deleteStore = async () => {
+const deleteCategory = async () => {
   const confirmDelete = await swal.fire({
     title: locale === 'en' ? 'Confirm' : 'Xác nhận',
-    text: locale === 'en' ? 'Confirm delete store' : 'Xác nhận xóa cửa hàng?',
+    text: locale === 'en' ? 'Confirm delete category' : 'Xác nhận xóa phân loại này?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: locale === 'en' ? 'Yes' : 'Có',
@@ -159,8 +142,8 @@ const deleteStore = async () => {
 
   if(confirmDelete.isConfirmed) {
     try {
-      const id = document.getElementById('update-store-id').value;
-      const response = await fetch(`/admin/store/${id}`, {
+      const id = document.getElementById('update-category-id').value;
+      const response = await fetch(`/admin/category/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -172,14 +155,14 @@ const deleteStore = async () => {
           title: locale === 'en' ? 'Error' : 'Lỗi',
           text:
             locale === 'en'
-              ? 'The store that received the order cannot be deleted'
-              : 'Không thể xóa cửa hàng đã nhận đơn hàng',
+              ? 'Cannot delete category that already has products'
+              : 'Không thể xóa phân loại đã có sản phẩm',
           icon: 'error',
           confirmButtonText: 'OK',
         });
       } else {
         const confirmResult = await swal.fire({
-          title: locale === 'en' ? 'Delete store successfully!' : 'Xóa cửa hàng thành công!',
+          title: locale === 'en' ? 'Delete category successfully!' : 'Xóa phân loại thành công!',
           icon: 'success',
           confirmButtonText: locale === 'en' ? 'Close' : 'Đóng',
         });
