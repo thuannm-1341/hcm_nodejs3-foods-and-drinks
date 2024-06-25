@@ -12,5 +12,8 @@ userRoute.get('/order', orderController.getUserOrderPage);
 userRoute.put('/order/update', orderController.updateOrderStatus);
 userRoute.get('/order/:id', orderController.getUserOrderDetail);
 userRoute.get('/profile', userController.getUserProfile);
+userRoute.put('/profile/account', userController.updateAccount);
+userRoute.put('/profile/avatar', userController.updateAvatar);
+userRoute.put('/profile/personal-info', userController.updatePersonalInfo);
 
 export default userRoute;

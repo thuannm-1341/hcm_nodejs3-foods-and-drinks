@@ -455,5 +455,32 @@
       "name": "Tên",
       "success": "Cập nhật phân loại thành công"
     }
+  },
+  "profile": {
+    "updateAccount": {
+      "title": "Cập nhật thông tin tài khoản",
+      "userName": "Tên đăng nhập",
+      "email": "Email",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "success": "Cập nhật thông tin tài khoản thành công!"
+    },
+    "updateAvatar": {
+      "title": "Cập nhật ảnh đại diện",
+      "avatar": "Tải ảnh mới lên",
+      "success": "Cập nhật ảnh đại diện thành công!"
+    },
+    "updatePersonalInfo": {
+      "title": "Cập nhật thông tin cá nhân",
+      "fullName": "Tên đầy đủ",
+      "gender": "Giới tính",
+      "address": "Địa chỉ",
+      "phoneNumber": "Số điện thoại",
+      "dob": "Ngày sinh",
+      "success": "Cập nhật thông tin cá nhân thành công!"
+    }
+  },
+  "gender": {
+    "MALE": "Nam",
+    "FEMALE": "Nữ"
   }
 }

@@ -28,4 +28,6 @@ export enum Error {
   FEEDBACK_MAX_STAR = 'error.feedback.maxStar',
   CATEGORY_MIN_LENGTH = 'error.category.minLength',
   CANNOT_DELETE_CATEGORY = 'error.category.cannotDelete',
+  UNAUTHORIZED = 'error.unauthorized',
+  INVALID_DOB = 'error.invalidDob',
 }

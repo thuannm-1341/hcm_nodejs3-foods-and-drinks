@@ -455,5 +455,32 @@
       "name": "Name",
       "success": "Update category successfully!"
     }
+  },
+  "profile": {
+    "updateAccount": {
+      "title": "Update account information",
+      "userName": "User name",
+      "email": "Email",
+      "confirmPassword": "Confirm password",
+      "success": "Update account information successfully!"
+    },
+    "updateAvatar": {
+      "title": "Update avatar",
+      "avatar": "Upload new image",
+      "success": "Update avatar successfully!"
+    },
+    "updatePersonalInfo": {
+      "title": "Update personal information",
+      "fullName": "Full name",
+      "gender": "Gender",
+      "address": "Address",
+      "phoneNumber": "Phone number",
+      "dob": "Date of birth",
+      "success": "Update personal information successfully!"
+    }
+  },
+  "gender": {
+    "MALE": "Male",
+    "FEMALE": "Female"
   }
 }
