@@ -1,0 +1,17 @@
+{
+  "category": {
+    "update": {
+      "title": "category.update.title",
+      "name": "category.update.name",
+      "success": "category.update.success"
+    },
+    "create": {
+      "name": "category.create.name"
+    }
+  },
+  "error": {
+    "category": {
+      "minLength": "error.category.minLength"
+    }
+  }
+}
