@@ -8,11 +8,15 @@ import { ProductPageOptions } from '../commons/dtos/productPageOptions.dto';
 import { validate } from 'class-validator';
 import { formatCurrency, handleError } from '../commons/utils';
 import { CustomSessionData } from '../interfaces/session.interface';
+import { FeedbackPageOptions } from '../commons/dtos/feedbackPageOption.dto';
+import { FeedbackService } from '../services/feedback.service';
 
 export class ProductController {
   private readonly productService: ProductService;
+  private readonly feedbackService: FeedbackService;
   constructor(){
     this.productService = new ProductService();
+    this.feedbackService = new FeedbackService();
   }
   
   public getHomePage = asyncHandler(
@@ -37,12 +41,18 @@ export class ProductController {
       const product = await this.getProductFromIdParam(req, res);
       if(product === null) {
         req.flash('error', Error.PRODUCT_NOT_FOUND);
-        res.redirect('/home');
+        return res.redirect('/home');
       }
+      const feedbackPageOptions = new FeedbackPageOptions();
+      feedbackPageOptions.productId = product?.id;
+      const feedbackPage = 
+        await this.feedbackService.getFeedbackPage(feedbackPageOptions);
       return res.render('user/product/detail', {
         user, 
         cartItem: (req.session as CustomSessionData).cartItem,
         product, 
+        feedbacks: feedbackPage.data,
+        meta: feedbackPage.meta,
         formatCurrency,
       });
     },

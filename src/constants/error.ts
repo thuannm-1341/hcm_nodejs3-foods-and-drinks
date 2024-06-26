@@ -24,4 +24,6 @@ export enum Error {
   MIN_RATING_STAR = 'error.rating.minValue',
   MAX_RATING_STAR = 'error.rating.maxValue',
   FEEDBACK_NOT_FOUND = 'error.feedback.notFound',
+  FEEDBACK_MIN_STAR = 'error.feedback.minStar',
+  FEEDBACK_MAX_STAR = 'error.feedback.maxStar',
 }
