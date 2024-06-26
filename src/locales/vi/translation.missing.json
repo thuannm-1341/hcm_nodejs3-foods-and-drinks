@@ -1,17 +1,28 @@
 {
-  "category": {
-    "update": {
-      "title": "category.update.title",
-      "name": "category.update.name",
-      "success": "category.update.success"
+  "profile": {
+    "updateAccount": {
+      "title": "profile.updateAccount.title",
+      "userName": "profile.updateAccount.userName",
+      "email": "profile.updateAccount.email",
+      "confirmPassword": "profile.updateAccount.confirmPassword"
     },
-    "create": {
-      "name": "category.create.name"
+    "updateAvatar": {
+      "title": "profile.updateAvatar.title",
+      "success": "profile.updateAvatar.success"
+    },
+    "updatePersonalInfo": {
+      "title": "profile.updatePersonalInfo.title",
+      "fullName": "profile.updatePersonalInfo.fullName",
+      "gender": "profile.updatePersonalInfo.gender",
+      "address": "profile.updatePersonalInfo.address",
+      "phoneNumber": "profile.updatePersonalInfo.phoneNumber",
+      "dob": "profile.updatePersonalInfo.dob"
     }
   },
-  "error": {
-    "category": {
-      "minLength": "error.category.minLength"
-    }
+  "gender": {
+    "MALE": "gender.male",
+    "FEMALE": "gender.female",
+    "male": "gender.male",
+    "female": "gender.female"
   }
 }
