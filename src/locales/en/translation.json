@@ -480,5 +480,21 @@
   "gender": {
     "MALE": "Male",
     "FEMALE": "Female"
+  },
+  "dashboard": {
+    "commonData": {
+      "totalUser": "Total users",
+      "totalOrder": "Total orders",
+      "totalProduct": "Total products",
+      "totalStore": "Total stores",
+      "totalCategory": "Total categories",
+      "totalRevenue": "Total revenue"
+    },
+    "chart": {
+      "orderByStatus": "Order by status",
+      "orderByPaymentStatus": "Order by payment status",
+      "topFiveProduct": "Top five most purchased products",
+      "orderByStore": "Order by store"
+    }
   }
 }

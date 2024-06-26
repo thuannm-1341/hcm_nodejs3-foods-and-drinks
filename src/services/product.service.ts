@@ -9,6 +9,8 @@ import { ProductPageOptions } from '../commons/dtos/productPageOptions.dto';
 import { PageDto } from '../commons/dtos/page.dto';
 import { PageMetaDto } from '../commons/dtos/pageMeta.dto';
 import { CreateProductDto } from '../commons/dtos/createProduct.dto';
+import { ProductSaleNumberDto } from '../commons/dtos/ProductSaleNumber.dto';
+import { plainToClass } from 'class-transformer';
 
 export class ProductService {
   private readonly productRepository: Repository<ProductEntity>;
@@ -170,5 +172,19 @@ export class ProductService {
     .leftJoin('product.categories', 'category')
     .where('category.id = :categoryId', {categoryId: categoryId});
     return query.getCount();
+  }
+
+  public async getTopPurchasedProduct(limit: number)
+  : Promise<ProductSaleNumberDto[]> {
+    const query = this.productRepository.createQueryBuilder('product')
+    .leftJoin('product.orderProducts', 'orderProduct')
+    .select('product.name', 'name')
+    .addSelect('SUM(orderProduct.quantity)', 'sellNumber')
+    .groupBy('product.id')
+    .limit(limit)
+    .orderBy('sellNumber', 'DESC')
+    .limit(limit);
+    const result = await query.getRawMany();
+    return plainToClass(ProductSaleNumberDto, result);    
   }
 }
