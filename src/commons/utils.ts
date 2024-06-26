@@ -52,9 +52,21 @@ export function sortObject(obj: CreateVNPayTransactionDto) {
   return sorted;
 }
 
-export function formatDate(dateString: string) {
+export function formatDate(
+  dateString: string,
+  isDatePickerFormat?: boolean,
+): string {
   const date = new Date(dateString);
-  return date.toLocaleString();
+
+  if (isDatePickerFormat) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+
+    return year + '-' + month + '-' + day;
+  } else {
+    return date.toLocaleString();
+  }
 }
 
 export function formatCurrency(value: string | number): string {

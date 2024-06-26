@@ -8,6 +8,7 @@
     <%= t('title.profile') %>
   </title>
   <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link rel="stylesheet" href="/stylesheets/style.css" />
   <link rel="icon" href="/images/kfc-logo.jpg" type="image/jpeg">
 </head>
@@ -18,13 +19,313 @@
       <%- include('../layouts/users/top-navbar') -%>
         <div id="content">
           <div class="container-fluid bg-white mt-4">
+            <div class="row py-3">
+              <!-- Avatar Section -->
+              <div class="col-md-4">
+                <div class="card position-relative">
+                  <img src="<%= user.avatar ? user.avatar : '/images/sample-avatar.png' %>"
+                    class="card-img-top img-fluid rounded mx-auto d-block" alt="User Avatar">
+                  <!-- Position the button in the top right corner -->
+                  <button type="button" class="btn position-absolute top-0 end-0 mt-2 me-2" 
+                    onclick="openUpdateAvatarModal()">
+                    <i class="fas fa-camera"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- Account Information Section -->
+              <div class="col-md-8">
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-10">
+                        <h4>
+                          <%= t('user.detail.accountInformation') %>
+                        </h4>
+                      </div>
+                      <div class="col-2 text-end">
+                        <button type="button" class="btn" onclick="openUpdateAccountModal()"><i
+                            class="fas fa-edit edit-icon"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <p><strong>
+                            <%= t('user.detail.userName') %>:
+                          </strong>
+                          <%= user.userName %>
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <p><strong>
+                            <%= t('user.detail.accountStatus') %>:
+                          </strong>
+                          <%= user.isActive ? t('user.detail.active') : t('user.detail.inactive') %>
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <p><strong>
+                            <%= t('user.detail.email') %>:
+                          </strong>
+                          <%= user.email %>
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <p><strong>
+                            <%= t('user.detail.createdAt') %>:
+                          </strong>
+                          <%= formatDate(user.createdAt) %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Personal Information Section -->
+                <div class="card">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-10">
+                        <h4>
+                          <%= t('user.detail.personalInformation') %>
+                        </h4>
+                      </div>
+                      <div class="col-2 text-end">
+                        <button type="button" class="btn" onclick="openUpdatePersonalInfoModal()"><i
+                            class="fas fa-edit edit-icon"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <p><strong>
+                            <%= t('user.detail.gender') %>:
+                          </strong>
+                          <%= user.gender ? t('gender.'+user.gender) : t('user.detail.noData') %>
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <p><strong>
+                            <%= t('user.detail.dob') %>:
+                          </strong>
+                          <%= user.dob ? formatDate(user.dob) : t('user.detail.noData') %>
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <p><strong>
+                            <%= t('user.detail.fullName') %>:
+                          </strong>
+                          <%= user.fullName %>
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <p><strong>
+                            <%= t('user.detail.address') %>:
+                          </strong>
+                          <%= user.address ? user.address : t('user.detail.noData') %>
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <p><strong>
+                            <%= t('user.detail.phoneNumber') %>:
+                          </strong>
+                          <%= user.phoneNumber ? user.phoneNumber : t('user.detail.noData') %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+    </div>
+
+    <!-- Update account modal -->
+    <div class="modal fade" id="updateAccountModal" tabindex="-1" aria-labelledby="updateAccountModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateAccountModalLabel">
+              <%= t('profile.updateAccount.title') %>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="updateAccountForm">
+              <div class="mb-3">
+                <label for="userName" class="form-label">
+                  <strong>
+                    <%= t('profile.updateAccount.userName') %>:
+                  </strong>
+                </label>
+                <input type="text" class="form-control" id="update-account-userName" name="userName" value="<%=user.userName%>" required>
+                <p class="text-danger pt-2 mb-0" id="update-account-userName-error"></p>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">
+                  <strong>
+                    <%= t('profile.updateAccount.email') %>:
+                  </strong>
+                </label>
+                <input type="text" class="form-control" id="update-account-email" name="email" value="<%=user.email%>" required>
+                <p class="text-danger pt-2 mb-0" id="update-account-email-error"></p>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">
+                  <strong>
+                    <%= t('profile.updateAccount.confirmPassword') %>:
+                  </strong>
+                </label>
+                <input type="password" class="form-control" id="update-account-password" name="password">
+                <p class="text-danger pt-2 mb-0" id="update-account-password-error"></p>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <%= t('button.cancel') %>
+            </button>
+            <button type="submit" form="updateAccountForm" class="btn btn-primary">
+              <%= t('button.update') %>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update avatar modal -->
+    <div class="modal fade" id="updateAvatarModal" tabindex="-1" aria-labelledby="updateAvatarModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateAvatarModalLabel">
+              <%= t('profile.updateAvatar.title') %>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="updateAvatarForm">
+              <div class="mb-3">
+                <label for="userName" class="form-label">
+                  <strong>
+                    <%= t('profile.updateAccount.userName') %>:
+                  </strong>
+                </label>
+                <input type="file" class="form-control" name="imageFile" id="image-input" accept="image/*">
+                <img id="image-preview" src="<%=user.avatar ? user.avatar : '/images/sample-avatar.png'%>" alt="Image Preview" class="w-25 mt-2" />
+                <% if (typeof errors !=='undefined' && errors.image !==undefined) { %>
+                  <p class="text-danger pt-2 mb-0">
+                    <%= t(errors.image) %>
+                  </p>
+                  <% } %>
+                <input type="hidden" name="image" id="image-url" value="<%= user.avatar ? user.avatar : '/images/sample-avatar.png' %>">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <%= t('button.cancel') %>
+            </button>
+            <button type="submit" form="updateAvatarForm" class="btn btn-primary">
+              <%= t('button.update') %>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update personal information modal -->
+    <div class="modal fade" id="updatePersonalInfoModal" tabindex="-1" aria-labelledby="updatePersonalInfoModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updatePersonalInfoModalLabel">
+              <%= t('profile.updatePersonalInfo.title') %>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="updatePersonalInfoForm">
+              <div class="mb-3">
+                <label for="fullName" class="form-label">
+                  <strong>
+                    <%= t('profile.updatePersonalInfo.fullName') %>:
+                  </strong>
+                </label>
+                <input type="text" class="form-control" id="update-updatePersonalInfo-fullName" name="fullName"
+                  value="<%=user.fullName%>" required>
+                <p class="text-danger pt-2 mb-0" id="update-updatePersonalInfo-fullName-error"></p>
+              </div>
+              <div class="mb-3">
+                <label for="gender" class="form-label">
+                  <strong>
+                    <%= t('profile.updatePersonalInfo.gender') %>:
+                  </strong>
+                </label>
+                <select class="form-select" id="update-updatePersonalInfo-gender" name="gender" required>
+                  <option value="MALE" <%= user.gender==='MALE' ? 'checked' : '' %>>
+                    <%= t('gender.MALE') %>
+                  </option>
+                  <option value="FEMALE"  <%= user.gender==='FEMALE' ? 'checked' : '' %>>
+                    <%= t('gender.FEMALE') %>
+                  </option>
+                </select>
+                <p class="text-danger pt-2 mb-0" id="update-updatePersonalInfo-gender-error"></p>
+              </div>
+              <div class="mb-3">
+                <label for="address" class="form-label">
+                  <strong>
+                    <%= t('profile.updatePersonalInfo.address') %>:
+                  </strong>
+                </label>
+                <input type="text" class="form-control" id="update-updatePersonalInfo-address" name="address"
+                  value="<%=user.address%>" required>
+                <p class="text-danger pt-2 mb-0" id="update-updatePersonalInfo-address-error"></p>
+              </div>
+              <div class="mb-3">
+                <label for="phoneNumber" class="form-label">
+                  <strong>
+                    <%= t('profile.updatePersonalInfo.phoneNumber') %>:
+                  </strong>
+                </label>
+                <input type="text" class="form-control" id="update-updatePersonalInfo-phoneNumber" name="phoneNumber"
+                  value="<%= user.phoneNumber %>" required>
+                <p class="text-danger pt-2 mb-0" id="update-updatePersonalInfo-phoneNumber-error"></p>
+              </div>
+              <div class="mb-3">
+                <label for="dob" class="form-label">
+                  <strong>
+                    <%= t('profile.updatePersonalInfo.dob') %>:
+                  </strong>
+                </label>
+                <input type="date" class="form-control" id="update-updatePersonalInfo-dob" name="dob" value="<%= user.dob ? formatDate(user.dob, true) : '' %>">
+                <p class="text-danger pt-2 mb-0" id="update-updatePersonalInfo-dob-error"></p>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <%= t('button.cancel') %>
+            </button>
+            <button type="submit" form="updatePersonalInfoForm" class="btn btn-primary">
+              <%= t('button.update') %>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 </body>
 <script src="/scripts/jquery.min.js"></script>
 <script src="/scripts/bootstrap.bundle.min.js"></script>
 <script src="/scripts/slim.min.js"></script>
 <script src="/scripts/header.js"></script>
+<script src="/scripts/utils.js"></script>
+<script src="/scripts/sweetalert.min.js"></script>
+<script src="/scripts/update-profile.js"></script>
 
 </html>
