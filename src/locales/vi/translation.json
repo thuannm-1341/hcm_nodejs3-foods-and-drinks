@@ -482,5 +482,21 @@
   "gender": {
     "MALE": "Nam",
     "FEMALE": "Nữ"
+  },
+  "dashboard": {
+    "commonData": {
+      "totalUser": "Số người dùng",
+      "totalOrder": "Số đơn hàng",
+      "totalProduct": "Số sản phẩm",
+      "totalStore": "Số cửa hàng",
+      "totalCategory": "Số phân loại",
+      "totalRevenue": "Tổng doanh thu"
+    },
+    "chart": {
+      "orderByStatus": "Đơn hàng theo trạng thái",
+      "orderByPaymentStatus": "Đơn hàng theo tình trạng thanh toán",
+      "topFiveProduct": "Top 5 sản phẩm được mua nhiều nhất",
+      "orderByStore": "Đơn hàng theo cửa hàng"
+    }
   }
 }

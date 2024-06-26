@@ -29,7 +29,10 @@ import { UpdateOrderStatusDto } from '../commons/dtos/updateOrderStatus.dto';
 import { UpdateOrderStoreDto } from '../commons/dtos/updateOrderStore.dto';
 import { NodeMailerService } from '../third-party-services/nodemailer.service';
 import { MailTitle } from '../constants/email';
-import { ProductEntity } from '../entities/product.entity';
+import { OrderNumberByStatusDto } from '../commons/dtos/orderNumberByStatus.dto';
+import { plainToClass } from 'class-transformer';
+import { OrderNumberByPaymentStatusDto } from '../commons/dtos/orderNumberByPaymentStatus.dto';
+import { OrderNumberByStoreDto } from '../commons/dtos/orderNumberByStore.dto';
 
 export class OrderService {
   private readonly orderRepository: Repository<OrderEntity>;
@@ -370,5 +373,35 @@ export class OrderService {
       query.andWhere('order.status = :status', {status: orderStatus});
     }
     return query.getCount();
+  }
+
+  public async getNumberOfOrderByStatus(): Promise<OrderNumberByStatusDto[]> {
+    const query = this.orderRepository.createQueryBuilder('order')
+    .select('order.status', 'status')
+    .addSelect('COUNT(*)', 'number')
+    .groupBy('order.status');
+    const result = await query.getRawMany();
+    return plainToClass(OrderNumberByStatusDto, result);
+  }
+
+  public async getNumberOfOrderByPaymentStatus()
+  : Promise<OrderNumberByPaymentStatusDto[]> {
+    const query = this.orderRepository.createQueryBuilder('order')
+    .select('order.paymentStatus', 'paymentStatus')
+    .addSelect('COUNT(*)', 'number')
+    .groupBy('order.paymentStatus');
+    const result = await query.getRawMany();
+    return plainToClass(OrderNumberByPaymentStatusDto, result);
+  }
+
+  public async getNumberOfOrderByStore()
+  : Promise<OrderNumberByStoreDto[]> {
+    const query = this.orderRepository.createQueryBuilder('order')
+    .leftJoin('order.store', 'store')
+    .select('store.name', 'name')
+    .addSelect('COUNT(*)', 'number')
+    .groupBy('store.id');
+    const result = await query.getRawMany();
+    return plainToClass(OrderNumberByStoreDto, result);
   }
 }
