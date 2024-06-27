@@ -11,6 +11,8 @@ import { PageMetaDto } from '../commons/dtos/pageMeta.dto';
 import { CreateProductDto } from '../commons/dtos/createProduct.dto';
 import { ProductSaleNumberDto } from '../commons/dtos/ProductSaleNumber.dto';
 import { plainToClass } from 'class-transformer';
+import { UserEntity } from '../entities/user.entity';
+import { OrderEntity } from '../entities/order.entity';
 
 export class ProductService {
   private readonly productRepository: Repository<ProductEntity>;
@@ -185,6 +187,53 @@ export class ProductService {
     .orderBy('sellNumber', 'DESC')
     .limit(limit);
     const result = await query.getRawMany();
-    return plainToClass(ProductSaleNumberDto, result);    
+    return plainToClass(ProductSaleNumberDto, result);
+  }
+      
+  async getSuggestionProduct(user?: UserEntity): Promise<ProductEntity[]>{
+    if(user == undefined) {
+      return [];
+    }
+    // Get user orders
+    const orders = await AppDataSource.getRepository(OrderEntity)
+    .createQueryBuilder('order')
+    .leftJoinAndSelect('order.orderProducts', 'orderProduct')
+    .leftJoinAndSelect('orderProduct.product', 'product')
+    .leftJoinAndSelect('product.categories', 'category')
+    .where('order.userId = :userId', { userId: user.id })
+    .getMany();
+
+    if (orders.length === 0) return [];
+
+    // Count order on each category
+    const categoryCount: { [key: string]: number } = {};
+    orders.forEach(order => {
+      order.orderProducts.forEach(orderProduct => {
+        const categoryName = orderProduct.product.categories[0].name;
+        if(!categoryCount[categoryName]) {
+          categoryCount[categoryName] = 0;
+        }
+        categoryCount[categoryName] += orderProduct.quantity;
+      });
+    });
+
+    // Find the category where users have purchased the most
+    const mostPurchasedCategory = Object.keys(categoryCount)
+    .reduce((a,b)=> categoryCount[a] > categoryCount[b] ? a : b);
+
+    // Retrieve products in the same category, sort by quantity purchased
+    const recommendedProducts = await this.productRepository
+    .createQueryBuilder('product')
+    .leftJoin('product.categories', 'category')
+    .leftJoin('product.orderProducts', 'orderProduct')
+    .where(
+      'category.name = :categoryName', 
+      { categoryName: mostPurchasedCategory },
+    )
+    .orderBy('SUM(orderProduct.quantity)', 'DESC')
+    .groupBy('product.id')
+    .limit(NUM_OF_PRODUCT_CARD)
+    .getMany();
+    return recommendedProducts;
   }
 }

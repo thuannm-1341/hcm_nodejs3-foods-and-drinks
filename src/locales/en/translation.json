@@ -3,6 +3,7 @@
     "title": "Home",
     "addToCartBtn": "Add to cart",
     "newProduct": "New products",
+    "suggestionProduct": "Suggestion products",
     "discount": "Discount",
     "search": {
       "placeHolder": "What are you looking for?"
@@ -495,7 +496,7 @@
     "chart": {
       "orderByStatus": "Order by status",
       "orderByPaymentStatus": "Order by payment status",
-      "topFiveProduct": "Top five most purchased products",
+      "topPurchasedProduct": "Top purchased products",
       "orderByStore": "Order by store"
     }
   }

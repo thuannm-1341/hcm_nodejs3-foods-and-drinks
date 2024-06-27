@@ -3,6 +3,7 @@
     "title": "Trang chủ",
     "addToCartBtn": "Thêm vào giỏ hàng",
     "newProduct": "Sản phẩm mới",
+    "suggestionProduct": "Sản phẩm gợi ý",
     "discount": "Khuyến mãi",
     "search": {
       "placeHolder": "Bạn cần tìm gì?"
@@ -495,7 +496,7 @@
     "chart": {
       "orderByStatus": "Đơn hàng theo trạng thái",
       "orderByPaymentStatus": "Đơn hàng theo tình trạng thanh toán",
-      "topFiveProduct": "Top 5 sản phẩm được mua nhiều nhất",
+      "topPurchasedProduct": "Top sản phẩm được mua nhiều nhất",
       "orderByStore": "Đơn hàng theo cửa hàng"
     }
   }
