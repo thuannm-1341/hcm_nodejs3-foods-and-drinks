@@ -164,4 +164,11 @@ export class ProductService {
     );
     return this.productRepository.save(product);
   }
+
+  async getCategoryProductNumber(categoryId: number): Promise<number> {
+    const query = this.productRepository.createQueryBuilder('product')
+    .leftJoin('product.categories', 'category')
+    .where('category.id = :categoryId', {categoryId: categoryId});
+    return query.getCount();
+  }
 }

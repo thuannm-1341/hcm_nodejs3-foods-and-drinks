@@ -72,6 +72,9 @@
     "file": {
       "uploadError": "Có lỗi trong quá trình upload file",
       "invalidType": "Định dạng file không hợp lệ"
+    },
+    "category": {
+      "minLength": "Độ dài tối thiểu của tên phân loại là 2 ký tự"
     }
   },
   "register": {
@@ -309,6 +312,7 @@
       "order": "Quản lý đơn hàng",
       "logout": "Đăng xuất",
       "user": "Quản lý người dùng",
+      "category": "Quản lý phân loại",
       "default": "Trang quản trị viên"
     },
     "home": {
@@ -428,6 +432,28 @@
     "filter": {
       "haveImage": "Có hình ảnh",
       "haveContent": "Có nội dung"
+    }
+  },
+  "category": {
+    "search": {
+      "keyword": "Từ khóa",
+      "take": "Số bản ghi / trang",
+      "sortOrder": "Thứ tự",
+      "ASC": "Tăng dần",
+      "DESC": "Giảm dần",
+      "filter": "Lọc",
+      "name": "Tên",
+      "action": "Hành động",
+      "update": "Chỉnh sửa"
+    },
+    "create": {
+      "new": "Tạo phân loại mới",
+      "name": "Tên"
+    },
+    "update": {
+      "title": "Cập nhật phân loại",
+      "name": "Tên",
+      "success": "Cập nhật phân loại thành công"
     }
   }
 }

@@ -5,12 +5,14 @@ import { AdminController } from '../controllers/admin/admin.controller';
 import { Router } from 'express';
 import { AdminProductController } from '../controllers/admin/product.controller';
 import { AdminUserController } from '../controllers/admin/user.controller';
+import { AdminCategoryController } from '../controllers/admin/category.controller';
 const adminRoute: Router = Router();
 const adminController = new AdminController();
 const adminOrderController = new AdminOrderController();
 const adminProductController = new AdminProductController();
 const adminUserController = new AdminUserController();
 const adminStoreController = new AdminStoreController();
+const adminCategoryController = new AdminCategoryController();
 
 adminRoute.use(authenticateAdminRole);
 adminRoute.get('/home', adminController.getAdminDashboard);
@@ -43,5 +45,10 @@ adminRoute.get('/store', adminStoreController.getAdminStorePage);
 adminRoute.post('/store', adminStoreController.createStorePost);
 adminRoute.put('/store', adminStoreController.updateStore);
 adminRoute.delete('/store/:id', adminStoreController.deleteStore);
+
+adminRoute.get('/category', adminCategoryController.getAdminCategoryPage);
+adminRoute.post('/category', adminCategoryController.createCategoryPost);
+adminRoute.put('/category/:id', adminCategoryController.updateCategory);
+adminRoute.delete('/category/:id', adminCategoryController.deleteCategory);
 
 export default adminRoute;
