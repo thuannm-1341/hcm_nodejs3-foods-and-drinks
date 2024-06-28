@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       data: data.map(item => item.number || item.sellNumber),
     };
 
+    // Calculate total and percentages
+    const total = chartData.data.reduce((acc, value) => acc + parseInt(value), 0);
+    const percentages = chartData.data.map(value => ((parseInt(value) / total) * 100).toFixed(2));
+
     const chartElement = document.getElementById(chartElementId);
     const ul = chartElement.closest('.card').querySelector('ul');
 
@@ -39,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const populateUl = () => {
       chartData.labels.forEach((label, i) => {
         let li = document.createElement("li");
-        li.innerHTML = `${label}: <span class='percentage'>${chartData.data[i]}%</span>`;
+        li.innerHTML = `${label}: <span class='percentage'>${percentages[i]}%</span>`;
         ul.appendChild(li);
       });
     };

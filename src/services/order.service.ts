@@ -6,6 +6,7 @@ import { OrderEntity } from '../entities/order.entity';
 import { CartProductEntity } from '../entities/cartProduct.entity';
 import { 
   Error as ErrorMessage,   
+  Interval,   
   OrderStatus,   
   OrderType, 
   PaymentStatus, 
@@ -33,6 +34,10 @@ import { OrderNumberByStatusDto } from '../commons/dtos/orderNumberByStatus.dto'
 import { plainToClass } from 'class-transformer';
 import { OrderNumberByPaymentStatusDto } from '../commons/dtos/orderNumberByPaymentStatus.dto';
 import { OrderNumberByStoreDto } from '../commons/dtos/orderNumberByStore.dto';
+import { RevenueAnalysisOption } from '../commons/dtos/revenueAnalysisOption.dto';
+import { RevenueAnalysis } from '../commons/dtos/revenueAnalysis.dto';
+import { StoreRevenueAnalysis } from '../commons/dtos/storeRevenueAnalysis.dto';
+import { ProductAnalysis } from '../commons/dtos/productAnalysis.dto';
 
 export class OrderService {
   private readonly orderRepository: Repository<OrderEntity>;
@@ -403,5 +408,106 @@ export class OrderService {
     .groupBy('store.id');
     const result = await query.getRawMany();
     return plainToClass(OrderNumberByStoreDto, result);
+  }
+
+  async getRevenue(options: RevenueAnalysisOption): Promise<RevenueAnalysis[]> {
+    const { interval, startDate, endDate, storeId } = options;
+
+    let dateFormat: string;
+    switch (interval) {
+      case Interval.DAY:
+        dateFormat = '%Y-%m-%d';
+        break;
+      case Interval.MONTH:
+        dateFormat = '%Y-%m';
+        break;
+      case Interval.YEAR:
+        dateFormat = '%Y';
+        break;
+      default:
+        throw new Error('Invalid interval');
+    }
+
+    const query = this.orderRepository.createQueryBuilder('order')
+      .leftJoin('order.store', 'store')
+      .select(`DATE_FORMAT(order.createdAt, '${dateFormat}')`, 'time')
+      .addSelect('SUM(order.total)', 'total')
+      .where('order.paymentStatus = :paymentStatus', {paymentStatus: PaymentStatus.COMPLETE})
+      .groupBy('time')
+      .orderBy('time', 'ASC');
+
+    if (storeId) {
+      query.andWhere('store.id = :storeId', {storeId: storeId});
+    }
+
+    if (startDate && endDate) {
+      query.andWhere('order.createdAt BETWEEN :startDate AND :endDate', { startDate, endDate });
+    } else if (startDate) {
+      query.andWhere('order.createdAt >= :startDate', { startDate });
+    } else if (endDate) {
+      query.andWhere('order.createdAt <= :endDate', { endDate });
+    }
+
+    const result = await query.getRawMany();
+    return plainToClass(RevenueAnalysis, result);
+  }
+
+  async getStoreRevenue(options: RevenueAnalysisOption)
+  : Promise<StoreRevenueAnalysis[]> {
+    const { startDate, endDate } = options;
+
+    const query = this.orderRepository.createQueryBuilder('order')
+      .leftJoin('order.store', 'store')
+      .select('store.name', 'name')
+      .addSelect('SUM(order.total)', 'total')
+      .where('order.paymentStatus = :paymentStatus', {paymentStatus: PaymentStatus.COMPLETE})
+      .groupBy('name')
+      .orderBy('name', 'ASC');
+
+    if (startDate && endDate) {
+      query.andWhere('order.createdAt BETWEEN :startDate AND :endDate', { startDate, endDate });
+    } else if (startDate) {
+      query.andWhere('order.createdAt >= :startDate', { startDate });
+    } else if (endDate) {
+      query.andWhere('order.createdAt <= :endDate', { endDate });
+    }
+
+    const result = await query.getRawMany();
+    return plainToClass(StoreRevenueAnalysis, result);
+  }
+
+  async getProductAnalysis(options: RevenueAnalysisOption)
+  : Promise<ProductAnalysis[]> {
+    const { startDate, endDate, storeId, categoryId } = options;
+
+    const query = this.orderRepository.createQueryBuilder('order')
+      .leftJoin('order.store', 'store')
+      .leftJoin('order.orderProducts', 'orderProduct')
+      .leftJoin('orderProduct.product', 'product')
+      .leftJoin('product.categories', 'category')
+      .select('product.name', 'name')
+      .addSelect('SUM(orderProduct.quantity)', 'sellNumber')
+      .where('order.paymentStatus = :paymentStatus', {paymentStatus: PaymentStatus.COMPLETE})
+      .groupBy('name')
+      .orderBy('name', 'ASC');
+    
+    if(storeId) {
+      query.andWhere('store.id = :storeId', {storeId: storeId});
+    }
+
+    if(categoryId) {
+      query.andWhere('category.id = :categoryId', {categoryId: categoryId});
+    }
+
+    if (startDate && endDate) {
+      query.andWhere('order.createdAt BETWEEN :startDate AND :endDate', { startDate, endDate });
+    } else if (startDate) {
+      query.andWhere('order.createdAt >= :startDate', { startDate });
+    } else if (endDate) {
+      query.andWhere('order.createdAt <= :endDate', { endDate });
+    }
+
+    const result = await query.getRawMany();
+    return plainToClass(ProductAnalysis, result);
   }
 }

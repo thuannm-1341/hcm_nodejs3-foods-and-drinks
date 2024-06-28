@@ -72,11 +72,14 @@
     },
     "file": {
       "uploadError": "Có lỗi trong quá trình upload file",
-      "invalidType": "Định dạng file không hợp lệ"
+      "invalidType": "Định dạng file không hợp lệ",
+      "noFile": "Hãy chọn tệp để tải lên"
     },
     "category": {
       "minLength": "Độ dài tối thiểu của tên phân loại là 2 ký tự"
-    }
+    },
+    "pastDate": "Phải chọn ngày trong quá khứ",
+    "startDate": "Ngày bắt đầu phải sớm hơn ngày kết thúc"
   },
   "register": {
     "title": "Tạo tài khoản mới",
@@ -377,7 +380,8 @@
     "updateProduct": "Cập nhật sản phẩm",
     "create": "Tạo",
     "update": "Cập nhật",
-    "delete": "Xóa"
+    "delete": "Xóa",
+    "analyze": "Phân tích"
   },
   "store": {
     "search": {
@@ -498,6 +502,25 @@
       "orderByPaymentStatus": "Đơn hàng theo tình trạng thanh toán",
       "topPurchasedProduct": "Top sản phẩm được mua nhiều nhất",
       "orderByStore": "Đơn hàng theo cửa hàng"
+    }
+  },
+  "interval": {
+    "day": "Ngày",
+    "month": "Tháng",
+    "year": "Năm"
+  },
+  "label": {
+    "startDate": "Từ",
+    "endDate": "Đến",
+    "interval": "Theo",
+    "store": "Cửa hàng",
+    "categories": "Phân loại"
+  },
+  "chart": {
+    "title": {
+      "revenue": "Biểu đồ doanh thu",
+      "storeRevenue": "Biểu đồ doanh thu theo cửa hàng",
+      "productAnalysis": "Biểu đồ số lượng sản phẩm bán ra"
     }
   }
 }

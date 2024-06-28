@@ -115,6 +115,7 @@ export class AdminProductController {
     async (req: Request, res: Response) => {
       const admin = (req.session as CustomSessionData).admin;
       const product = await this.getProductFromIdParam(req, res);
+      console.log('product:', product?.categories[0].id);
       const categories = await this.productService.getAllCategories();
       if(product === null) {
         req.flash('error', Error.PRODUCT_NOT_FOUND);
