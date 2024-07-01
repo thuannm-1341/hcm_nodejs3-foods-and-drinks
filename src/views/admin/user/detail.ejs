@@ -98,7 +98,7 @@
                           <p><strong>
                               <%= t('user.detail.gender') %>:
                             </strong>
-                            <%= user.gender ? user.gender : t('user.detail.noData') %>
+                            <%= user.gender ? t('gender.'+user.gender) : t('user.detail.noData') %>
                           </p>
                         </div>
                         <div class="col-md-6 mb-3">

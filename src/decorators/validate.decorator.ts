@@ -166,3 +166,24 @@ export function IsCurrentPriceLessThanOrEqualBasePrice(
     });
   };
 }
+
+export function IsValidDOB(validationOptions?: ValidationOptions) {
+  return function (object: Object, propertyName: string) {
+    registerDecorator({
+      name: 'isValidDOB',
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      constraints: [],
+      validator: {
+        async validate(value: string, args: ValidationArguments) {
+          const dateValue = new Date(value);
+
+          const currentDate = new Date();
+          // Valid if it's a valid past date
+          return dateValue < currentDate;
+        },
+      },
+    });
+  };
+}

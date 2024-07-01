@@ -1,3 +1,4 @@
+import { UpdatePersonalInfo } from './../commons/dtos/updatePersonalInfo.dto';
 import { RegisterDto } from './../commons/dtos/register.dto';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
@@ -8,6 +9,8 @@ import { LoginDto } from '../commons/dtos/login.dto';
 import { UserPageOptions } from '../commons/dtos/userPageOptions.dto';
 import { PageDto } from '../commons/dtos/page.dto';
 import { PageMetaDto } from '../commons/dtos/pageMeta.dto';
+import { UserUpdateAccountDto } from '../commons/dtos/userUpdateAccount.dto';
+import { UpdateAvatarDto } from '../commons/dtos/updateAvatar.dto';
 
 export class UserService {
   private readonly userRepository: Repository<UserEntity>;
@@ -15,7 +18,8 @@ export class UserService {
     this.userRepository = AppDataSource.getRepository(UserEntity);
   }
 
-  public async registerUser(registerDto: RegisterDto): Promise<any | UserEntity> {
+  public async registerUser(registerDto: RegisterDto)
+  : Promise<any | UserEntity> {
     const errors: any = {};
     //check duplicate userName
     const findByUserNameResult = await this.userRepository.findOne({
@@ -102,5 +106,58 @@ export class UserService {
 
     const pageMeta = new PageMetaDto({pageOptionsDto, itemCount});
     return new PageDto(entities, pageMeta);
+  }
+
+  async updateAccount(user: UserEntity, updateOptions: UserUpdateAccountDto)
+  : Promise<any | UserEntity> {
+    const errors: any = {};
+    const {userName, email, password} = updateOptions;
+
+    // Check for duplicate userName
+    const userByUserName = await this.userRepository.findOne({
+      where: {
+        userName: userName,
+      },
+    });
+    if (userByUserName && user.id !== userByUserName.id) {
+      errors.userName = [Error.DUPLICATE_USER_NAME];
+    }
+
+    // Check for duplicate email
+    const userByEmail = await this.userRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (userByEmail && user.id !== userByEmail.id) {
+      errors.email = [Error.DUPLICATE_EMAIL];
+    }
+
+    // Check password match
+    const isMatch = await bcryptjs.compare(password, user.password);
+    if (!isMatch) {
+      errors.password = [Error.INVALID_CREDENTIAL];
+    }
+
+    // Return errors if any
+    if (Object.keys(errors).length > 0) {
+      return errors;
+    }
+
+    // Merge and save updated data
+    this.userRepository.merge(user, {userName, email});
+    return this.userRepository.save(user);
+  }
+
+  async updateAvatar(user: UserEntity, updateOptions: UpdateAvatarDto)
+  : Promise< UserEntity> {
+    user.avatar = updateOptions.avatar;
+    return this.userRepository.save(user);
+  }
+
+  async updatePersonalInfo(user: UserEntity, updateOptions: UpdatePersonalInfo)
+  : Promise< UserEntity> {
+    this.userRepository.merge(user, updateOptions);
+    return this.userRepository.save(user);
   }
 }
