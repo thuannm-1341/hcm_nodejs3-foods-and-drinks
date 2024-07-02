@@ -53,7 +53,7 @@ export class AdminService {
     await AppDataSource.getRepository(OrderEntity).createQueryBuilder('order')
     .select('SUM(order.total)', 'totalRevenue')
     .where('order.paymentStatus = :paymentStatus', {paymentStatus: PaymentStatus.COMPLETE})
-    .getRawOne().then(result=>result.totalRevenue);
+    .getRawOne().then(result=>result.totalRevenue) || '0';
     return {
       totalOrder, 
       totalProduct, 
